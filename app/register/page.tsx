@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Loader2, MailCheck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Loader2, Mail, Star } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function RegisterPage() {
@@ -22,44 +21,35 @@ export default function RegisterPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fullName, email, password }),
       })
-
       const data = await res.json()
-
-      if (!res.ok) {
-        toast.error(data.error || 'Failed to create account')
-        return
-      }
-
+      if (!res.ok) { toast.error(data.error || 'Failed to create account'); return }
       setSent(true)
     } catch {
       toast.error('Something went wrong. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+    } finally { setLoading(false) }
   }
 
   if (sent) {
     return (
-      <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-24">
-        <div className="w-full max-w-sm text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
-            <MailCheck className="h-8 w-8 text-emerald-600" />
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-16">
+        <div className="w-full max-w-sm animate-fade-up text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 border border-blue-100">
+            <Mail className="h-7 w-7 text-blue-600" />
           </div>
-          <h1 className="mt-6 text-2xl font-black tracking-tight text-zinc-900">
-            Check your inbox
-          </h1>
-          <p className="mt-3 text-sm text-zinc-500">
+          <h1 className="mt-6 text-xl font-bold text-slate-900">Check your inbox</h1>
+          <p className="mt-2 text-sm text-slate-500">
             We sent a verification link to{' '}
-            <span className="font-medium text-zinc-900">{email}</span>.
-            Click it to activate your account and start reviewing.
+            <span className="font-semibold text-slate-900">{email}</span>.
+            Click it to activate your account.
           </p>
-          <p className="mt-4 text-xs text-zinc-400">
-            The link expires in 24 hours. Check your spam folder if you don't see it.
+          <p className="mt-3 text-xs text-slate-400">
+            Link expires in 24 hours. Check spam if you don&apos;t see it.
           </p>
-          <Link href="/login" className="mt-8 inline-block">
-            <Button variant="outline" className="rounded-full">
-              Back to Sign In
-            </Button>
+          <Link
+            href="/login"
+            className="mt-7 inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600"
+          >
+            Back to Sign In
           </Link>
         </div>
       </div>
@@ -67,74 +57,54 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="animate-fade-up flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-24">
-      <div className="w-full max-w-sm">
-        <h1 className="text-3xl font-black tracking-tight text-zinc-900">
-          Create Account
-        </h1>
-        <p className="mt-2 text-sm text-zinc-500">
-          Join Rwanda&apos;s verified review platform.
-        </p>
+    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-16">
+      <div className="w-full max-w-sm animate-fade-up">
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+        <div className="mb-8 flex justify-center">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600">
+            <Star className="h-6 w-6 fill-white text-white" />
+          </div>
+        </div>
+
+        <h1 className="text-center text-2xl font-bold tracking-tight text-slate-900">Create your account</h1>
+        <p className="mt-2 text-center text-sm text-slate-500">Join Rwanda&apos;s verified review platform</p>
+
+        <form onSubmit={handleSubmit} className="mt-7 space-y-4">
           <div>
-            <label className="text-sm font-medium text-zinc-900">
-              Full Name
-            </label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Full Name</label>
             <input
-              type="text"
-              required
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              className="mt-2 h-12 w-full rounded-xl border border-zinc-200 px-4 text-base text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-900 focus:outline-none"
-              placeholder="Your name"
+              type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
+              className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              placeholder="Your full name"
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-zinc-900">Email</label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
             <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 h-12 w-full rounded-xl border border-zinc-200 px-4 text-base text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-900 focus:outline-none"
+              type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+              className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-zinc-900">
-              Password
-            </label>
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">Password</label>
             <input
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-2 h-12 w-full rounded-xl border border-zinc-200 px-4 text-base text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-900 focus:outline-none"
+              type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
+              className="h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               placeholder="Min 8 chars, 1 uppercase, 1 number"
             />
           </div>
-          <Button
-            type="submit"
-            disabled={loading}
-            className="h-12 w-full rounded-full bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-50"
+          <button
+            type="submit" disabled={loading}
+            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-60"
           >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating account...
-              </>
-            ) : (
-              'Create Account'
-            )}
-          </Button>
+            {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
+          </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-zinc-500">
+        <p className="mt-5 text-center text-sm text-slate-500">
           Already have an account?{' '}
-          <Link href="/login" className="font-medium text-zinc-900 underline">
-            Sign in
-          </Link>
+          <Link href="/login" className="font-semibold text-blue-600 hover:text-blue-700">Sign in</Link>
         </p>
       </div>
     </div>
