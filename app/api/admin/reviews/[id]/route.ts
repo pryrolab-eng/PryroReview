@@ -5,24 +5,24 @@ import { sendReviewDeletedEmail } from '@/lib/email'
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
     if (!session?.user || (session.user as any).role !== 'ADMIN') {
       return Response.json({ error: 'Forbidden' }, { status: 403 })
     }
 
-    // Fetch review with user and company before deleting for email
     const review = await prisma.review.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         user: { select: { email: true, fullName: true } },
         company: { select: { name: true } },
       },
     })
 
-    await prisma.review.delete({ where: { id: params.id } })
+    await prisma.review.delete({ where: { id } })
 
     if (review) {
       sendReviewDeletedEmail(

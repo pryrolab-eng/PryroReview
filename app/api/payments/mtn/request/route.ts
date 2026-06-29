@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     const payment = await prisma.payment.create({
       data: {
         userId,
-        amount: 100,
+        amount: 20,
         method: 'MTN',
         status: 'pending',
         phoneNumber: phone,

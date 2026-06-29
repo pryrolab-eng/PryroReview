@@ -10,7 +10,7 @@ import { Toaster } from '@/components/ui/sonner'
 export const metadata: Metadata = {
   title: 'Pryro Review — Verified Business Reviews for Rwanda',
   description:
-    "Rwanda's verified public service accountability platform. Every review is backed by a real 100 RWF payment — no fake reviews, no spam.",
+    "Rwanda's verified public service accountability platform. Every review is backed by a real 20 RWF payment — no fake reviews, no spam.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

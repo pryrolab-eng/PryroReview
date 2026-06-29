@@ -73,7 +73,7 @@ model Payment {
   id          String   @id @default(cuid())
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  amount      Int      @default(100)
+  amount      Int      @default(20)
   method      String
   status      String   @default("pending")
   phoneNumber String

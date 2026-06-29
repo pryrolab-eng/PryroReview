@@ -41,13 +41,6 @@ export const mtnPaymentSchema = z.object({
   companyName: z.string(),
 })
 
-export const claimSchema = z.object({
-  companyId: z.string(),
-  fullName: z.string().min(2),
-  businessEmail: z.string().email(),
-  regNumber: z.string().optional(),
-})
-
 export const flagSchema = z.object({
   reviewId: z.string(),
   reason: z.enum([

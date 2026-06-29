@@ -4,25 +4,23 @@ import prisma from '@/lib/prisma'
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const session = await getServerSession(authOptions)
     if (!session?.user || (session.user as any).role !== 'ADMIN') {
       return Response.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     const currentUserId = (session.user as any).id
-    if (params.id === currentUserId) {
-      return Response.json(
-        { error: 'Cannot change your own role' },
-        { status: 400 }
-      )
+    if (id === currentUserId) {
+      return Response.json({ error: 'Cannot change your own role' }, { status: 400 })
     }
 
     const body = await req.json()
     const user = await prisma.user.update({
-      where: { id: params.id },
+      where: { id },
       data: { role: body.role },
       select: { id: true, email: true, fullName: true, role: true },
     })

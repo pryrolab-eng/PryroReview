@@ -11,14 +11,8 @@ export async function GET(
         reviews: {
           orderBy: { createdAt: 'desc' },
           include: {
-            user: {
-              select: { id: true, fullName: true },
-            },
+            user: { select: { id: true, fullName: true } },
           },
-        },
-        claims: {
-          where: { status: 'APPROVED' },
-          select: { userId: true, fullName: true },
         },
       },
     })
@@ -65,8 +59,7 @@ export async function GET(
       totalReviews,
       ratingBreakdown,
       categoryScores,
-    })
-  } catch (err) {
+    }, { headers: { 'Cache-Control': 'public, s-maxage=20, stale-while-revalidate=60' } })  } catch (err) {
     console.error('[GET /api/companies/[slug]]', err)
     return Response.json({ error: 'Internal server error' }, { status: 500 })
   }

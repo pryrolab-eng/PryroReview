@@ -66,12 +66,10 @@ export async function GET(req: Request) {
       rank: skip + index + 1,
     }))
 
-    return Response.json({
-      companies: ranked,
-      total,
-      page,
-      totalPages: Math.ceil(total / take),
-    })
+    return Response.json(
+      { companies: ranked, total, page, totalPages: Math.ceil(total / take) },
+      { headers: { 'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60' } }
+    )
   } catch (err) {
     console.error('[GET /api/leaderboard]', err)
     return Response.json({ error: 'Internal server error' }, { status: 500 })

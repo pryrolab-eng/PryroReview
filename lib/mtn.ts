@@ -35,7 +35,7 @@ export async function requestMtnPayment(
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      amount: '100',
+      amount: '20',
       currency: 'RWF',
       externalId,
       payer: { partyIdType: 'MSISDN', partyId: msisdn },

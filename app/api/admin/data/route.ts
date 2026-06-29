@@ -2,6 +2,63 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import prisma from '@/lib/prisma'
 
+async function fetchData(tab: string, skip: number, take: number) {
+  switch (tab) {
+    case 'companies':
+      return Promise.all([
+        prisma.company.findMany({ orderBy: { createdAt: 'desc' }, skip, take }),
+        prisma.company.count(),
+      ])
+
+    case 'reviews':
+      return Promise.all([
+        prisma.review.findMany({
+          orderBy: { createdAt: 'desc' }, skip, take,
+          include: {
+            user: { select: { id: true, fullName: true, email: true } },
+            company: { select: { id: true, name: true, slug: true } },
+          },
+        }),
+        prisma.review.count(),
+      ])
+
+    case 'users':
+      return Promise.all([
+        prisma.user.findMany({
+          orderBy: { createdAt: 'desc' }, skip, take,
+          select: { id: true, fullName: true, email: true, role: true, createdAt: true },
+        }),
+        prisma.user.count(),
+      ])
+
+    case 'payments':
+      return Promise.all([
+        prisma.payment.findMany({
+          orderBy: { createdAt: 'desc' }, skip, take,
+          include: { user: { select: { id: true, fullName: true } } },
+        }),
+        prisma.payment.count(),
+      ])
+
+    case 'flags':
+      return Promise.all([
+        prisma.flag.findMany({
+          orderBy: { createdAt: 'desc' }, skip, take,
+          include: {
+            user: { select: { id: true, fullName: true } },
+            review: {
+              include: { company: { select: { id: true, name: true, slug: true } } },
+            },
+          },
+        }),
+        prisma.flag.count(),
+      ])
+
+    default:
+      return [[], 0] as [any[], number]
+  }
+}
+
 export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions)
@@ -10,7 +67,7 @@ export async function GET(req: Request) {
     }
 
     const { searchParams } = new URL(req.url)
-    const tab = searchParams.get('tab') || 'companies'
+    const tab  = searchParams.get('tab') || 'companies'
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'))
     const take = 10
     const skip = (page - 1) * take
@@ -18,98 +75,15 @@ export async function GET(req: Request) {
     let data: any[] = []
     let total = 0
 
-    switch (tab) {
-      case 'companies':
-        ;[data, total] = await Promise.all([
-          prisma.company.findMany({
-            orderBy: { createdAt: 'desc' },
-            skip,
-            take,
-          }),
-          prisma.company.count(),
-        ])
+    // Retry once — Neon free tier wakes slowly after idle
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        ;[data, total] = await fetchData(tab, skip, take)
         break
-
-      case 'reviews':
-        ;[data, total] = await Promise.all([
-          prisma.review.findMany({
-            orderBy: { createdAt: 'desc' },
-            skip,
-            take,
-            include: {
-              user: { select: { id: true, fullName: true, email: true } },
-              company: { select: { id: true, name: true, slug: true } },
-            },
-          }),
-          prisma.review.count(),
-        ])
-        break
-
-      case 'users':
-        ;[data, total] = await Promise.all([
-          prisma.user.findMany({
-            orderBy: { createdAt: 'desc' },
-            skip,
-            take,
-            select: {
-              id: true,
-              fullName: true,
-              email: true,
-              role: true,
-              createdAt: true,
-            },
-          }),
-          prisma.user.count(),
-        ])
-        break
-
-      case 'payments':
-        ;[data, total] = await Promise.all([
-          prisma.payment.findMany({
-            orderBy: { createdAt: 'desc' },
-            skip,
-            take,
-            include: {
-              user: { select: { id: true, fullName: true } },
-            },
-          }),
-          prisma.payment.count(),
-        ])
-        break
-
-      case 'claims':
-        ;[data, total] = await Promise.all([
-          prisma.claim.findMany({
-            orderBy: { createdAt: 'desc' },
-            skip,
-            take,
-            include: {
-              user: { select: { id: true, fullName: true, email: true } },
-              company: { select: { id: true, name: true, slug: true } },
-            },
-          }),
-          prisma.claim.count(),
-        ])
-        break
-
-      case 'flags':
-        ;[data, total] = await Promise.all([
-          prisma.flag.findMany({
-            orderBy: { createdAt: 'desc' },
-            skip,
-            take,
-            include: {
-              user: { select: { id: true, fullName: true } },
-              review: {
-                include: {
-                  company: { select: { id: true, name: true, slug: true } },
-                },
-              },
-            },
-          }),
-          prisma.flag.count(),
-        ])
-        break
+      } catch (err: any) {
+        if (attempt === 1 || err?.code !== 'P1001') throw err
+        await new Promise((r) => setTimeout(r, 2500))
+      }
     }
 
     return Response.json({

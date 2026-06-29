@@ -65,30 +65,6 @@ export async function sendVerificationEmail(
   )
 }
 
-export async function sendClaimApprovedEmail(
-  email: string,
-  name: string,
-  companyName: string
-) {
-  await sendEmail(
-    email,
-    'Your company claim has been approved ✓',
-    `<p>Hi ${name}, your claim for <strong>${companyName}</strong> has been approved. You can now respond to reviews.</p>`
-  )
-}
-
-export async function sendClaimRejectedEmail(
-  email: string,
-  name: string,
-  companyName: string
-) {
-  await sendEmail(
-    email,
-    'Update on your company claim',
-    `<p>Hi ${name}, your claim for <strong>${companyName}</strong> could not be approved. Contact us if you believe this is an error.</p>`
-  )
-}
-
 export async function sendReviewDeletedEmail(
   email: string,
   name: string,
