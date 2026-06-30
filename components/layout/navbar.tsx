@@ -20,7 +20,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 h-16 border-b border-slate-200 bg-white">
-      <div className="flex h-16 items-center px-6 lg:px-10">
+      <div className="flex h-16 items-center px-4 sm:px-6 lg:px-10">
 
         {/* ── Left: Logo + Nav ── */}
         <div className="flex items-center gap-8">
@@ -48,7 +48,7 @@ export function Navbar() {
           </nav>
         </div>
 
-        {/* ── Right: Auth ── */}
+        {/* ── Right: Auth (desktop) ── */}
         <div className="ml-auto hidden items-center gap-2 md:flex">
           {loading ? (
             <div className="h-8 w-24 animate-pulse rounded-lg bg-slate-100" />
@@ -56,7 +56,7 @@ export function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
-                className="flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                className="flex h-11 items-center gap-2 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
               >
                 <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
                   {(user.fullName || user.email || 'U')[0].toUpperCase()}
@@ -72,18 +72,18 @@ export function Navbar() {
                     <p className="truncate text-xs text-slate-500">{user.email}</p>
                   </div>
                   <Link href="/my-reviews" onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                    className="flex min-h-[44px] items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                     <Star className="h-4 w-4 text-slate-400" /> My Reviews
                   </Link>
                   {user.role === 'ADMIN' && (
                     <Link href="/admin" onClick={() => setProfileOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
+                      className="flex min-h-[44px] items-center gap-2.5 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">
                       <LayoutDashboard className="h-4 w-4 text-slate-400" /> Admin Panel
                     </Link>
                   )}
                   <div className="mt-1 border-t border-slate-100 pt-1">
                     <button onClick={() => { signOut(); setProfileOpen(false) }}
-                      className="flex w-full items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
+                      className="flex min-h-[44px] w-full items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
                       <LogOut className="h-4 w-4" /> Sign Out
                     </button>
                   </div>
@@ -93,11 +93,11 @@ export function Navbar() {
           ) : (
             <>
               <Link href="/login"
-                className="rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900">
+                className="flex h-11 items-center rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900">
                 Sign In
               </Link>
               <Link href="/register"
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
+                className="flex h-11 items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
                 Get Started
               </Link>
             </>
@@ -106,7 +106,7 @@ export function Navbar() {
 
         {/* ── Mobile hamburger ── */}
         <button
-          className="ml-auto rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-lg p-2 text-slate-600 hover:bg-slate-100 md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -121,7 +121,7 @@ export function Navbar() {
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
                 className={cn(
-                  'block rounded-lg px-3 py-2.5 text-sm font-medium',
+                  'block min-h-[44px] rounded-lg px-3 py-2.5 text-sm font-medium',
                   pathname === link.href ? 'text-blue-600 font-semibold' : 'text-slate-700 hover:bg-slate-50'
                 )}>
                 {link.label}
@@ -134,16 +134,16 @@ export function Navbar() {
                     <p className="text-xs font-semibold text-slate-900">{user.fullName}</p>
                     <p className="text-xs text-slate-500">{user.email}</p>
                   </div>
-                  <Link href="/my-reviews" onClick={() => setMobileOpen(false)} className="block rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50">My Reviews</Link>
-                  {user.role === 'ADMIN' && <Link href="/admin" onClick={() => setMobileOpen(false)} className="block rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50">Admin Panel</Link>}
-                  <button onClick={() => { signOut(); setMobileOpen(false) }} className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-red-500 hover:bg-red-50">
+                  <Link href="/my-reviews" onClick={() => setMobileOpen(false)} className="block min-h-[44px] rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50">My Reviews</Link>
+                  {user.role === 'ADMIN' && <Link href="/admin" onClick={() => setMobileOpen(false)} className="block min-h-[44px] rounded-lg px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50">Admin Panel</Link>}
+                  <button onClick={() => { signOut(); setMobileOpen(false) }} className="mt-1 flex min-h-[44px] w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-red-500 hover:bg-red-50">
                     <LogOut className="h-4 w-4" /> Sign Out
                   </button>
                 </>
               ) : (
                 <div className="flex flex-col gap-2">
-                  <Link href="/login" onClick={() => setMobileOpen(false)} className="rounded-lg border border-slate-200 px-4 py-2.5 text-center text-sm font-medium text-slate-700">Sign In</Link>
-                  <Link href="/register" onClick={() => setMobileOpen(false)} className="rounded-lg bg-blue-600 px-4 py-2.5 text-center text-sm font-semibold text-white">Get Started</Link>
+                  <Link href="/login" onClick={() => setMobileOpen(false)} className="flex min-h-[44px] items-center justify-center rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700">Sign In</Link>
+                  <Link href="/register" onClick={() => setMobileOpen(false)} className="flex min-h-[44px] items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white">Get Started</Link>
                 </div>
               )}
             </div>

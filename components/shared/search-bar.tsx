@@ -115,17 +115,17 @@ export function SearchBar({ className }: { className?: string }) {
   const showNotFound = !isLoading && !hasDbResults && !hasOsmResults && query.trim().length >= 2
 
   return (
-    <div ref={containerRef} className={`relative ${className ?? ''}`}>
+    <div ref={containerRef} className={`relative w-full ${className ?? ''}`}>
       <form onSubmit={handleSubmit}>
         <div className="relative">
-          <Search className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400" />
+          <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400 sm:left-5" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="h-14 w-full rounded-full border border-zinc-200 bg-white pl-14 pr-4 text-base text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-900 focus:outline-none"
+            className="h-12 w-full rounded-full border border-zinc-200 bg-white pl-12 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-900 focus:outline-none sm:h-14 sm:pl-14 sm:text-base"
           />
           {isLoading && (
             <Loader2 className="absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-zinc-400" />
@@ -134,7 +134,7 @@ export function SearchBar({ className }: { className?: string }) {
       </form>
 
       {open && query.trim().length >= 1 && (
-        <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-lg">
+        <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-[60vh] overflow-y-auto overflow-x-hidden rounded-xl border border-zinc-100 bg-white shadow-lg">
 
           {/* Local DB results */}
           {hasDbResults && (
@@ -149,16 +149,16 @@ export function SearchBar({ className }: { className?: string }) {
                   <li key={company.id}>
                     <button
                       onClick={() => handleSelect(company.slug)}
-                      className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors hover:bg-zinc-50"
+                      className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 text-left transition-colors hover:bg-zinc-50"
                     >
-                      <div>
-                        <p className="text-sm font-medium text-zinc-900">{company.name}</p>
-                        <p className="text-xs text-zinc-500">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-zinc-900">{company.name}</p>
+                        <p className="truncate text-xs text-zinc-500">
                           {company.category} · {company.district}
                         </p>
                       </div>
                       {company.reviewCount > 0 && (
-                        <span className="shrink-0 text-xs font-medium text-orange-500">
+                        <span className="ml-2 shrink-0 text-xs font-medium text-orange-500">
                           {company.avgRating.toFixed(1)} ★
                         </span>
                       )}
@@ -186,15 +186,15 @@ export function SearchBar({ className }: { className?: string }) {
                     <Link
                       href={`/add-company?name=${encodeURIComponent(biz.name)}&category=${encodeURIComponent(biz.category)}&district=${encodeURIComponent(biz.district)}${biz.website ? `&website=${encodeURIComponent(biz.website)}` : ''}`}
                       onClick={() => { setOpen(false); setQuery('') }}
-                      className="flex w-full items-center justify-between px-4 py-3 transition-colors hover:bg-zinc-50"
+                      className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 transition-colors hover:bg-zinc-50"
                     >
-                      <div>
-                        <p className="text-sm font-medium text-zinc-900">{biz.name}</p>
-                        <p className="text-xs text-zinc-500">
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-zinc-900">{biz.name}</p>
+                        <p className="truncate text-xs text-zinc-500">
                           {biz.category} · {biz.district}
                         </p>
                       </div>
-                      <span className="shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">
+                      <span className="ml-2 shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">
                         Add →
                       </span>
                     </Link>

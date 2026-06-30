@@ -3,7 +3,7 @@ import Link from 'next/link'
 export function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:px-10">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-10">
 
         {/* ── Main row: brand left, links right ── */}
         <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">

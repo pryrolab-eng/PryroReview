@@ -89,7 +89,7 @@ export default function AdminPage() {
 
   if (authLoading) {
     return (
-      <div className="mx-auto max-w-6xl px-6 py-16 lg:px-10">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-10">
         <div className="h-7 w-32 animate-pulse rounded-lg bg-slate-100" />
         <div className="mt-6 flex gap-2">
           {[1,2,3,4,5,6].map((i) => <div key={i} className="h-9 w-24 animate-pulse rounded-lg bg-slate-100" />)}
@@ -176,11 +176,11 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="animate-fade-up mx-auto max-w-6xl px-6 py-10 lg:px-10">
-      <div className="flex items-center justify-between">
+    <div className="animate-fade-up mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold text-slate-900">Admin Panel</h1>
         <button onClick={handleImport} disabled={importing}
-          className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600 disabled:opacity-50">
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600 disabled:opacity-50">
           <Download className="h-4 w-4" />
           {importing ? 'Importing...' : 'Import Businesses'}
         </button>
@@ -203,7 +203,7 @@ export default function AdminPage() {
       <div className="relative mt-5">
         <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..."
-          className="h-10 w-full rounded-lg border border-slate-200 pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20" />
+          className="h-11 w-full rounded-lg border border-slate-200 pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20" />
       </div>
 
       {/* Table */}
@@ -217,7 +217,7 @@ export default function AdminPage() {
         </div>
       ) : (
         <div className="mt-5 overflow-x-auto rounded-xl border border-slate-200 bg-white">
-          <table className="w-full">
+          <table className="w-full min-w-[600px]">
             {tab === 'companies' && (
               <CompaniesTable
                 data={filtered}

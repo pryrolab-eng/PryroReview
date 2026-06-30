@@ -159,7 +159,7 @@ export default function CompanyProfilePage() {
             )}
           </div>
           <button onClick={handleWriteReview}
-            className="shrink-0 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700">
+            className="w-full shrink-0 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 sm:w-auto">
             Write a Review
           </button>
         </div>

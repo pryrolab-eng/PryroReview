@@ -42,15 +42,17 @@ export default function LeaderboardPage() {
         </p>
       </div>
 
-      {/* Tabs */}
-      <div className="mb-6 inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1">
+      {/* Tabs — full width on mobile */}
+      <div className="mb-6 flex w-full gap-2 sm:inline-flex sm:w-auto sm:rounded-lg sm:border sm:border-slate-200 sm:bg-slate-50 sm:p-1 sm:gap-0">
         {(['best', 'worst'] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              'rounded-md px-5 py-2 text-sm font-medium transition-all duration-150',
-              tab === t ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'
+              'flex-1 rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-150 sm:flex-none sm:rounded-md sm:py-2',
+              tab === t
+                ? 'bg-white text-blue-600 shadow-sm border border-slate-200 sm:border-0'
+                : 'text-slate-500 hover:text-slate-900 border border-slate-200 sm:border-0'
             )}
           >
             {t === 'best' ? 'Best Rated' : 'Worst Rated'}
@@ -70,21 +72,15 @@ export default function LeaderboardPage() {
           <p className="text-sm text-slate-400">No companies with reviews yet.</p>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
-          <table className="w-full">
+        <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+          <table className="w-full min-w-[500px]">
             <thead>
               <tr className="border-b border-slate-100 bg-slate-50">
-                {['#', 'Company', 'Rating', 'Reviews'].map((h, i) => (
-                  <th
-                    key={h}
-                    className={cn(
-                      'px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400',
-                      i === 0 ? 'w-12 text-center' : i === 3 ? 'text-right' : 'text-left'
-                    )}
-                  >
-                    {h}
-                  </th>
-                ))}
+                <th className="w-12 px-4 py-3 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">#</th>
+                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Company</th>
+                <th className="hidden px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400 sm:table-cell">District</th>
+                <th className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-slate-400">Rating</th>
+                <th className="px-4 py-3 text-right text-[11px] font-semibold uppercase tracking-wider text-slate-400">Reviews</th>
               </tr>
             </thead>
             <tbody>
@@ -111,8 +107,9 @@ export default function LeaderboardPage() {
                       </p>
                       {c.verified && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-blue-500" />}
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5">{c.category} · {c.district}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">{c.category}</p>
                   </td>
+                  <td className="hidden px-4 py-4 text-sm text-slate-500 sm:table-cell">{c.district}</td>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-bold text-slate-900">
@@ -136,7 +133,7 @@ export default function LeaderboardPage() {
         <div className="mt-6 flex items-center justify-center gap-2">
           <button
             onClick={() => setPage(page - 1)} disabled={page === 1}
-            className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Previous
           </button>
@@ -145,7 +142,7 @@ export default function LeaderboardPage() {
           </span>
           <button
             onClick={() => setPage(page + 1)} disabled={page === totalPages}
-            className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+            className="min-h-[44px] rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Next
           </button>

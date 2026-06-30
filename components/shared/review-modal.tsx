@@ -95,7 +95,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-full max-w-md animate-scale-in rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
+      <div className="relative w-[calc(100vw-2rem)] max-w-md max-h-[90vh] overflow-y-auto animate-scale-in rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
         <button onClick={onClose} className="absolute right-4 top-4 rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700">
           <X className="h-5 w-5" />
         </button>
@@ -155,7 +155,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 {[1, 2, 3, 4, 5].map((s) => (
                   <button key={s} onClick={() => setRating(s)}
                     onMouseEnter={() => setHoverRating(s)} onMouseLeave={() => setHoverRating(0)}
-                    className="transition-transform hover:scale-110 focus:outline-none">
+                    className="flex h-11 w-11 items-center justify-center transition-transform hover:scale-110 focus:outline-none">
                     <Star className={`h-8 w-8 transition-colors ${
                       s <= (hoverRating || rating)
                         ? 'fill-blue-600 text-blue-600'
