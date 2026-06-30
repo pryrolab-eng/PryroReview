@@ -26,7 +26,7 @@ export function Navbar() {
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center shrink-0">
             <span className="text-[17px] font-bold tracking-tight text-slate-900">
-              Pryro<span className="text-blue-600">Review</span>
+              PryroReview
             </span>
           </Link>
 

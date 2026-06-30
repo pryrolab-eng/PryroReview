@@ -12,7 +12,7 @@ export function Footer() {
           <div className="max-w-xs">
             <Link href="/" className="flex items-center">
               <span className="text-[16px] font-bold tracking-tight text-slate-900">
-                Pryro<span className="text-blue-600">Review</span>
+                PryroReview
               </span>
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-slate-500">
