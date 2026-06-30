@@ -116,7 +116,7 @@ export default async function HomePage() {
     <div className="bg-white">
       {/* Hero */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
+        <div className="mx-auto max-w-5xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="whitespace-nowrap font-[family-name:var(--font-playfair)] text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               Find a company you can trust
@@ -138,7 +138,7 @@ export default async function HomePage() {
       </section>
 
       {/* Companies */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <Suspense fallback={<CompaniesSkeleton />}>
           <CompaniesSection />
         </Suspense>
@@ -146,7 +146,7 @@ export default async function HomePage() {
 
       {/* CTA */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-20 text-center lg:px-10">
+        <div className="mx-auto max-w-5xl px-4 py-20 text-center sm:px-6 lg:px-8">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
             Had an experience worth sharing?
           </h2>
