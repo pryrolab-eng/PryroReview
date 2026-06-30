@@ -5,7 +5,6 @@ import { authOptions } from '@/lib/auth'
 import { SearchBar } from '@/components/shared/search-bar'
 import { CompanyCard } from '@/components/shared/company-card'
 import { StarRating } from '@/components/shared/star-rating'
-import { AnimatedCounter } from '@/components/shared/animated-counter'
 import { Building2, ArrowRight, ShieldCheck } from 'lucide-react'
 import prisma from '@/lib/prisma'
 import { formatDistanceToNow } from 'date-fns'
@@ -241,50 +240,6 @@ async function ReviewsSection() {
   )
 }
 
-// ─── Stats — fast counts only ─────────────────────────────────────────────
-async function StatsBar() {
-  let totalReviews = 0, totalCompanies = 0, uniqueDistricts = 0
-  try {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const [rev, comp, dist] = await Promise.all([
-          prisma.review.count(),
-          prisma.company.count(),
-          prisma.$queryRaw<[{ count: bigint }]>`SELECT COUNT(DISTINCT district) FROM "Company"`,
-        ])
-        totalReviews = rev
-        totalCompanies = comp
-        uniqueDistricts = Number(dist[0].count)
-        break
-      } catch (err: any) {
-        if (attempt === 1 || err?.code !== 'P1001') break
-        await new Promise((res) => setTimeout(res, 2500))
-      }
-    }
-  } catch {}
-
-  return (
-    <section className="border-b border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-16">
-          {[
-            { value: totalReviews, label: 'Verified Reviews' },
-            { value: totalCompanies, label: 'Companies Listed' },
-            { value: uniqueDistricts, label: 'Districts Covered' },
-          ].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="text-2xl font-bold tabular-nums text-slate-900">
-                <AnimatedCounter value={value} />
-              </p>
-              <p className="mt-0.5 text-xs text-slate-500">{label}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 // ─── Main page — renders hero instantly, streams the rest ─────────────────
 export default async function HomePage() {
   const session = await getServerSession(authOptions)
@@ -313,11 +268,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Stats — streams in fast */}
-      <Suspense fallback={<div className="h-20 border-b border-slate-200 bg-slate-50 animate-pulse" />}>
-        <StatsBar />
-      </Suspense>
 
       {/* Companies — streams in while hero is already visible */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
