@@ -23,7 +23,15 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (!res.ok) { toast.error(data.error || 'Failed to create account'); return }
-      setSent(true)
+
+      if (data.verified) {
+        // No email service — account ready, go straight to login
+        toast.success('Account created! You can now sign in.')
+        window.location.href = '/login'
+      } else {
+        // Email verification required
+        setSent(true)
+      }
     } catch {
       toast.error('Something went wrong. Please try again.')
     } finally { setLoading(false) }
