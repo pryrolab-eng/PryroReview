@@ -19,7 +19,7 @@ export function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 h-16 border-b border-slate-200 bg-white">
+    <header className="sticky top-0 z-50 h-16 bg-white">
       <div className="flex h-16 items-center px-4 sm:px-6 lg:px-10">
 
         {/* ── Left: Logo + Nav ── */}
@@ -116,7 +116,7 @@ export function Navbar() {
 
       {/* ── Mobile menu ── */}
       {mobileOpen && (
-        <div className="border-b border-slate-200 bg-white md:hidden">
+        <div className="bg-white md:hidden">
           <nav className="space-y-1 px-4 py-3">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)}
@@ -127,7 +127,7 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <div className="mt-3 border-t border-slate-100 pt-3">
+            <div className="mt-3 pt-3">
               {user ? (
                 <>
                   <div className="mb-2 px-3 py-1">
