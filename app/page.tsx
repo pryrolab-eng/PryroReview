@@ -6,7 +6,7 @@ import { SearchBar } from '@/components/shared/search-bar'
 import { CompanyCard } from '@/components/shared/company-card'
 import { StarRating } from '@/components/shared/star-rating'
 import { AnimatedCounter } from '@/components/shared/animated-counter'
-import { Building2, Star, MapPin, ArrowRight, ShieldCheck } from 'lucide-react'
+import { Building2, ArrowRight, ShieldCheck } from 'lucide-react'
 import prisma from '@/lib/prisma'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -268,20 +268,15 @@ async function StatsBar() {
       <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-16">
           {[
-            { icon: Star, value: totalReviews, label: 'Verified Reviews' },
-            { icon: Building2, value: totalCompanies, label: 'Companies Listed' },
-            { icon: MapPin, value: uniqueDistricts, label: 'Districts Covered' },
-          ].map(({ icon: Icon, value, label }) => (
-            <div key={label} className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 border border-blue-100">
-                <Icon className="h-4 w-4 text-blue-600" />
-              </div>
-              <div>
-                <p className="text-xl font-bold tabular-nums text-slate-900">
-                  <AnimatedCounter value={value} />
-                </p>
-                <p className="text-xs text-slate-500">{label}</p>
-              </div>
+            { value: totalReviews, label: 'Verified Reviews' },
+            { value: totalCompanies, label: 'Companies Listed' },
+            { value: uniqueDistricts, label: 'Districts Covered' },
+          ].map(({ value, label }) => (
+            <div key={label} className="text-center">
+              <p className="text-2xl font-bold tabular-nums text-slate-900">
+                <AnimatedCounter value={value} />
+              </p>
+              <p className="mt-0.5 text-xs text-slate-500">{label}</p>
             </div>
           ))}
         </div>
