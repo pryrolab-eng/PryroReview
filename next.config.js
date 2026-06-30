@@ -6,8 +6,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Required for Prisma + bcryptjs on Vercel serverless
-  serverExternalPackages: ['@prisma/client', 'bcryptjs'],
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
+  },
 }
 
 module.exports = nextConfig
