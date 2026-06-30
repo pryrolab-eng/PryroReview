@@ -1,16 +1,5 @@
 import Link from 'next/link'
 
-const categories = [
-  'Banking & Finance',
-  'Telecommunications',
-  'Government Services',
-  'Healthcare',
-  'Education',
-  'Airlines & Transport',
-  'Hospitality & Tourism',
-  'Retail & Shopping',
-]
-
 export function Footer() {
   return (
     <footer className="bg-white">
@@ -50,14 +39,19 @@ export function Footer() {
               </ul>
             </div>
 
-            {/* Top Categories */}
+            {/* Leaderboard */}
             <div>
-              <p className="text-sm font-semibold text-slate-900">Top Categories</p>
+              <p className="text-sm font-semibold text-slate-900">Leaderboard</p>
               <ul className="mt-5 space-y-3.5">
-                {categories.map((cat) => (
-                  <li key={cat}>
-                    <Link href={`/?category=${encodeURIComponent(cat)}`} className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
-                      {cat}
+                {[
+                  { href: '/leaderboard', label: 'Best Rated' },
+                  { href: '/leaderboard', label: 'Worst Rated' },
+                  { href: '/leaderboard', label: 'Most Reviewed' },
+                  { href: '/leaderboard', label: 'Top Businesses' },
+                ].map((l) => (
+                  <li key={l.label}>
+                    <Link href={l.href} className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
+                      {l.label}
                     </Link>
                   </li>
                 ))}

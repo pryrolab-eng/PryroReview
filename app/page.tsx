@@ -4,19 +4,22 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { SearchBar } from '@/components/shared/search-bar'
 import { CompanyCard } from '@/components/shared/company-card'
-import { StarRating } from '@/components/shared/star-rating'
-import { Building2, ArrowRight, ShieldCheck } from 'lucide-react'
+import { LeaderboardDropdown } from '@/components/shared/leaderboard-dropdown'
+import { Building2, ArrowRight } from 'lucide-react'
 import prisma from '@/lib/prisma'
-import { formatDistanceToNow } from 'date-fns'
 
 export const revalidate = 60
 
 function CompaniesSkeleton() {
   return (
-    <div>
-      <div className="h-6 w-32 animate-pulse rounded bg-slate-100 mb-6" />
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {[1,2,3,4,5,6,7,8,9].map((i) => (
+    <div className="flex-1">
+      <div className="mb-6 flex items-center gap-3">
+        <div className="h-6 w-36 animate-pulse rounded bg-slate-100" />
+        <div className="h-5 w-28 animate-pulse rounded bg-slate-100" />
+        <div className="h-5 w-28 animate-pulse rounded bg-slate-100" />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {[1,2,3,4,5,6,7,8].map((i) => (
           <div key={i} className="h-44 animate-pulse rounded-xl bg-slate-100" />
         ))}
       </div>
@@ -30,18 +33,38 @@ async function CompaniesSection() {
     website: string | null; verified: boolean; avg_rating: number | null; review_count: bigint
   }
   let allCompanies: any[] = []
+  let topRanked: any[] = []
+
   try {
     for (let attempt = 0; attempt < 2; attempt++) {
       try {
-        const rows = await prisma.$queryRaw<CompanyRow[]>`
-          SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
-            AVG(r.rating)::float AS avg_rating, COUNT(r.id) AS review_count
-          FROM "Company" c
-          LEFT JOIN "Review" r ON r."companyId" = c.id
-          GROUP BY c.id ORDER BY c."createdAt" DESC
-        `
+        const [rows, ranked] = await Promise.all([
+          prisma.$queryRaw<CompanyRow[]>`
+            SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
+              AVG(r.rating)::float AS avg_rating, COUNT(r.id) AS review_count
+            FROM "Company" c
+            LEFT JOIN "Review" r ON r."companyId" = c.id
+            GROUP BY c.id ORDER BY c."createdAt" DESC
+          `,
+          prisma.$queryRaw<any[]>`
+            SELECT c.id, c.name, c.slug, c.category, c.website,
+              AVG(r.rating)::float AS avg_rating,
+              COUNT(r.id) AS review_count
+            FROM "Company" c
+            INNER JOIN "Review" r ON r."companyId" = c.id
+            GROUP BY c.id
+            ORDER BY AVG(r.rating) DESC, COUNT(r.id) DESC
+            LIMIT 8
+          `,
+        ])
         allCompanies = rows.map((r) => ({
           ...r,
+          avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
+          reviewCount: Number(r.review_count),
+        }))
+        topRanked = ranked.map((r, i) => ({
+          ...r,
+          rank: i + 1,
           avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
           reviewCount: Number(r.review_count),
         }))
@@ -54,21 +77,28 @@ async function CompaniesSection() {
   } catch (err) { console.error('[CompaniesSection]', err) }
 
   return (
-    <div>
-      {/* Grid — no sidebar, full width */}
-      <div className="mb-6">
+    <div className="flex-1 min-w-0">
+      {/* Heading + inline controls */}
+      <div className="mb-6 flex items-center gap-3">
         <h2 className="text-lg font-bold text-slate-900">All Businesses</h2>
+        {topRanked.length > 0 && (
+          <div className="ml-auto">
+            <LeaderboardDropdown companies={topRanked} />
+          </div>
+        )}
       </div>
+
       {allCompanies.length === 0 ? (
         <div className="rounded-xl border border-slate-200 p-16 text-center">
           <Building2 className="mx-auto h-8 w-8 text-slate-300" />
           <p className="mt-3 text-sm text-slate-400">No companies yet.</p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {allCompanies.slice(0, 9).map((c) => <CompanyCard key={c.id} company={c} />)}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {allCompanies.slice(0, 12).map((c) => <CompanyCard key={c.id} company={c} />)}
         </div>
       )}
+
       <div className="mt-8 text-center">
         <Link href="/leaderboard"
           className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition-all hover:border-blue-200 hover:text-blue-600">
@@ -79,86 +109,6 @@ async function CompaniesSection() {
   )
 }
 
-async function ReviewsSection() {
-  let mostReviewed: any[] = []
-  let latestReviews: any[] = []
-  try {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const [rows, reviews] = await Promise.all([
-          prisma.$queryRaw<any[]>`
-            SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
-              AVG(r.rating)::float AS avg_rating, COUNT(r.id) AS review_count
-            FROM "Company" c INNER JOIN "Review" r ON r."companyId" = c.id
-            GROUP BY c.id ORDER BY COUNT(r.id) DESC LIMIT 6
-          `,
-          prisma.review.findMany({
-            orderBy: { createdAt: 'desc' }, take: 4,
-            include: {
-              user: { select: { fullName: true } },
-              company: { select: { name: true, slug: true } },
-            },
-          }),
-        ])
-        mostReviewed = rows.map((r) => ({
-          ...r,
-          avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
-          reviewCount: Number(r.review_count),
-        }))
-        latestReviews = reviews
-        break
-      } catch (err: any) {
-        if (attempt === 1 || err?.code !== 'P1001') break
-        await new Promise((res) => setTimeout(res, 2500))
-      }
-    }
-  } catch (err) { console.error('[ReviewsSection]', err) }
-
-  return (
-    <>
-      {mostReviewed.length > 0 && (
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <h2 className="text-lg font-bold text-slate-900 mb-1">Most Reviewed</h2>
-            <p className="text-sm text-slate-500 mb-8">Companies with the most community feedback</p>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {mostReviewed.map((c) => <CompanyCard key={c.id} company={c} />)}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {latestReviews.length > 0 && (
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <h2 className="text-lg font-bold text-slate-900 mb-1">Latest Reviews</h2>
-            <p className="text-sm text-slate-500 mb-8">What people are saying right now</p>
-            <div className="grid gap-4 md:grid-cols-2">
-              {latestReviews.map((review) => (
-                <Link key={review.id} href={`/company/${review.company?.slug}`}
-                  className="group block rounded-xl border border-slate-200 bg-white p-5 transition-all duration-200 hover:border-blue-200 hover:shadow-[0_4px_24px_0_rgba(37,99,235,0.08)]">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-blue-600">
-                        {review.company?.name}
-                      </p>
-                      <p className="mt-0.5 text-xs text-slate-400">
-                        {review.user?.fullName || 'Anonymous'} · {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
-                      </p>
-                    </div>
-                    <StarRating rating={review.rating} size="sm" className="shrink-0" />
-                  </div>
-                  <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-600">{review.comment}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-    </>
-  )
-}
-
 export default async function HomePage() {
   const session = await getServerSession(authOptions)
 
@@ -166,42 +116,37 @@ export default async function HomePage() {
     <div className="bg-white">
       {/* Hero */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-xs font-medium text-blue-600">
-              <ShieldCheck className="h-3.5 w-3.5" />
-              Every review verified with 20 RWF
-            </div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
-              Honest reviews for<br />
-              <span className="text-blue-600">Rwandan businesses</span>
+            <h1 className="whitespace-nowrap font-[family-name:var(--font-playfair)] text-3xl font-extrabold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              Find a company you can trust
             </h1>
-            <p className="mx-auto mt-5 max-w-xl text-base text-slate-500 sm:text-lg">
-              No fake reviews. No spam. Real experiences from real people,
-              verified by a small payment.
-            </p>
-            <div className="mt-10">
+            <div className="mt-10 mx-auto w-full" style={{ maxWidth: '640px' }}>
               <SearchBar />
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-slate-500">
+                <span>No fake reviews</span>
+                <span className="text-slate-300">·</span>
+                <span>No spam</span>
+                <span className="text-slate-300">·</span>
+                <span>Real experiences from real people</span>
+                <span className="text-slate-300">·</span>
+                <span>Verified by a small payment</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Companies */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
         <Suspense fallback={<CompaniesSkeleton />}>
           <CompaniesSection />
         </Suspense>
       </section>
 
-      {/* Reviews */}
-      <Suspense fallback={null}>
-        <ReviewsSection />
-      </Suspense>
-
       {/* CTA */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-20 text-center sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-6 py-20 text-center lg:px-10">
           <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
             Had an experience worth sharing?
           </h2>

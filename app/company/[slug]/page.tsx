@@ -3,10 +3,11 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Flag, ArrowLeft, ExternalLink, MessageSquare, Building2, ShieldCheck } from 'lucide-react'
+import { Flag, ArrowLeft, ExternalLink, MessageSquare, Building2, ShieldCheck, Star } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { StarRating } from '@/components/shared/star-rating'
 import { ReviewModal } from '@/components/shared/review-modal'
+import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -23,6 +24,31 @@ interface CompanyData {
   categoryScores: { category: string; avgRating: number; count: number }[]
 }
 
+function ReviewerAvatar({ name }: { name: string }) {
+  const colors = [
+    'bg-orange-500', 'bg-violet-500', 'bg-emerald-500',
+    'bg-blue-500', 'bg-rose-500', 'bg-amber-500', 'bg-teal-500',
+  ]
+  const color = colors[name.charCodeAt(0) % colors.length]
+  return (
+    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${color} text-sm font-bold text-white`}>
+      {name[0].toUpperCase()}
+    </div>
+  )
+}
+
+function StarRow({ rating }: { rating: number }) {
+  return (
+    <div className="flex items-center gap-0.5">
+      {[1, 2, 3, 4, 5].map((s) => (
+        <Star
+          key={s}
+          className={`h-3.5 w-3.5 ${s <= rating ? 'fill-amber-400 text-amber-400' : 'fill-slate-200 text-slate-200'}`}
+        />
+      ))}
+    </div>
+  )
+}
 
 export default function CompanyProfilePage() {
   const params = useParams()
@@ -36,6 +62,7 @@ export default function CompanyProfilePage() {
   const [flaggedReviews, setFlaggedReviews] = useState<Set<string>>(new Set())
   const [responseText, setResponseText] = useState<Record<string, string>>({})
   const [respondingTo, setRespondingTo] = useState<string | null>(null)
+  const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   const loadData = useCallback(async () => {
     try {
@@ -93,14 +120,9 @@ export default function CompanyProfilePage() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-6 py-12 lg:px-10">
         <div className="h-6 w-24 animate-pulse rounded-lg bg-slate-100" />
-        <div className="mt-8 h-10 w-64 animate-pulse rounded-lg bg-slate-100" />
-        <div className="mt-3 h-4 w-40 animate-pulse rounded-lg bg-slate-100" />
-        <div className="mt-10 h-28 animate-pulse rounded-xl bg-slate-100" />
-        <div className="mt-4 space-y-3">
-          {[1,2,3].map((i) => <div key={i} className="h-32 animate-pulse rounded-xl bg-slate-100" />)}
-        </div>
+        <div className="mt-8 h-64 animate-pulse rounded-2xl bg-slate-100" />
       </div>
     )
   }
@@ -119,171 +141,184 @@ export default function CompanyProfilePage() {
   }
 
   const canRespond = user && user.role === 'ADMIN'
+  const TRUNCATE_LEN = 160
 
   return (
-    <div className="animate-fade-up">
-      <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-6xl px-6 py-10 lg:px-10">
 
-        {/* Back */}
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-900">
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Link>
+      {/* Back */}
+      <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-slate-500 transition-colors hover:text-slate-900">
+        <ArrowLeft className="h-4 w-4" /> Back
+      </Link>
 
-        {/* Header */}
-        <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">{company.name}</h1>
-              {company.verified && (
-                <span className="inline-flex items-center gap-1 rounded-md border border-blue-100 bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700">
-                  <ShieldCheck className="h-3 w-3" /> Verified
-                </span>
+      {/* ── Main card ── */}
+      <div className="mt-6 overflow-hidden rounded-2xl bg-white">
+        <div className="flex flex-col lg:flex-row">
+
+          {/* ── Left panel ── */}
+          <div className="flex flex-col justify-between p-8 lg:w-72 lg:shrink-0 lg:p-10">
+            <div>
+              <h1 className="text-2xl font-bold leading-snug text-slate-900 sm:text-3xl">
+                What People Are Saying About {company.name}
+              </h1>
+
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <Badge variant="default">
+                  {company.category}
+                </Badge>
+                <Badge variant="secondary">
+                  {company.district}
+                </Badge>
+                {company.verified && (
+                  <Badge className="bg-emerald-500 text-white hover:bg-emerald-600 border-transparent gap-1">
+                    <ShieldCheck className="h-3 w-3" /> Verified
+                  </Badge>
+                )}
+              </div>
+
+              {/* Overall score */}
+              <div className="mt-6">
+                <div className="flex items-end gap-2">
+                  <span className="text-5xl font-extrabold text-slate-900">
+                    {company.avgRating > 0 ? company.avgRating.toFixed(1) : '0.0'}
+                  </span>
+                  <span className="mb-1 text-slate-400 text-base">/ 5</span>
+                </div>
+                <StarRow rating={Math.round(company.avgRating)} />
+                <p className="mt-1.5 text-sm text-slate-500">
+                  {company.totalReviews} {company.totalReviews === 1 ? 'review' : 'reviews'}
+                </p>
+              </div>
+
+              {company.description && (
+                <p className="mt-5 text-sm leading-relaxed text-slate-600">{company.description}</p>
               )}
-            </div>
-            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-500">
-              <span>{company.category}</span>
-              <span className="text-slate-300">·</span>
-              <span>{company.district}</span>
+
               {company.website && (
-                <>
-                  <span className="text-slate-300">·</span>
-                  <a href={company.website} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700">
-                    Website <ExternalLink className="h-3 w-3" />
-                  </a>
-                </>
+                <a href={company.website} target="_blank" rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-900 transition-colors">
+                  Visit website <ExternalLink className="h-3.5 w-3.5" />
+                </a>
               )}
             </div>
-            {company.description && (
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">{company.description}</p>
+
+            <button
+              onClick={handleWriteReview}
+              className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
+            >
+              Write a Review
+            </button>
+          </div>
+
+          {/* ── Right: review grid ── */}
+          <div className="flex-1 bg-white p-6 lg:p-8">
+            {company.reviews.length === 0 ? (
+              <div className="flex h-full flex-col items-center justify-center py-16 text-center">
+                <p className="text-sm text-slate-500">No reviews yet. Be the first to review.</p>
+                <button onClick={handleWriteReview}
+                  className="mt-4 rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white hover:bg-slate-700">
+                  Write a Review
+                </button>
+              </div>
+            ) : (
+              <div className="grid gap-4 sm:grid-cols-2">
+                {company.reviews.map((review) => {
+                  const isFlagged = flaggedReviews.has(review.id)
+                  const isLong = review.comment.length > TRUNCATE_LEN
+                  const isExpanded = expanded.has(review.id)
+
+                  return (
+                    <div key={review.id} className="flex flex-col rounded-xl bg-white p-4 shadow-sm">
+                      {/* Reviewer row */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2.5">
+                          <ReviewerAvatar name={review.user?.fullName || 'A'} />
+                          <div>
+                            <p className="text-sm font-semibold text-slate-900 leading-tight">
+                              {review.user?.fullName || 'Anonymous'}
+                            </p>
+                            <p className="text-xs text-slate-400">
+                              {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
+                            </p>
+                          </div>
+                        </div>
+                        {user && (
+                          <button onClick={() => handleFlag(review.id)} disabled={isFlagged} title={isFlagged ? 'Flagged' : 'Flag'}>
+                            <Flag className={`h-3.5 w-3.5 ${isFlagged ? 'fill-red-400 text-red-400' : 'text-slate-300 hover:text-slate-500'}`} />
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Stars */}
+                      <div className="mt-2.5">
+                        <StarRow rating={review.rating} />
+                      </div>
+
+                      {/* Comment */}
+                      <p className="mt-2.5 text-sm leading-relaxed text-slate-600">
+                        {isLong && !isExpanded
+                          ? review.comment.slice(0, TRUNCATE_LEN) + '…'
+                          : review.comment}
+                      </p>
+                      {isLong && (
+                        <button
+                          onClick={() => setExpanded((prev) => {
+                            const next = new Set(prev)
+                            isExpanded ? next.delete(review.id) : next.add(review.id)
+                            return next
+                          })}
+                          className="mt-1 self-start text-xs font-medium text-blue-600 hover:text-blue-700"
+                        >
+                          {isExpanded ? 'Show less' : 'Read more'}
+                        </button>
+                      )}
+
+                      {/* Official response */}
+                      {review.response && (
+                        <div className="mt-3 rounded-lg border border-blue-100 bg-blue-50 p-3">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <MessageSquare className="h-3.5 w-3.5 text-blue-500" />
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-blue-600">Official Response</span>
+                          </div>
+                          <p className="text-xs text-slate-700">{review.response}</p>
+                        </div>
+                      )}
+
+                      {/* Admin respond */}
+                      {canRespond && !review.response && (
+                        <div className="mt-3">
+                          {respondingTo === review.id ? (
+                            <div>
+                              <textarea
+                                value={responseText[review.id] || ''}
+                                onChange={(e) => setResponseText({ ...responseText, [review.id]: e.target.value })}
+                                placeholder="Write an official response..." rows={2}
+                                className="w-full rounded-lg border border-slate-200 p-2.5 text-xs focus:border-blue-500 focus:outline-none resize-none" />
+                              <div className="mt-1.5 flex gap-2">
+                                <button onClick={() => handleResponse(review.id)}
+                                  className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-700">
+                                  Post
+                                </button>
+                                <button onClick={() => setRespondingTo(null)}
+                                  className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs text-slate-600 hover:bg-slate-50">
+                                  Cancel
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <button onClick={() => setRespondingTo(review.id)}
+                              className="text-xs font-medium text-blue-600 hover:text-blue-700">
+                              Add response →
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
             )}
           </div>
-          <button onClick={handleWriteReview}
-            className="w-full shrink-0 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-700 sm:w-auto">
-            Write a Review
-          </button>
-        </div>
-
-        {/* Score block */}
-        <div className="mt-10 flex flex-col gap-6 rounded-xl border border-slate-200 bg-white p-6 sm:flex-row sm:items-center">
-          <div className="text-center sm:text-left sm:w-32 sm:shrink-0">
-            <span className="text-5xl font-extrabold tabular-nums text-slate-900">
-              {company.avgRating > 0 ? company.avgRating.toFixed(1) : '—'}
-            </span>
-            <span className="ml-1 text-lg text-slate-400">/ 5</span>
-            <StarRating rating={company.avgRating} size="md" className="mt-2 justify-center sm:justify-start" />
-            <p className="mt-1.5 text-xs text-slate-400">
-              {company.totalReviews} {company.totalReviews === 1 ? 'review' : 'reviews'}
-            </p>
-          </div>
-          <div className="flex-1 space-y-2">
-            {company.ratingBreakdown.map(({ star, count }) => {
-              const pct = company.totalReviews > 0 ? (count / company.totalReviews) * 100 : 0
-              return (
-                <div key={star} className="flex items-center gap-3">
-                  <span className="w-3 text-xs text-slate-500">{star}</span>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
-                    <div className="h-full rounded-full bg-blue-500 transition-all duration-500" style={{ width: `${pct}%` }} />
-                  </div>
-                  <span className="w-6 text-right text-xs text-slate-400">{count}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Reviews */}
-        <div className="mt-10">
-          <h2 className="text-lg font-bold text-slate-900">
-            Reviews {company.totalReviews > 0 && <span className="text-slate-400 font-normal text-base ml-1">({company.totalReviews})</span>}
-          </h2>
-
-          {company.reviews.length === 0 ? (
-            <div className="mt-4 flex flex-col items-center rounded-xl border border-slate-200 bg-white py-16 text-center">
-              <p className="text-sm text-slate-500">No reviews yet. Be the first to review.</p>
-              <button onClick={handleWriteReview}
-                className="mt-4 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">
-                Write a Review
-              </button>
-            </div>
-          ) : (
-            <div className="mt-4 space-y-3">
-              {company.reviews.map((review) => {
-                const isFlagged = flaggedReviews.has(review.id)
-                return (
-                  <div key={review.id} className="rounded-xl border border-slate-200 bg-white p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-sm font-bold text-slate-600">
-                          {(review.user?.fullName || 'A')[0].toUpperCase()}
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-900">{review.user?.fullName || 'Anonymous'}</p>
-                          <p className="text-xs text-slate-400">
-                            {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0">
-                        <StarRating rating={review.rating} size="sm" />
-                        {user && (
-                          <button onClick={() => handleFlag(review.id)} disabled={isFlagged}
-                            title={isFlagged ? 'Flagged' : 'Flag'}>
-                            <Flag className={`h-4 w-4 ${isFlagged ? 'fill-red-400 text-red-400' : 'text-slate-300 hover:text-slate-600'}`} />
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    <span className="mt-3 inline-block rounded-md border border-slate-100 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600">
-                      {review.category}
-                    </span>
-
-                    <p className="mt-3 text-sm leading-relaxed text-slate-700">{review.comment}</p>
-
-                    {review.response && (
-                      <div className="mt-4 rounded-lg border border-blue-100 bg-blue-50 p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <MessageSquare className="h-4 w-4 text-blue-500" />
-                          <span className="text-xs font-semibold uppercase tracking-wider text-blue-600">Official Response</span>
-                        </div>
-                        <p className="text-sm text-slate-700">{review.response}</p>
-                      </div>
-                    )}
-
-                    {canRespond && !review.response && (
-                      <div className="mt-4">
-                        {respondingTo === review.id ? (
-                          <div>
-                            <textarea
-                              value={responseText[review.id] || ''}
-                              onChange={(e) => setResponseText({ ...responseText, [review.id]: e.target.value })}
-                              placeholder="Write an official response..." rows={3}
-                              className="w-full rounded-lg border border-slate-200 p-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none" />
-                            <div className="mt-2 flex gap-2">
-                              <button onClick={() => handleResponse(review.id)}
-                                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
-                                Post Response
-                              </button>
-                              <button onClick={() => setRespondingTo(null)}
-                                className="rounded-lg border border-slate-200 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
-                                Cancel
-                              </button>
-                            </div>
-                          </div>
-                        ) : (
-                          <button onClick={() => setRespondingTo(review.id)}
-                            className="text-sm font-medium text-blue-600 hover:text-blue-700">
-                            Add official response →
-                          </button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          )}
         </div>
       </div>
 

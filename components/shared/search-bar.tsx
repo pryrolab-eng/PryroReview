@@ -118,18 +118,24 @@ export function SearchBar({ className }: { className?: string }) {
     <div ref={containerRef} className={`relative w-full ${className ?? ''}`}>
       <form onSubmit={handleSubmit}>
         <div className="relative">
-          <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-400 sm:left-5" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="h-12 w-full rounded-full border border-zinc-200 bg-white pl-12 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 transition-colors focus:border-zinc-900 focus:outline-none sm:h-14 sm:pl-14 sm:text-base"
+            className="h-14 w-full rounded-full border-2 border-slate-900 bg-white pl-6 pr-16 text-base font-medium text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-900 focus:outline-none focus:ring-4 focus:ring-slate-900/10"
           />
-          {isLoading && (
-            <Loader2 className="absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-zinc-400" />
-          )}
+          <button
+            type="submit"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white transition-colors hover:bg-slate-700"
+            aria-label="Search"
+          >
+            {isLoading
+              ? <Loader2 className="h-5 w-5 animate-spin" />
+              : <Search className="h-5 w-5" />
+            }
+          </button>
         </div>
       </form>
 
