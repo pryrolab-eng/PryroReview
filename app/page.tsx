@@ -224,7 +224,7 @@ export default async function HomePage() {
                   <div className="w-36 shrink-0 border-r border-zinc-200 bg-white p-4">
                     <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-zinc-400">Navigate</p>
                     {['Dashboard', 'Businesses', 'My Reviews', 'Leaderboard', 'Add Business'].map((item, i) => (
-                      <div key={item} className={`mb-1 rounded-md px-2.5 py-1.5 text-xs ${i === 0 ? 'bg-blue-700 font-semibold text-white' : 'text-zinc-500'}`}>
+                      <div key={item} className={`mb-1 rounded-md px-2.5 py-1.5 text-xs ${i === 0 ? 'bg-zinc-950 font-semibold text-white' : 'text-zinc-500'}`}>
                         {item}
                       </div>
                     ))}

@@ -121,11 +121,11 @@ export function SearchBar({ className }: { className?: string }) {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="h-14 w-full rounded-full border border-zinc-300 bg-white pl-6 pr-16 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-700 md:h-16"
+            className="h-14 w-full rounded-full border border-zinc-300 bg-white pl-6 pr-16 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-950 md:h-16"
           />
           <button
             type="submit"
-            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 md:h-11 md:w-11"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-950 text-white hover:bg-zinc-700 md:h-11 md:w-11"
             aria-label="Search"
           >
             {isLoading
