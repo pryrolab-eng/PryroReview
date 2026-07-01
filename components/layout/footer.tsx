@@ -3,7 +3,7 @@ import Link from 'next/link'
 export function Footer() {
   return (
     <footer className="bg-white">
-      <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="w-full px-6 py-16 lg:px-10">
 
         {/* ── Main row: logo far left — links far right ── */}
         <div className="flex flex-col gap-12 lg:flex-row lg:justify-between">
@@ -11,7 +11,7 @@ export function Footer() {
           {/* Logo — top left, nothing below it */}
           <div className="shrink-0">
             <Link href="/">
-              <span className="text-[17px] font-bold tracking-tight text-slate-900">
+              <span className="text-xl font-bold tracking-tight text-zinc-900">
                 PryroReview
               </span>
             </Link>
@@ -83,7 +83,7 @@ export function Footer() {
         {/* ── Bottom bar ── */}
         <div className="mt-16 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <p className="text-xs text-slate-400">
-            © {new Date().getFullYear()} Pryro Review · Making Rwanda&apos;s services transparent
+            © {new Date().getFullYear()} PryroReview · Verified business reviews
           </p>
           <div className="flex items-center gap-5">
             {['Terms', 'Privacy', 'Cookies'].map((item) => (

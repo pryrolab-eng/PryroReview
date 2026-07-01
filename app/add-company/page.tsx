@@ -1,20 +1,23 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
+import { useAuthModal } from '@/lib/auth-modal-context'
+import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
 const categories = ['Telecommunications','Banking & Finance','Healthcare','Government Services','Airlines & Transport','Hospitality & Tourism','Retail & Shopping','Education','Energy & Utilities','NGOs & Development','Other']
 const districts  = ['Kigali','Northern Province','Southern Province','Eastern Province','Western Province']
 
-const inputCls   = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20'
-const selectCls  = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20'
-const labelCls   = 'block text-sm font-medium text-slate-700 mb-1.5'
+const inputCls  = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
+const selectCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
+const labelCls  = 'block text-sm font-medium text-zinc-700 mb-1.5'
 
 function AddCompanyForm() {
-  const { user, loading: authLoading } = useAuth()
+  const { user } = useAuth()
+  const { openAuthModal } = useAuthModal()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -25,23 +28,12 @@ function AddCompanyForm() {
 
   const [submitting, setSubmitting] = useState(false)
 
-  useEffect(() => {
-    if (!authLoading && !user) router.push('/login?redirect=/add-company')
-  }, [user, authLoading, router])
-
-  if (authLoading || !user) {
-    return (
-      <div className="mx-auto max-w-2xl px-6 py-16">
-        <div className="h-7 w-48 animate-pulse rounded-lg bg-slate-100" />
-        <div className="mt-8 space-y-3">
-          {[1,2,3,4].map((i) => <div key={i} className="h-11 animate-pulse rounded-lg bg-slate-100" />)}
-        </div>
-      </div>
-    )
-  }
+  const defaultCategory = categories.includes(prefillCategory) ? prefillCategory : 'Other'
+  const defaultDistrict = districts.includes(prefillDistrict) ? prefillDistrict : 'Kigali'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!user) { openAuthModal('add a company'); return }
     setSubmitting(true)
     const fd = new FormData(e.target as HTMLFormElement)
     const payload = {
@@ -61,13 +53,10 @@ function AddCompanyForm() {
     finally { setSubmitting(false) }
   }
 
-  const defaultCategory = categories.includes(prefillCategory) ? prefillCategory : 'Other'
-  const defaultDistrict = districts.includes(prefillDistrict) ? prefillDistrict : 'Kigali'
-
   return (
-    <div className="animate-fade-up mx-auto max-w-xl px-4 py-12 sm:px-6">
-      <h1 className="text-2xl font-bold text-slate-900">Add a Company</h1>
-      <p className="mt-1 text-sm text-slate-500">
+    <div className="animate-fade-up mx-auto max-w-xl px-4 py-12 sm:px-6 lg:px-8">
+      <h1 className="font-serif text-2xl font-bold text-zinc-900">Add a Company</h1>
+      <p className="mt-1 text-sm text-zinc-500">
         Add a business to the PryroReview directory so others can review it.
       </p>
 
@@ -94,27 +83,26 @@ function AddCompanyForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Website <span className="text-slate-400 font-normal">(optional)</span></label>
+          <label className={labelCls}>Website <span className="text-zinc-400 font-normal">(optional)</span></label>
           <input name="website" type="url" defaultValue={prefillWebsite}
             className={inputCls} placeholder="https://example.com" />
         </div>
 
         <div>
-          <label className={labelCls}>Phone <span className="text-slate-400 font-normal">(optional)</span></label>
+          <label className={labelCls}>Phone <span className="text-zinc-400 font-normal">(optional)</span></label>
           <input name="phone" type="tel" className={inputCls} placeholder="078 123 4567" />
         </div>
 
         <div>
-          <label className={labelCls}>Description <span className="text-slate-400 font-normal">(optional)</span></label>
+          <label className={labelCls}>Description <span className="text-zinc-400 font-normal">(optional)</span></label>
           <textarea name="description" rows={3}
-            className="w-full rounded-lg border border-slate-200 bg-white p-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none"
+            className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 resize-none"
             placeholder="What does this company do?" />
         </div>
 
-        <button type="submit" disabled={submitting}
-          className="flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-60">
+        <Button type="submit" disabled={submitting} className="w-full" size="lg">
           {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Adding...</> : 'Add Company'}
-        </button>
+        </Button>
       </form>
     </div>
   )

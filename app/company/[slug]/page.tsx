@@ -4,10 +4,11 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Flag, ArrowLeft, ExternalLink, MessageSquare, Building2, ShieldCheck, Star } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { ReviewModal } from '@/components/shared/review-modal'
-import { AuthGateModal } from '@/components/shared/auth-gate-modal'
 import { Badge } from '@/components/ui/badge'
+import { useAuthModal } from '@/lib/auth-modal-context'
 import { toast } from 'sonner'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -28,14 +29,14 @@ function StarRow({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map((s) => (
-        <Star key={s} className={`h-3.5 w-3.5 ${s <= rating ? 'fill-amber-400 text-amber-400' : 'fill-slate-100 text-slate-100'}`} />
+        <Star key={s} className={`h-3.5 w-3.5 ${s <= rating ? 'fill-amber-400 text-amber-400' : 'fill-zinc-100 text-zinc-100'}`} />
       ))}
     </div>
   )
 }
 
 function ReviewerAvatar({ name }: { name: string }) {
-  const colors = ['bg-orange-500', 'bg-violet-500', 'bg-slate-600', 'bg-blue-500', 'bg-rose-500', 'bg-amber-500', 'bg-indigo-500']
+  const colors = ['bg-orange-500', 'bg-violet-500', 'bg-slate-600', 'bg-zinc-700', 'bg-rose-500', 'bg-amber-500', 'bg-indigo-500']
   const color = colors[name.charCodeAt(0) % colors.length]
   return (
     <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${color} text-xs font-bold text-white`}>
@@ -49,11 +50,11 @@ export default function CompanyProfilePage() {
   const router = useRouter()
   const slug = params.slug as string
   const { user } = useAuth()
+  const { openAuthModal } = useAuthModal()
 
   const [company, setCompany] = useState<CompanyData | null>(null)
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
-  const [authOpen, setAuthOpen] = useState(false)
   const [flaggedReviews, setFlaggedReviews] = useState<Set<string>>(new Set())
   const [responseText, setResponseText] = useState<Record<string, string>>({})
   const [respondingTo, setRespondingTo] = useState<string | null>(null)
@@ -81,12 +82,12 @@ export default function CompanyProfilePage() {
   }, [user, slug])
 
   const handleWriteReview = () => {
-    if (!user) { setAuthOpen(true); return }
+    if (!user) { openAuthModal('write a review'); return }
     setModalOpen(true)
   }
 
   const handleFlag = async (reviewId: string) => {
-    if (!user) { setAuthOpen(true); return }
+    if (!user) { openAuthModal('flag a review'); return }
     try {
       const res = await fetch('/api/flags', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -142,10 +143,10 @@ export default function CompanyProfilePage() {
   const TRUNCATE_LEN = 200
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="w-full px-6 py-10 lg:px-10">
 
       {/* Back */}
-      <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-slate-400 hover:text-slate-900 transition-colors">
+      <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:underline">
         <ArrowLeft className="h-4 w-4" /> Back
       </Link>
 
@@ -154,7 +155,7 @@ export default function CompanyProfilePage() {
         <div>
           <div className="flex items-center gap-2 flex-wrap">
             <h1 className="text-2xl font-bold text-slate-900">{company.name}</h1>
-            {company.verified && <ShieldCheck className="h-5 w-5 text-slate-900" />}
+            {company.verified && <ShieldCheck className="h-5 w-5 text-blue-700" />}
           </div>
 
           <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -191,12 +192,7 @@ export default function CompanyProfilePage() {
 
       {/* ── Write review button ── */}
       <div className="mt-6 flex items-center gap-3">
-        <button
-          onClick={handleWriteReview}
-          className="rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
-        >
-          Write a Review
-        </button>
+        <Button onClick={handleWriteReview}>Write a Review</Button>
       </div>
 
       {/* ── Divider ── */}
@@ -210,11 +206,10 @@ export default function CompanyProfilePage() {
 
         {company.reviews.length === 0 ? (
           <div className="mt-6 py-16 text-center">
-            <p className="text-sm text-slate-400">No reviews yet. Be the first.</p>
-            <button onClick={handleWriteReview}
-              className="mt-4 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white hover:bg-slate-700">
+            <p className="mt-4 text-sm font-medium text-slate-700">No reviews yet. Be the first.</p>
+            <Button onClick={handleWriteReview} className="mt-4">
               Write a Review
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="mt-4 divide-y divide-slate-100">
@@ -300,22 +295,16 @@ export default function CompanyProfilePage() {
                             onChange={(e) => setResponseText({ ...responseText, [review.id]: e.target.value })}
                             placeholder="Write an official response..."
                             rows={3}
-                            className="w-full rounded-lg border border-slate-200 p-3 text-sm focus:border-slate-900 focus:outline-none resize-none"
+                            className="w-full rounded-md border border-zinc-300 p-3 text-sm focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 resize-none"
                           />
                           <div className="flex gap-2">
-                            <button onClick={() => handleResponse(review.id)}
-                              className="rounded-full bg-slate-900 px-4 py-1.5 text-xs font-semibold text-white hover:bg-slate-700">
-                              Post
-                            </button>
-                            <button onClick={() => setRespondingTo(null)}
-                              className="rounded-full border border-slate-200 px-4 py-1.5 text-xs text-slate-600 hover:bg-slate-50">
-                              Cancel
-                            </button>
+                            <Button size="sm" onClick={() => handleResponse(review.id)}>Post</Button>
+                            <Button size="sm" variant="outline" onClick={() => setRespondingTo(null)}>Cancel</Button>
                           </div>
                         </div>
                       ) : (
                         <button onClick={() => setRespondingTo(review.id)}
-                          className="text-xs text-slate-400 hover:text-slate-900 transition-colors">
+                          className="text-xs font-medium text-blue-700 hover:underline">
                           Add response →
                         </button>
                       )}
@@ -335,12 +324,6 @@ export default function CompanyProfilePage() {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         onSubmitted={loadData}
-      />
-
-      <AuthGateModal
-        open={authOpen}
-        onClose={() => setAuthOpen(false)}
-        action="write a review"
       />
     </div>
   )

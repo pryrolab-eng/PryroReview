@@ -1,21 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 
 interface RankedCompany {
-  id: string
-  rank: number
-  name: string
-  slug: string
-  category: string
-  website: string | null
-  avgRating: number
-  reviewCount: number
+  id: string; rank: number; name: string; slug: string
+  category: string; website: string | null; avgRating: number; reviewCount: number
 }
 
 const SORT_OPTIONS = [
-  { label: 'Top Rated',     value: 'top_rated' },
+  { label: 'Top Rated', value: 'top_rated' },
   { label: 'Most Reviewed', value: 'most_reviewed' },
 ] as const
 
@@ -29,16 +23,13 @@ function CompanyLogo({ name, website }: { name: string; website?: string | null 
 
   if (domain && !failed) {
     return (
-      <img
-        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
-        alt={name}
-        onError={() => setFailed(true)}
-        className="h-6 w-6 rounded object-contain shrink-0"
-      />
+      <img src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+        alt={name} onError={() => setFailed(true)}
+        className="h-6 w-6 rounded object-contain shrink-0" />
     )
   }
   return (
-    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-slate-100 text-[10px] font-bold text-slate-500">
+    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-zinc-200 bg-white text-[10px] font-bold text-zinc-500">
       {name[0].toUpperCase()}
     </div>
   )
@@ -58,24 +49,24 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
       {/* Mobile: horizontal scroll */}
       <div className="lg:hidden">
         <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">Leaderboard</h3>
-          <Link href="/leaderboard" className="text-xs font-medium text-blue-600 hover:text-blue-700">
+          <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
+          <Link href="/leaderboard" className="text-xs font-semibold text-blue-700 hover:underline">
             View all →
           </Link>
         </div>
         <div className="flex gap-3 overflow-x-auto pb-2">
           {sorted.map((c) => (
             <Link key={c.id} href={`/company/${c.slug}`}
-              className="shrink-0 w-44 rounded-xl border border-slate-200 bg-white p-3 hover:border-blue-200 transition-colors">
+              className="shrink-0 w-44 rounded-md border border-zinc-200 bg-white p-3">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold text-slate-400">#{c.rank}</span>
+                <span className="text-xs font-bold text-blue-700">#{c.rank}</span>
                 <CompanyLogo name={c.name} website={c.website} />
               </div>
-              <p className="text-xs font-semibold text-slate-900 truncate">{c.name}</p>
-              <p className="text-[11px] text-slate-400 truncate">{c.category}</p>
-              <div className="mt-2 flex items-center gap-1 text-xs text-slate-600">
+              <p className="text-xs font-semibold text-zinc-900 truncate">{c.name}</p>
+              <p className="text-[11px] text-zinc-400 truncate">{c.category}</p>
+              <div className="mt-2 flex items-center gap-1 text-xs text-zinc-600">
                 <span className="font-semibold">{c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}</span>
-                <span className="text-slate-300">·</span>
+                <span className="text-zinc-300">·</span>
                 <span>{c.reviewCount} reviews</span>
               </div>
             </Link>
@@ -83,32 +74,30 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
         </div>
       </div>
 
-      {/* Desktop: vertical sticky panel */}
-      <div className="hidden lg:block rounded-xl border border-slate-200 bg-white p-4">
-        {/* Header */}
+      {/* Desktop: vertical panel */}
+      <div className="hidden lg:block rounded-md border border-zinc-200 bg-white p-4">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">Leaderboard</h3>
-          <Link href="/leaderboard" className="text-xs font-medium text-blue-600 hover:text-blue-700 whitespace-nowrap">
+          <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
+          <Link href="/leaderboard" className="text-xs font-semibold text-blue-700 hover:underline whitespace-nowrap">
             View all →
           </Link>
         </div>
 
-        {/* Ranked list */}
         <ul className="space-y-1">
           {sorted.map((c) => (
             <li key={c.id}>
               <Link href={`/company/${c.slug}`}
-                className="flex items-center gap-2.5 rounded-lg p-2 transition-colors hover:bg-slate-50 group">
-                <span className="w-4 text-center text-xs font-bold text-slate-400 shrink-0">
+                className="flex items-center gap-2.5 rounded-md p-2 hover:bg-zinc-50">
+                <span className="w-4 text-center text-xs font-bold text-blue-700 shrink-0">
                   {c.rank}
                 </span>
                 <CompanyLogo name={c.name} website={c.website} />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
+                  <p className="truncate text-xs font-semibold text-zinc-900">
                     {c.name}
                   </p>
-                  <div className="flex items-center gap-1 mt-0.5 text-[11px] text-slate-400">
-                    <span className="font-medium text-slate-600">
+                  <div className="flex items-center gap-1 mt-0.5 text-[11px] text-zinc-400">
+                    <span className="font-medium text-zinc-600">
                       {c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}
                     </span>
                     <span>·</span>

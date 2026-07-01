@@ -1,37 +1,38 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Playfair_Display } from 'next/font/google'
 import { AuthProvider } from '@/lib/auth-context'
+import { AuthModalProvider } from '@/lib/auth-modal-context'
+import { AuthModal } from '@/components/shared/auth-modal'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Toaster } from '@/components/ui/sonner'
 
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
-})
-
 export const metadata: Metadata = {
-  title: 'Pryro Review — Verified Business Reviews for Rwanda',
+  title: 'PryroReview — Verified Business Reviews',
   description:
-    "Rwanda's verified public service accountability platform. Every review is backed by a real 20 RWF payment — no fake reviews, no spam.",
+    "PryroReview's verified business accountability platform. Every review is backed by a real 20 RWF payment — no fake reviews, no spam.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${playfair.variable}`}
-    >
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-white font-sans">
         <AuthProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <Toaster position="bottom-right" />
+          <AuthModalProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <AuthModal />
+            <Toaster position="bottom-right" />
+          </AuthModalProvider>
         </AuthProvider>
       </body>
     </html>

@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    /* Font */
+    --fonts--badge-font: 'Inter', Arial, sans-serif;
+
     /* Pryro Brand Blue */
     --brand: 221 83% 53%;           /* #2563EB — primary blue */
     --brand-dark: 224 76% 45%;      /* #1d4ed8 — hover */
@@ -11,8 +14,8 @@
     --brand-border: 213 97% 87%;    /* #bfdbfe — blue border */
 
     /* Backgrounds */
-    --background: 0 0% 100%;
-    --surface: 220 14% 98%;         /* #f8fafc */
+    --background: 220 20% 97%;      /* #f4f5f7 — light grey page bg like Bonsai */
+    --surface: 0 0% 100%;           /* pure white for cards/panels */
     --surface-hover: 220 13% 95%;   /* #f1f5f9 */
 
     /* Foreground / Text */
@@ -59,11 +62,17 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3 {
+    font-family: 'DM Serif Display', serif;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.02em;
+  }
+  h4, h5, h6 {
     color: hsl(var(--foreground));
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -106,6 +115,15 @@
   @keyframes slideDown {
     from { opacity: 0; transform: translateY(-8px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Marquee for logo strip */
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
   }
 
   /* Pryro brand utility classes */

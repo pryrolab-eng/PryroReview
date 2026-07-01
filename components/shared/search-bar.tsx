@@ -43,7 +43,6 @@ export function SearchBar({ className }: { className?: string }) {
 
     setOpen(true)
 
-    // Search local DB — fast
     const dbTimer = setTimeout(async () => {
       setLoadingDb(true)
       try {
@@ -57,7 +56,6 @@ export function SearchBar({ className }: { className?: string }) {
       }
     }, 200)
 
-    // Search OpenStreetMap — slightly delayed to avoid hammering
     const osmTimer = setTimeout(async () => {
       setLoadingOsm(true)
       try {
@@ -102,7 +100,6 @@ export function SearchBar({ className }: { className?: string }) {
     }
   }
 
-  // OSM results not already in DB
   const newOsmResults = osmResults.filter(
     (osm) => !dbResults.some(
       (db) => db.name.toLowerCase() === osm.name.toLowerCase()
@@ -124,11 +121,11 @@ export function SearchBar({ className }: { className?: string }) {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="h-14 w-full rounded-full border-2 border-slate-900 bg-white pl-6 pr-16 text-base font-medium text-slate-900 placeholder:text-slate-400 transition-all focus:border-slate-900 focus:outline-none focus:ring-4 focus:ring-slate-900/10"
+            className="h-14 w-full rounded-full border border-zinc-300 bg-white pl-6 pr-16 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-700 md:h-16"
           />
           <button
             type="submit"
-            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white transition-colors hover:bg-slate-700"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-blue-700 text-white hover:bg-blue-800 md:h-11 md:w-11"
             aria-label="Search"
           >
             {isLoading
@@ -140,7 +137,7 @@ export function SearchBar({ className }: { className?: string }) {
       </form>
 
       {open && query.trim().length >= 1 && (
-        <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-[60vh] overflow-y-auto overflow-x-hidden rounded-xl border border-zinc-100 bg-white shadow-lg">
+        <div className="absolute left-0 right-0 top-full z-50 mt-2 max-h-[60vh] overflow-y-auto overflow-x-hidden rounded-xl border border-zinc-200 bg-white">
 
           {/* Local DB results */}
           {hasDbResults && (
@@ -155,7 +152,7 @@ export function SearchBar({ className }: { className?: string }) {
                   <li key={company.id}>
                     <button
                       onClick={() => handleSelect(company.slug)}
-                      className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 text-left transition-colors hover:bg-zinc-50"
+                      className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 text-left hover:bg-zinc-50"
                     >
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-zinc-900">{company.name}</p>
@@ -164,7 +161,7 @@ export function SearchBar({ className }: { className?: string }) {
                         </p>
                       </div>
                       {company.reviewCount > 0 && (
-                        <span className="ml-2 shrink-0 text-xs font-medium text-orange-500">
+                        <span className="ml-2 shrink-0 text-xs font-medium text-amber-500">
                           {company.avgRating.toFixed(1)} ★
                         </span>
                       )}
@@ -192,7 +189,7 @@ export function SearchBar({ className }: { className?: string }) {
                     <Link
                       href={`/add-company?name=${encodeURIComponent(biz.name)}&category=${encodeURIComponent(biz.category)}&district=${encodeURIComponent(biz.district)}${biz.website ? `&website=${encodeURIComponent(biz.website)}` : ''}`}
                       onClick={() => { setOpen(false); setQuery('') }}
-                      className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 transition-colors hover:bg-zinc-50"
+                      className="flex min-h-[44px] w-full items-center justify-between px-4 py-3 hover:bg-zinc-50"
                     >
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-zinc-900">{biz.name}</p>
@@ -200,7 +197,7 @@ export function SearchBar({ className }: { className?: string }) {
                           {biz.category} · {biz.district}
                         </p>
                       </div>
-                      <span className="ml-2 shrink-0 rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-600">
+                      <span className="ml-2 shrink-0 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-600">
                         Add →
                       </span>
                     </Link>
@@ -228,7 +225,7 @@ export function SearchBar({ className }: { className?: string }) {
               <Link
                 href={`/add-company?name=${encodeURIComponent(query)}`}
                 onClick={() => { setOpen(false); setQuery('') }}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
               >
                 <Plus className="h-4 w-4" />
                 Add &ldquo;{query}&rdquo; to the directory

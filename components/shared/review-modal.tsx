@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Star, Phone, X, Check, Loader2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { toast } from 'sonner'
 
@@ -24,9 +25,8 @@ const categories = [
   'Overall Experience',
 ]
 
-const inputCls = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20'
-const selectCls = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-slate-900 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20'
-const btnPrimary = 'flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-blue-600 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-50'
+const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
+const selectCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
 
 export function ReviewModal({ companyId, companySlug, companyName, open, onClose, onSubmitted }: ReviewModalProps) {
   const { user } = useAuth()
@@ -94,103 +94,97 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative w-[calc(100vw-2rem)] max-w-md max-h-[90vh] overflow-y-auto animate-scale-in rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
-        <button onClick={onClose} className="absolute right-4 top-4 rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700">
+      <div className="absolute inset-0 bg-zinc-900/40" onClick={onClose} />
+      <div className="relative w-[calc(100vw-2rem)] max-w-md max-h-[90vh] overflow-y-auto rounded-md border border-zinc-200 bg-white p-6">
+        <button onClick={onClose} className="absolute right-4 top-4 rounded-md p-1 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700">
           <X className="h-5 w-5" />
         </button>
 
-        {/* ── Step 1: Payment ── */}
+        {/* Step 1: Payment */}
         {step === 'payment' && (
           <div>
-            <h2 className="text-lg font-bold text-slate-900">Write a Review</h2>
-            <p className="mt-1 text-sm text-slate-500">{companyName} · 20 RWF verification fee</p>
+            <h2 className="text-lg font-bold text-zinc-900">Write a Review</h2>
+            <p className="mt-1 text-sm text-zinc-500">{companyName} · 20 RWF verification fee</p>
             <div className="mt-6">
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">MTN Mobile Number</label>
-              <p className="mb-2 text-xs text-slate-400">Must start with 078 or 079</p>
+              <label className="block text-sm font-medium text-zinc-700 mb-1.5">MTN Mobile Number</label>
+              <p className="mb-2 text-xs text-zinc-400">Must start with 078 or 079</p>
               <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}
                 placeholder="0781234567" className={inputCls} />
             </div>
-            <button onClick={handlePayment} disabled={!phone || paying} className={`mt-5 ${btnPrimary}`}>
+            <Button className="w-full mt-5" disabled={!phone || paying} onClick={handlePayment}>
               {paying ? <><Loader2 className="h-4 w-4 animate-spin" /> Initiating...</> : 'Pay 20 RWF via MTN MoMo'}
-            </button>
+            </Button>
           </div>
         )}
 
-        {/* ── Step 2: Processing ── */}
+        {/* Step 2: Processing */}
         {step === 'processing' && (
           <div className="py-10 text-center">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 border border-blue-100">
-              <Phone className="h-8 w-8 text-blue-600" />
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-md border-2 border-blue-700">
+              <Phone className="h-8 w-8 text-blue-700" />
             </div>
-            <h2 className="mt-5 text-lg font-bold text-slate-900">Check your phone</h2>
-            <p className="mt-2 text-sm text-slate-500">
+            <h2 className="mt-5 text-lg font-bold text-zinc-900">Check your phone</h2>
+            <p className="mt-2 text-sm text-zinc-500">
               We sent a payment request to {phone}. Enter your PIN to confirm.
             </p>
-            <div className="mt-5 flex items-center justify-center gap-2 text-sm text-slate-400">
-              <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+            <div className="mt-5 flex items-center justify-center gap-2 text-sm text-zinc-400">
+              <Loader2 className="h-4 w-4 animate-spin text-blue-700" />
               Waiting for confirmation...
             </div>
-            <button onClick={onClose} className="mt-5 text-sm text-slate-400 hover:text-slate-700">
-              Cancel
-            </button>
+            <Button variant="ghost" size="sm" onClick={onClose} className="mt-5">Cancel</Button>
           </div>
         )}
 
-        {/* ── Step 3: Review form ── */}
+        {/* Step 3: Review form */}
         {step === 'form' && (
           <div>
-            <div className="mb-5 flex items-center gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2">
-              <Check className="h-4 w-4 text-blue-600" />
-              <span className="text-sm font-medium text-blue-700">Payment confirmed</span>
+            <div className="mb-5 flex items-center gap-2 rounded-md border border-zinc-200 bg-white px-3 py-2">
+              <Check className="h-4 w-4 text-blue-700" />
+              <span className="text-sm font-semibold text-blue-700">Payment confirmed</span>
             </div>
 
-            <h2 className="text-lg font-bold text-slate-900">Your Review</h2>
-            <p className="mt-0.5 text-sm text-slate-500">{companyName}</p>
+            <h2 className="text-lg font-bold text-zinc-900">Your Review</h2>
+            <p className="mt-0.5 text-sm text-zinc-500">{companyName}</p>
 
-            {/* Star rating */}
             <div className="mt-5">
-              <label className="block text-sm font-medium text-slate-700 mb-2">Rating</label>
+              <label className="block text-sm font-medium text-zinc-700 mb-2">Rating</label>
               <div className="flex gap-1.5">
                 {[1, 2, 3, 4, 5].map((s) => (
                   <button key={s} onClick={() => setRating(s)}
                     onMouseEnter={() => setHoverRating(s)} onMouseLeave={() => setHoverRating(0)}
-                    className="flex h-11 w-11 items-center justify-center transition-transform hover:scale-110 focus:outline-none">
-                    <Star className={`h-8 w-8 transition-colors ${
+                    className="flex h-11 w-11 items-center justify-center focus:outline-none">
+                    <Star className={`h-8 w-8 ${
                       s <= (hoverRating || rating)
-                        ? 'fill-blue-600 text-blue-600'
-                        : 'fill-slate-100 text-slate-200'
+                        ? 'fill-amber-400 text-amber-400'
+                        : 'fill-zinc-100 text-zinc-200'
                     }`} />
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Category */}
             <div className="mt-4">
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Category</label>
+              <label className="block text-sm font-medium text-zinc-700 mb-1.5">Category</label>
               <select value={category} onChange={(e) => setCategory(e.target.value)} className={selectCls}>
                 {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
             </div>
 
-            {/* Comment */}
             <div className="mt-4">
-              <label className="block text-sm font-medium text-slate-700 mb-1.5">Your Experience</label>
+              <label className="block text-sm font-medium text-zinc-700 mb-1.5">Your Experience</label>
               <textarea value={comment} onChange={(e) => setComment(e.target.value)}
                 placeholder="Tell others about your experience..." rows={4}
-                className="w-full rounded-lg border border-slate-200 bg-white p-3.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 resize-none" />
+                className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 resize-none" />
               <div className="mt-1 flex justify-end">
-                <span className={`text-xs ${comment.length >= 50 ? 'text-blue-600' : 'text-slate-400'}`}>
+                <span className={`text-xs ${comment.length >= 50 ? 'text-blue-700 font-semibold' : 'text-zinc-400'}`}>
                   {comment.length} / 50 min
                 </span>
               </div>
             </div>
 
-            <button onClick={handleSubmit} disabled={submitting || rating === 0 || comment.length < 50}
-              className={`mt-4 ${btnPrimary}`}>
+            <Button className="w-full mt-4" disabled={submitting || rating === 0 || comment.length < 50} onClick={handleSubmit}>
               {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : 'Submit Review'}
-            </button>
+            </Button>
           </div>
         )}
       </div>

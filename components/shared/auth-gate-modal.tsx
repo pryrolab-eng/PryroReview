@@ -12,24 +12,24 @@ import {
 interface AuthGateModalProps {
   open: boolean
   onClose: () => void
-  /** Short description of what they're trying to do, e.g. "write a review" */
   action?: string
 }
 
 export function AuthGateModal({ open, onClose, action = 'do this' }: AuthGateModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-sm rounded-2xl p-8 text-center">
-        {/* Icon */}
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-xl">
-          🔒
+      <DialogContent className="max-w-sm rounded-md border border-zinc-200 bg-white p-8 text-center">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-md border-2 border-blue-700">
+          <svg className="h-5 w-5 text-blue-700" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 11h14l1 9H4l1-9z" />
+          </svg>
         </div>
 
         <DialogHeader className="mt-4 space-y-1">
-          <DialogTitle className="text-base font-bold text-slate-900">
+          <DialogTitle className="text-base font-bold text-zinc-900">
             Sign in required
           </DialogTitle>
-          <DialogDescription className="text-sm text-slate-500">
+          <DialogDescription className="text-sm text-zinc-500">
             You need an account to {action}. It only takes a minute.
           </DialogDescription>
         </DialogHeader>
@@ -38,14 +38,14 @@ export function AuthGateModal({ open, onClose, action = 'do this' }: AuthGateMod
           <Link
             href="/register"
             onClick={onClose}
-            className="flex items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-700"
+            className="flex items-center justify-center rounded-md bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-800"
           >
             Create account
           </Link>
           <Link
             href="/login"
             onClick={onClose}
-            className="flex items-center justify-center rounded-full border border-slate-200 px-5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+            className="flex items-center justify-center rounded-md border-2 border-blue-700 px-5 py-2.5 text-sm font-semibold text-blue-700 hover:bg-blue-700 hover:text-white"
           >
             Sign in
           </Link>
