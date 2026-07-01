@@ -82,7 +82,7 @@ async function CompaniesSection() {
     <div className="flex-1 min-w-0">
       {/* Heading + inline controls */}
       <div className="mb-6 flex items-center gap-3">
-        <h2 className="text-lg font-serif font-bold text-slate-900">All Businesses</h2>
+        <h2 className="text-lg font-bold text-slate-900">All Businesses</h2>
         {topRanked.length > 0 && (
           <div className="ml-auto">
             <LeaderboardDropdown companies={topRanked} />
@@ -96,7 +96,7 @@ async function CompaniesSection() {
           <p className="mt-3 text-sm text-slate-400">No companies yet.</p>
         </div>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {allCompanies.slice(0, 12).map((c) => <CompanyCard key={c.id} company={c} />)}
         </div>
       )}
@@ -140,7 +140,7 @@ export default async function HomePage() {
             </span>
 
             {/* Heading */}
-            <h1 className="mx-auto max-w-2xl font-serif text-4xl font-extrabold leading-tight tracking-tight text-zinc-900 md:text-6xl">
+            <h1 className="mx-auto max-w-2xl text-4xl font-extrabold leading-tight tracking-tight text-zinc-900 md:text-6xl">
               Find a company you can trust
             </h1>
 
@@ -186,7 +186,7 @@ export default async function HomePage() {
               <span className="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-500">
                 PryroReview — verified business reviews
               </span>
-              <h2 className="mt-4 font-serif text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
+              <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
                 Honest reviews you can actually trust
               </h2>
               <p className="mt-4 text-base text-zinc-500 leading-relaxed">

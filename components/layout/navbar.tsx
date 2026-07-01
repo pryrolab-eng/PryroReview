@@ -36,7 +36,7 @@ export function Navbar() {
 
         {/* ── Logo ── */}
         <Link href="/" className="shrink-0">
-          <span className="font-serif text-xl font-black italic tracking-tight text-zinc-950 select-none">
+          <span className="text-xl font-extrabold tracking-tight text-zinc-950 select-none">
             PryroReview
           </span>
         </Link>

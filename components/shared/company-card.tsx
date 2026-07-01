@@ -35,7 +35,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
   return (
     <Link
       href={`/company/${company.slug}`}
-      className="flex flex-col rounded-xl bg-white p-4"
+      className="group relative flex flex-col rounded-xl bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-md"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -43,8 +43,8 @@ export function CompanyCard({ company }: CompanyCardProps) {
       <div className="flex items-start gap-3">
         {/* Logo — hidden by default, shown on hover */}
         <div
-          className={`shrink-0 overflow-hidden transition-all duration-200 ${
-            hovered ? 'w-9 opacity-100' : 'w-0 opacity-0'
+          className={`shrink-0 transition-all duration-200 ${
+            hovered ? 'w-9 opacity-100' : 'w-0 opacity-0 overflow-hidden'
           }`}
         >
           {logoUrl && !imgFailed ? (
@@ -65,7 +65,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             <h3 className="truncate text-sm font-semibold text-zinc-900">{company.name}</h3>
-            {company.verified && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-blue-700" />}
+            {company.verified && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-zinc-900" />}
           </div>
           <p className="mt-0.5 text-xs text-zinc-400">
             {company.category}

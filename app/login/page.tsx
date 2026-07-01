@@ -57,7 +57,7 @@ function LoginForm() {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm animate-fade-up">
 
-        <h1 className="text-center font-serif text-2xl font-bold tracking-tight text-zinc-900">
+        <h1 className="text-center text-2xl font-bold tracking-tight text-zinc-900">
           Welcome back
         </h1>
         <p className="mt-2 text-center text-sm text-zinc-500">

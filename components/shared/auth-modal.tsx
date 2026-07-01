@@ -119,7 +119,7 @@ export function AuthModal() {
           {mode === 'register' && (
             <>
               <div className="mb-6 flex justify-center">
-                <span className="font-serif text-2xl font-black italic tracking-tight text-zinc-950 select-none">PryroReview</span>
+                <span className="text-2xl font-extrabold tracking-tight text-zinc-950 select-none">PryroReview</span>
               </div>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Create your account</h2>

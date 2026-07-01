@@ -55,7 +55,7 @@ function AddCompanyForm() {
 
   return (
     <div className="animate-fade-up mx-auto max-w-xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="font-serif text-2xl font-bold text-zinc-900">Add a Company</h1>
+      <h1 className="text-2xl font-bold text-zinc-900">Add a Company</h1>
       <p className="mt-1 text-sm text-zinc-500">
         Add a business to the PryroReview directory so others can review it.
       </p>

@@ -10,7 +10,6 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['"DM Serif Display"', 'serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['ui-monospace', 'monospace'],
       },

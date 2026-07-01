@@ -25,7 +25,7 @@ function Logo({ name, website }: { name: string; website: string }) {
       alt={name}
       title={name}
       onError={() => setFailed(true)}
-      className="h-8 w-8 object-contain opacity-40 grayscale transition-all duration-200 hover:opacity-80 hover:grayscale-0"
+      className="h-8 w-8 object-contain transition-opacity duration-200 hover:opacity-80"
     />
   )
 }

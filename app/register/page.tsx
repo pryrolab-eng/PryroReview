@@ -68,10 +68,10 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm animate-fade-up">
 
         <div className="mb-8 flex justify-center">
-          <span className="font-serif text-3xl font-black italic tracking-tight text-zinc-950 select-none">PryroReview</span>
+          <span className="text-3xl font-extrabold tracking-tight text-zinc-950 select-none">PryroReview</span>
         </div>
 
-        <h1 className="text-center font-serif text-2xl font-bold tracking-tight text-zinc-900">Create your account</h1>
+        <h1 className="text-center text-2xl font-bold tracking-tight text-zinc-900">Create your account</h1>
         <p className="mt-2 text-center text-sm text-zinc-500">Join PryroReview&apos;s verified review platform</p>
 
         <form onSubmit={handleSubmit} className="mt-7 space-y-4">
