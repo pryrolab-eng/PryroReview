@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Twitter, Linkedin, Instagram } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -12,7 +11,7 @@ export function Footer() {
           {/* Left: Logo only */}
           <div className="shrink-0 lg:max-w-[160px]">
             <Link href="/">
-              <span className="text-lg font-extrabold tracking-tight text-zinc-950 select-none">
+              <span className="text-2xl font-bold tracking-tight text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>
                 PryroReview
               </span>
             </Link>
@@ -63,21 +62,7 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-              {/* Social icons */}
-              <div className="mt-6 flex items-center gap-3">
-                <a href="#" aria-label="X / Twitter"
-                  className="flex h-8 w-8 items-center justify-center rounded border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-400">
-                  <Twitter className="h-3.5 w-3.5" />
-                </a>
-                <a href="#" aria-label="LinkedIn"
-                  className="flex h-8 w-8 items-center justify-center rounded border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-400">
-                  <Linkedin className="h-3.5 w-3.5" />
-                </a>
-                <a href="#" aria-label="Instagram"
-                  className="flex h-8 w-8 items-center justify-center rounded border border-zinc-200 text-zinc-500 hover:text-zinc-900 hover:border-zinc-400">
-                  <Instagram className="h-3.5 w-3.5" />
-                </a>
-              </div>
+              {/* Social icons removed */}
             </div>
 
             {/* Quick Links — replaces Policies */}

@@ -36,7 +36,7 @@ export function Navbar() {
 
         {/* ── Logo ── */}
         <Link href="/" className="shrink-0">
-          <span className="text-xl font-extrabold tracking-tight text-zinc-950 select-none">
+          <span className="text-2xl font-bold tracking-tight text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>
             PryroReview
           </span>
         </Link>
