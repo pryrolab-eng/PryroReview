@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -121,7 +121,7 @@ export function SearchBar({ className }: { className?: string }) {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="h-14 w-full rounded-full border border-zinc-300 bg-white pl-6 pr-16 text-sm text-zinc-700 placeholder:text-zinc-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-950 md:h-16"
+            className="h-14 w-full rounded-full border border-zinc-300 bg-white pl-6 pr-16 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-950 md:h-16"
           />
           <button
             type="submit"
@@ -143,7 +143,7 @@ export function SearchBar({ className }: { className?: string }) {
           {hasDbResults && (
             <>
               <div className="px-4 pt-3 pb-1">
-                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-900">
                   On Pryro Review
                 </span>
               </div>
@@ -156,7 +156,7 @@ export function SearchBar({ className }: { className?: string }) {
                     >
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-zinc-900">{company.name}</p>
-                        <p className="truncate text-xs text-zinc-500">
+                        <p className="truncate text-xs text-zinc-900">
                           {company.category} · {company.district}
                         </p>
                       </div>
@@ -177,8 +177,8 @@ export function SearchBar({ className }: { className?: string }) {
             <>
               <div className={`px-4 pt-3 pb-1 ${hasDbResults ? 'border-t border-zinc-100' : ''}`}>
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="h-3 w-3 text-zinc-400" />
-                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                  <MapPin className="h-3 w-3 text-zinc-900" />
+                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-900">
                     Found on map · not yet reviewed
                   </span>
                 </div>
@@ -193,11 +193,11 @@ export function SearchBar({ className }: { className?: string }) {
                     >
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-zinc-900">{biz.name}</p>
-                        <p className="truncate text-xs text-zinc-500">
+                        <p className="truncate text-xs text-zinc-900">
                           {biz.category} · {biz.district}
                         </p>
                       </div>
-                      <span className="ml-2 shrink-0 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-600">
+                      <span className="ml-2 shrink-0 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-900">
                         Add →
                       </span>
                     </Link>
@@ -219,7 +219,7 @@ export function SearchBar({ className }: { className?: string }) {
           {/* Nothing found anywhere */}
           {showNotFound && (
             <div className="p-6 text-center">
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-zinc-900">
                 No results for <span className="font-medium text-zinc-900">&ldquo;{query}&rdquo;</span>
               </p>
               <Link

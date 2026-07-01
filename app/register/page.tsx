@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -41,15 +41,15 @@ export default function RegisterPage() {
       <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-16">
         <div className="w-full max-w-sm animate-fade-up text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-md border border-zinc-200 bg-white">
-            <Mail className="h-7 w-7 text-zinc-700" />
+            <Mail className="h-7 w-7 text-zinc-900" />
           </div>
           <h1 className="mt-6 text-xl font-bold text-zinc-900">Check your inbox</h1>
-          <p className="mt-2 text-sm text-zinc-500">
+          <p className="mt-2 text-sm text-zinc-900">
             We sent a verification link to{' '}
             <span className="font-semibold text-zinc-900">{email}</span>.
             Click it to activate your account.
           </p>
-          <p className="mt-3 text-xs text-zinc-400">
+          <p className="mt-3 text-xs text-zinc-900">
             Link expires in 24 hours. Check spam if you don&apos;t see it.
           </p>
           <Link
@@ -72,21 +72,21 @@ export default function RegisterPage() {
         </div>
 
         <h1 className="text-center text-2xl font-bold tracking-tight text-zinc-900">Create your account</h1>
-        <p className="mt-2 text-center text-sm text-zinc-500">Join PryroReview&apos;s verified review platform</p>
+        <p className="mt-2 text-center text-sm text-zinc-900">Join PryroReview&apos;s verified review platform</p>
 
         <form onSubmit={handleSubmit} className="mt-7 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Full Name</label>
+            <label className="block text-sm font-medium text-zinc-900 mb-1.5">Full Name</label>
             <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
               className={inputCls} placeholder="Your full name" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Email address</label>
+            <label className="block text-sm font-medium text-zinc-900 mb-1.5">Email address</label>
             <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
               className={inputCls} placeholder="you@example.com" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Password</label>
+            <label className="block text-sm font-medium text-zinc-900 mb-1.5">Password</label>
             <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
               className={inputCls} placeholder="Min 8 chars, 1 uppercase, 1 number" />
           </div>
@@ -98,7 +98,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p className="mt-5 text-center text-sm text-zinc-500">
+        <p className="mt-5 text-center text-sm text-zinc-900">
           Already have an account?{' '}
           <Link href="/login" className="font-semibold text-zinc-900 hover:underline">Sign in</Link>
         </p>

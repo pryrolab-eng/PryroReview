@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 
@@ -13,7 +13,7 @@ function Logo({ name, website }: { name: string; website: string }) {
 
   if (!domain || failed) {
     return (
-      <span className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-100 text-[11px] font-bold text-zinc-400">
+      <span className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-100 text-[11px] font-bold text-zinc-900">
         {name[0].toUpperCase()}
       </span>
     )

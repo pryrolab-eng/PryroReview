@@ -19,9 +19,9 @@
     --surface-hover: 220 13% 95%;   /* #f1f5f9 */
 
     /* Foreground / Text */
-    --foreground: 222 47% 11%;      /* #0f172a */
-    --foreground-secondary: 215 16% 47%;  /* #64748b */
-    --foreground-muted: 215 14% 65%;      /* #94a3b8 */
+    --foreground: 0 0% 4%;                /* #0a0a0a — near black */
+    --foreground-secondary: 0 0% 4%;
+    --foreground-muted: 0 0% 4%;
 
     /* Borders */
     --border: 220 13% 91%;          /* #e2e8f0 */
@@ -61,20 +61,23 @@
   }
   body {
     background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+    color: #0a0a0a;
     font-family: 'Inter', sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3 {
-    color: hsl(var(--foreground));
+    color: #0a0a0a;
     letter-spacing: -0.02em;
   }
   h4, h5, h6 {
-    color: hsl(var(--foreground));
+    color: #0a0a0a;
     font-weight: 700;
     letter-spacing: -0.02em;
+  }
+  p, span, li, a, label, td, th, button {
+    color: inherit;
   }
   a {
     color: inherit;

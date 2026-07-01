@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import {
@@ -29,7 +29,7 @@ export function AuthGateModal({ open, onClose, action = 'do this' }: AuthGateMod
           <DialogTitle className="text-base font-bold text-zinc-900">
             Sign in required
           </DialogTitle>
-          <DialogDescription className="text-sm text-zinc-500">
+          <DialogDescription className="text-sm text-zinc-900">
             You need an account to {action}. It only takes a minute.
           </DialogDescription>
         </DialogHeader>

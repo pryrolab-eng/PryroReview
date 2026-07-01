@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -46,7 +46,7 @@ export function LeaderboardDropdown({ companies }: { companies: RankedCompany[] 
       {open && (
         <div className="absolute right-0 top-full z-30 mt-1.5 w-60 rounded-md border border-zinc-200 bg-white">
           <div className="flex items-center justify-between border-b border-zinc-100 px-3 py-2">
-            <span className="text-xs font-bold text-zinc-500 uppercase tracking-wide">Top Companies</span>
+            <span className="text-xs font-bold text-zinc-900 uppercase tracking-wide">Top Companies</span>
             <Link href="/leaderboard" onClick={() => setOpen(false)}
               className="text-xs font-semibold text-blue-700 hover:underline whitespace-nowrap">
               View all →
@@ -61,7 +61,7 @@ export function LeaderboardDropdown({ companies }: { companies: RankedCompany[] 
                 className={`rounded-md px-2.5 py-1 text-xs font-semibold ${
                   sort === opt.value
                     ? 'bg-blue-700 text-white'
-                    : 'text-zinc-500 hover:text-zinc-900'
+                    : 'text-zinc-900 hover:text-zinc-900'
                 }`}
               >
                 {opt.label}
@@ -80,7 +80,7 @@ export function LeaderboardDropdown({ companies }: { companies: RankedCompany[] 
                   <span className="flex-1 truncate text-sm font-medium text-zinc-900">
                     {c.name}
                   </span>
-                  <span className="shrink-0 text-xs font-semibold text-zinc-500">
+                  <span className="shrink-0 text-xs font-semibold text-zinc-900">
                     {c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}
                   </span>
                 </Link>

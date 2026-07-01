@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
@@ -49,7 +49,7 @@ function RankBadge({ rank }: { rank: number }) {
     <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-zinc-900 text-xs font-bold text-white">{rank}</span>
   )
   return (
-    <span className="inline-flex h-7 w-7 items-center justify-center rounded-md text-xs font-semibold text-zinc-400">{rank}</span>
+    <span className="inline-flex h-7 w-7 items-center justify-center rounded-md text-xs font-semibold text-zinc-900">{rank}</span>
   )
 }
 
@@ -83,7 +83,7 @@ export default function LeaderboardPage() {
       <div className="mb-8 flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Leaderboard</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-zinc-900">
             {tab === 'best'
               ? 'Top rated companies by verified reviews'
               : 'Lowest rated companies by verified reviews'}
@@ -91,8 +91,8 @@ export default function LeaderboardPage() {
         </div>
         <Badge variant="outline" className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs">
           {tab === 'best'
-            ? <><TrendingUp className="h-3.5 w-3.5 text-slate-700" /> Best Rated</>
-            : <><TrendingDown className="h-3.5 w-3.5 text-slate-700" /> Worst Rated</>
+            ? <><TrendingUp className="h-3.5 w-3.5 text-zinc-900" /> Best Rated</>
+            : <><TrendingDown className="h-3.5 w-3.5 text-zinc-900" /> Worst Rated</>
           }
         </Badge>
       </div>
@@ -107,7 +107,7 @@ export default function LeaderboardPage() {
               'rounded-md px-4 py-1.5 text-sm font-semibold transition-colors',
               tab === t
                 ? 'bg-zinc-900 text-white'
-                : 'text-zinc-500 hover:text-zinc-900'
+                : 'text-zinc-900 hover:text-zinc-900'
             )}
           >
             {t === 'best' ? 'Best Rated' : 'Worst Rated'}
@@ -124,19 +124,19 @@ export default function LeaderboardPage() {
         </div>
       ) : companies.length === 0 ? (
         <div className="rounded-xl border border-slate-200 p-16 text-center">
-          <p className="text-sm text-slate-400">No companies with reviews yet.</p>
+          <p className="text-sm text-zinc-900">No companies with reviews yet.</p>
         </div>
       ) : (
         <div className="rounded-xl border border-slate-200 bg-white overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow className="bg-white hover:bg-white border-b border-zinc-100">
-                <TableHead className="w-14 text-center text-[11px] font-semibold uppercase tracking-wider text-slate-400">#</TableHead>
-                <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Company</TableHead>
-                <TableHead className="hidden sm:table-cell text-[11px] font-semibold uppercase tracking-wider text-slate-400">Category</TableHead>
-                <TableHead className="hidden md:table-cell text-[11px] font-semibold uppercase tracking-wider text-slate-400">District</TableHead>
-                <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Rating</TableHead>
-                <TableHead className="text-right text-[11px] font-semibold uppercase tracking-wider text-slate-400">Reviews</TableHead>
+                <TableHead className="w-14 text-center text-[11px] font-semibold uppercase tracking-wider text-zinc-900">#</TableHead>
+                <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-zinc-900">Company</TableHead>
+                <TableHead className="hidden sm:table-cell text-[11px] font-semibold uppercase tracking-wider text-zinc-900">Category</TableHead>
+                <TableHead className="hidden md:table-cell text-[11px] font-semibold uppercase tracking-wider text-zinc-900">District</TableHead>
+                <TableHead className="text-[11px] font-semibold uppercase tracking-wider text-zinc-900">Rating</TableHead>
+                <TableHead className="text-right text-[11px] font-semibold uppercase tracking-wider text-zinc-900">Reviews</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -158,7 +158,7 @@ export default function LeaderboardPage() {
                       <div className="flex items-center gap-3">
                         <Avatar className="h-8 w-8 rounded-lg">
                           <AvatarImage src={logoUrl ?? ''} className="object-contain p-0.5" />
-                          <AvatarFallback className="rounded-md border border-zinc-200 bg-white text-xs font-bold text-zinc-600">
+                          <AvatarFallback className="rounded-md border border-zinc-200 bg-white text-xs font-bold text-zinc-900">
                             {c.name[0].toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
@@ -183,7 +183,7 @@ export default function LeaderboardPage() {
                     </TableCell>
 
                     {/* District */}
-                    <TableCell className="hidden md:table-cell py-3 text-sm text-slate-500">
+                    <TableCell className="hidden md:table-cell py-3 text-sm text-zinc-900">
                       {c.district}
                     </TableCell>
 

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -79,7 +79,7 @@ export function AuthModal() {
 
         <button
           onClick={handleClose}
-          className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-md text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700"
+          className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-md text-zinc-900 hover:bg-zinc-100 hover:text-zinc-900"
         >
           <X className="h-4 w-4" />
         </button>
@@ -90,16 +90,16 @@ export function AuthModal() {
             <>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Welcome back</h2>
-                <p className="mt-1 text-sm text-zinc-500">Sign in to your account</p>
+                <p className="mt-1 text-sm text-zinc-900">Sign in to your account</p>
               </div>
               <form onSubmit={handleLogin} className="mt-6 space-y-4">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-700">Email</label>
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Email</label>
                   <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com" className={inputCls} />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-700">Password</label>
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Password</label>
                   <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••" className={inputCls} />
                 </div>
@@ -107,7 +107,7 @@ export function AuthModal() {
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
                 </Button>
               </form>
-              <p className="mt-5 text-center text-sm text-zinc-500">
+              <p className="mt-5 text-center text-sm text-zinc-900">
                 Don&apos;t have an account?{' '}
                 <button onClick={() => setMode('register')} className="font-semibold text-zinc-950 hover:underline">
                   Sign up
@@ -123,21 +123,21 @@ export function AuthModal() {
               </div>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Create your account</h2>
-                <p className="mt-1 text-sm text-zinc-500">Join PryroReview&apos;s verified review platform</p>
+                <p className="mt-1 text-sm text-zinc-900">Join PryroReview&apos;s verified review platform</p>
               </div>
               <form onSubmit={handleRegister} className="mt-6 space-y-4">
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-700">Full Name</label>
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Full Name</label>
                   <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
                     placeholder="Your full name" className={inputCls} />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-700">Email address</label>
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Email address</label>
                   <input type="email" required value={regEmail} onChange={(e) => setRegEmail(e.target.value)}
                     placeholder="you@example.com" className={inputCls} />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-700">Password</label>
+                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Password</label>
                   <input type="password" required value={regPassword} onChange={(e) => setRegPassword(e.target.value)}
                     placeholder="Min 8 chars, 1 uppercase, 1 number" className={inputCls} />
                 </div>
@@ -145,7 +145,7 @@ export function AuthModal() {
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
                 </Button>
               </form>
-              <p className="mt-5 text-center text-sm text-zinc-500">
+              <p className="mt-5 text-center text-sm text-zinc-900">
                 Already have an account?{' '}
                 <button onClick={() => setMode('login')} className="font-semibold text-blue-700 hover:underline">
                   Sign in

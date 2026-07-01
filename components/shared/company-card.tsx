@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { ShieldCheck, Star } from 'lucide-react'
@@ -55,7 +55,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
               className="h-9 w-9 rounded-lg border border-zinc-100 object-contain p-1"
             />
           ) : (
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white text-sm font-bold text-zinc-500">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-white text-sm font-bold text-zinc-900">
               {company.name[0].toUpperCase()}
             </div>
           )}
@@ -67,9 +67,9 @@ export function CompanyCard({ company }: CompanyCardProps) {
             <h3 className="truncate text-sm font-semibold text-zinc-900">{company.name}</h3>
             {company.verified && <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-zinc-900" />}
           </div>
-          <p className="mt-0.5 text-xs text-zinc-400">
+          <p className="mt-0.5 text-xs text-zinc-900">
             {company.category}
-            {company.verified && <span className="ml-1.5 text-zinc-300">· Verified</span>}
+            {company.verified && <span className="ml-1.5 text-zinc-900">· Verified</span>}
           </p>
         </div>
       </div>
@@ -87,12 +87,12 @@ export function CompanyCard({ company }: CompanyCardProps) {
             />
           ))}
           {company.avgRating > 0 && (
-            <span className="ml-1 text-xs font-semibold text-zinc-700">
+            <span className="ml-1 text-xs font-semibold text-zinc-900">
               {company.avgRating.toFixed(1)}
             </span>
           )}
         </div>
-        <span className="text-xs text-zinc-400">
+        <span className="text-xs text-zinc-900">
           {company.reviewCount === 0
             ? 'No reviews yet'
             : `${company.reviewCount} ${company.reviewCount === 1 ? 'review' : 'reviews'}`}

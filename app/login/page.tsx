@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -60,13 +60,13 @@ function LoginForm() {
         <h1 className="text-center text-2xl font-bold tracking-tight text-zinc-900">
           Welcome back
         </h1>
-        <p className="mt-2 text-center text-sm text-zinc-500">
+        <p className="mt-2 text-center text-sm text-zinc-900">
           Sign in to your PryroReview account
         </p>
 
         {verified && (
           <div className="mt-5 flex items-center gap-3 rounded-md border border-zinc-200 bg-white p-4">
-            <MailCheck className="h-5 w-5 shrink-0 text-zinc-700" />
+            <MailCheck className="h-5 w-5 shrink-0 text-zinc-900" />
             <p className="text-sm font-medium text-zinc-900">
               Email verified! You can now sign in.
             </p>
@@ -82,12 +82,12 @@ function LoginForm() {
 
         <form onSubmit={handleSubmit} className="mt-7 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Email address</label>
+            <label className="block text-sm font-medium text-zinc-900 mb-1.5">Email address</label>
             <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
               className={inputCls} placeholder="you@example.com" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-zinc-700 mb-1.5">Password</label>
+            <label className="block text-sm font-medium text-zinc-900 mb-1.5">Password</label>
             <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
               className={inputCls} placeholder="••••••••" />
           </div>
@@ -99,9 +99,9 @@ function LoginForm() {
           </button>
         </form>
 
-        <p className="mt-5 text-center text-sm text-zinc-500">
+        <p className="mt-5 text-center text-sm text-zinc-900">
           Don&apos;t have an account?{' '}
-          <Link href="/register" className="font-semibold text-blue-700 hover:underline">
+          <Link href="/register" className="font-semibold text-zinc-950 hover:underline">
             Create one free
           </Link>
         </p>

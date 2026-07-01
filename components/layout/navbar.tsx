@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -48,7 +48,7 @@ export function Navbar() {
               <button
                 key={link.href}
                 onClick={() => openAuthModal('add a company')}
-                className="rounded-md px-3 py-1.5 text-sm font-medium text-zinc-600 hover:text-zinc-950"
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-zinc-900 hover:text-zinc-950"
               >
                 {link.label}
               </button>
@@ -60,7 +60,7 @@ export function Navbar() {
                   'rounded-md px-3 py-1.5 text-sm font-medium',
                   pathname === link.href
                     ? 'text-zinc-950 font-semibold'
-                    : 'text-zinc-600 hover:text-zinc-950'
+                    : 'text-zinc-900 hover:text-zinc-950'
                 )}
               >
                 {link.label}
@@ -80,29 +80,29 @@ export function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
-                  className="flex h-9 items-center gap-2 rounded-full border border-zinc-200 px-3 text-sm font-medium text-zinc-700 hover:border-zinc-400"
+                  className="flex h-9 items-center gap-2 rounded-full border border-zinc-200 px-3 text-sm font-medium text-zinc-900 hover:border-zinc-400"
                 >
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white">
                     {(user.fullName || user.email || 'U')[0].toUpperCase()}
                   </div>
                   <span className="max-w-[100px] truncate">{user.fullName || user.email}</span>
-                  <ChevronDown className="h-3.5 w-3.5 text-zinc-400" />
+                  <ChevronDown className="h-3.5 w-3.5 text-zinc-900" />
                 </button>
 
                 {profileOpen && (
                   <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-zinc-200 bg-white py-1 shadow-lg">
                     <div className="border-b border-zinc-100 px-4 py-2.5">
                       <p className="truncate text-xs font-semibold text-zinc-900">{user.fullName}</p>
-                      <p className="truncate text-xs text-zinc-500">{user.email}</p>
+                      <p className="truncate text-xs text-zinc-900">{user.email}</p>
                     </div>
                     <Link href="/my-reviews" onClick={() => setProfileOpen(false)}
-                      className="flex min-h-[44px] items-center gap-2.5 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
-                      <Star className="h-4 w-4 text-zinc-400" /> My Reviews
+                      className="flex min-h-[44px] items-center gap-2.5 px-4 py-2 text-sm text-zinc-900 hover:bg-zinc-50">
+                      <Star className="h-4 w-4 text-zinc-900" /> My Reviews
                     </Link>
                     {user.role === 'ADMIN' && (
                       <Link href="/admin" onClick={() => setProfileOpen(false)}
-                        className="flex min-h-[44px] items-center gap-2.5 px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
-                        <LayoutDashboard className="h-4 w-4 text-zinc-400" /> Admin Panel
+                        className="flex min-h-[44px] items-center gap-2.5 px-4 py-2 text-sm text-zinc-900 hover:bg-zinc-50">
+                        <LayoutDashboard className="h-4 w-4 text-zinc-900" /> Admin Panel
                       </Link>
                     )}
                     <div className="mt-1 border-t border-zinc-100 pt-1">
@@ -124,7 +124,7 @@ export function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-600 hover:bg-zinc-100 md:hidden"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-900 hover:bg-zinc-100 md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -142,7 +142,7 @@ export function Navbar() {
                 <button
                   key={link.href}
                   onClick={() => { setMobileOpen(false); openAuthModal('add a company') }}
-                  className="block w-full rounded-md px-3 py-2 text-left text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950"
+                  className="block w-full rounded-md px-3 py-2 text-left text-sm font-medium text-zinc-900 hover:bg-zinc-50 hover:text-zinc-950"
                 >
                   {link.label}
                 </button>
@@ -152,7 +152,7 @@ export function Navbar() {
                     'block rounded-md px-3 py-2 text-sm font-medium',
                     pathname === link.href
                       ? 'font-semibold text-zinc-950 bg-zinc-50'
-                      : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950'
+                      : 'text-zinc-900 hover:bg-zinc-50 hover:text-zinc-950'
                   )}>
                   {link.label}
                 </Link>
@@ -165,13 +165,13 @@ export function Navbar() {
               <>
                 <div className="mb-2 px-3 py-1">
                   <p className="text-xs font-semibold text-zinc-900">{user.fullName}</p>
-                  <p className="text-xs text-zinc-500">{user.email}</p>
+                  <p className="text-xs text-zinc-900">{user.email}</p>
                 </div>
                 <Link href="/my-reviews" onClick={() => setMobileOpen(false)}
-                  className="block rounded-md px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50">My Reviews</Link>
+                  className="block rounded-md px-3 py-2 text-sm text-zinc-900 hover:bg-zinc-50">My Reviews</Link>
                 {user.role === 'ADMIN' && (
                   <Link href="/admin" onClick={() => setMobileOpen(false)}
-                    className="block rounded-md px-3 py-2 text-sm text-zinc-700 hover:bg-zinc-50">Admin Panel</Link>
+                    className="block rounded-md px-3 py-2 text-sm text-zinc-900 hover:bg-zinc-50">Admin Panel</Link>
                 )}
                 <button onClick={() => { signOut(); setMobileOpen(false) }}
                   className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-red-500 hover:bg-red-50">
@@ -184,7 +184,7 @@ export function Navbar() {
                   className="flex items-center justify-center rounded-full bg-zinc-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700">
                   Sign up
                 </Link>
-                <p className="text-center text-xs text-zinc-400">
+                <p className="text-center text-xs text-zinc-900">
                   Already have an account?{' '}
                   <Link href="/login" onClick={() => setMobileOpen(false)}
                     className="font-medium text-zinc-900 hover:underline">Login</Link>

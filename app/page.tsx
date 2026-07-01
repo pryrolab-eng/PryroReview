@@ -1,4 +1,4 @@
-import { Suspense } from 'react'
+﻿import { Suspense } from 'react'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
@@ -92,8 +92,8 @@ async function CompaniesSection() {
 
       {allCompanies.length === 0 ? (
         <div className="rounded-xl border border-slate-200 p-16 text-center">
-          <Building2 className="mx-auto h-8 w-8 text-slate-300" />
-          <p className="mt-3 text-sm text-slate-400">No companies yet.</p>
+          <Building2 className="mx-auto h-8 w-8 text-zinc-900" />
+          <p className="mt-3 text-sm text-zinc-900">No companies yet.</p>
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
@@ -150,7 +150,7 @@ export default async function HomePage() {
             </div>
 
             {/* Trust badges */}
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-900">
               <span>No fake reviews</span>
               <span className="h-3 w-px bg-zinc-200" aria-hidden="true" />
               <span>No spam</span>
@@ -183,13 +183,13 @@ export default async function HomePage() {
 
             {/* ── Left: description ── */}
             <div className="flex-1 lg:max-w-lg">
-              <span className="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-500">
+              <span className="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-900">
                 PryroReview — verified business reviews
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
                 Honest reviews you can actually trust
               </h2>
-              <p className="mt-4 text-base text-zinc-500 leading-relaxed">
+              <p className="mt-4 text-base text-zinc-900 leading-relaxed">
                 Every review on PryroReview is verified with a 20 RWF MTN MoMo payment — making spam and fake reviews economically unviable. Real experiences from real customers.
               </p>
               <ul className="mt-6 space-y-3">
@@ -199,7 +199,7 @@ export default async function HomePage() {
                   'See ratings across all categories',
                   'Add businesses not yet in the directory',
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-sm text-zinc-600">
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-zinc-900">
                     <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-900" />
                     {item}
                   </li>
@@ -215,16 +215,16 @@ export default async function HomePage() {
                   <span className="h-2.5 w-2.5 rounded-full bg-zinc-200" />
                   <span className="h-2.5 w-2.5 rounded-full bg-zinc-200" />
                   <span className="h-2.5 w-2.5 rounded-full bg-zinc-200" />
-                  <span className="mx-auto text-[11px] font-medium tracking-widest text-zinc-400">PRYRO REVIEW</span>
+                  <span className="mx-auto text-[11px] font-medium tracking-widest text-zinc-900">PRYRO REVIEW</span>
                   <span className="h-6 w-6 rounded-full bg-zinc-100" />
                 </div>
 
                 <div className="flex h-full">
                   {/* Sidebar */}
                   <div className="w-36 shrink-0 border-r border-zinc-200 bg-white p-4">
-                    <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-zinc-400">Navigate</p>
+                    <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-zinc-900">Navigate</p>
                     {['Dashboard', 'Businesses', 'My Reviews', 'Leaderboard', 'Add Business'].map((item, i) => (
-                      <div key={item} className={`mb-1 rounded-md px-2.5 py-1.5 text-xs ${i === 0 ? 'bg-zinc-950 font-semibold text-white' : 'text-zinc-500'}`}>
+                      <div key={item} className={`mb-1 rounded-md px-2.5 py-1.5 text-xs ${i === 0 ? 'bg-zinc-950 font-semibold text-white' : 'text-zinc-900'}`}>
                         {item}
                       </div>
                     ))}
@@ -241,7 +241,7 @@ export default async function HomePage() {
                         { label: 'Verified Reviews', value: '1,240+' },
                       ].map((s) => (
                         <div key={s.label} className="rounded-xl border border-zinc-100 bg-white p-3">
-                          <p className="text-[10px] text-zinc-400">{s.label}</p>
+                          <p className="text-[10px] text-zinc-900">{s.label}</p>
                           <p className="mt-1 text-lg font-extrabold text-zinc-900">{s.value}</p>
                         </div>
                       ))}
@@ -257,7 +257,7 @@ export default async function HomePage() {
                       ].map((bar) => (
                         <div key={bar.name} className="mb-2.5">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-[10px] text-zinc-600">{bar.name}</span>
+                            <span className="text-[10px] text-zinc-900">{bar.name}</span>
                             <span className="text-[10px] font-semibold text-zinc-900">{bar.pct}%</span>
                           </div>
                           <div className="h-1.5 w-full rounded-full bg-zinc-100">

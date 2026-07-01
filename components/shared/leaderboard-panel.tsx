@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -29,7 +29,7 @@ function CompanyLogo({ name, website }: { name: string; website?: string | null 
     )
   }
   return (
-    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-zinc-200 bg-white text-[10px] font-bold text-zinc-500">
+    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-zinc-200 bg-white text-[10px] font-bold text-zinc-900">
       {name[0].toUpperCase()}
     </div>
   )
@@ -63,10 +63,10 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
                 <CompanyLogo name={c.name} website={c.website} />
               </div>
               <p className="text-xs font-semibold text-zinc-900 truncate">{c.name}</p>
-              <p className="text-[11px] text-zinc-400 truncate">{c.category}</p>
-              <div className="mt-2 flex items-center gap-1 text-xs text-zinc-600">
+              <p className="text-[11px] text-zinc-900 truncate">{c.category}</p>
+              <div className="mt-2 flex items-center gap-1 text-xs text-zinc-900">
                 <span className="font-semibold">{c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}</span>
-                <span className="text-zinc-300">·</span>
+                <span className="text-zinc-900">·</span>
                 <span>{c.reviewCount} reviews</span>
               </div>
             </Link>
@@ -96,8 +96,8 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
                   <p className="truncate text-xs font-semibold text-zinc-900">
                     {c.name}
                   </p>
-                  <div className="flex items-center gap-1 mt-0.5 text-[11px] text-zinc-400">
-                    <span className="font-medium text-zinc-600">
+                  <div className="flex items-center gap-1 mt-0.5 text-[11px] text-zinc-900">
+                    <span className="font-medium text-zinc-900">
                       {c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}
                     </span>
                     <span>·</span>

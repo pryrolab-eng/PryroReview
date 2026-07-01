@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -13,7 +13,7 @@ const districts  = ['Kigali','Northern Province','Southern Province','Eastern Pr
 
 const inputCls  = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
 const selectCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
-const labelCls  = 'block text-sm font-medium text-zinc-700 mb-1.5'
+const labelCls  = 'block text-sm font-medium text-zinc-900 mb-1.5'
 
 function AddCompanyForm() {
   const { user } = useAuth()
@@ -56,7 +56,7 @@ function AddCompanyForm() {
   return (
     <div className="animate-fade-up mx-auto max-w-xl px-4 py-12 sm:px-6 lg:px-8">
       <h1 className="text-2xl font-bold text-zinc-900">Add a Company</h1>
-      <p className="mt-1 text-sm text-zinc-500">
+      <p className="mt-1 text-sm text-zinc-900">
         Add a business to the PryroReview directory so others can review it.
       </p>
 
@@ -83,18 +83,18 @@ function AddCompanyForm() {
         </div>
 
         <div>
-          <label className={labelCls}>Website <span className="text-zinc-400 font-normal">(optional)</span></label>
+          <label className={labelCls}>Website <span className="text-zinc-900 font-normal">(optional)</span></label>
           <input name="website" type="url" defaultValue={prefillWebsite}
             className={inputCls} placeholder="https://example.com" />
         </div>
 
         <div>
-          <label className={labelCls}>Phone <span className="text-zinc-400 font-normal">(optional)</span></label>
+          <label className={labelCls}>Phone <span className="text-zinc-900 font-normal">(optional)</span></label>
           <input name="phone" type="tel" className={inputCls} placeholder="078 123 4567" />
         </div>
 
         <div>
-          <label className={labelCls}>Description <span className="text-zinc-400 font-normal">(optional)</span></label>
+          <label className={labelCls}>Description <span className="text-zinc-900 font-normal">(optional)</span></label>
           <textarea name="description" rows={3}
             className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 resize-none"
             placeholder="What does this company do?" />

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
@@ -53,11 +53,11 @@ export default function MyReviewsPage() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">My Reviews</h1>
-          <div className="mt-1 flex items-center gap-3 text-sm text-zinc-500">
+          <div className="mt-1 flex items-center gap-3 text-sm text-zinc-900">
             <span>{reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}</span>
             {avg && (
               <>
-                <span className="text-zinc-300">·</span>
+                <span className="text-zinc-900">·</span>
                 <span>{avg} avg rating</span>
               </>
             )}
@@ -71,10 +71,10 @@ export default function MyReviewsPage() {
       {reviews.length === 0 ? (
         <div className="mt-8 flex flex-col items-center rounded-md border border-zinc-200 bg-white py-20 text-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-md border border-zinc-200 bg-white">
-            <Building2 className="h-5 w-5 text-zinc-400" />
+            <Building2 className="h-5 w-5 text-zinc-900" />
           </div>
-          <p className="mt-4 text-sm font-medium text-zinc-700">No reviews yet</p>
-          <p className="mt-1 text-xs text-zinc-400">Find a company and share your experience.</p>
+          <p className="mt-4 text-sm font-medium text-zinc-900">No reviews yet</p>
+          <p className="mt-1 text-xs text-zinc-900">Find a company and share your experience.</p>
           <Button asChild className="mt-5">
             <Link href="/">Browse Companies <ArrowRight className="h-4 w-4" /></Link>
           </Button>
@@ -92,16 +92,16 @@ export default function MyReviewsPage() {
                   <p className="text-sm font-semibold text-zinc-900">
                     {review.company.name}
                   </p>
-                  <p className="mt-0.5 text-xs text-zinc-400">
+                  <p className="mt-0.5 text-xs text-zinc-900">
                     {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
                   </p>
                 </div>
                 <StarRating rating={review.rating} size="sm" className="shrink-0" />
               </div>
-              <span className="mt-3 inline-block rounded-md border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-600">
+              <span className="mt-3 inline-block rounded-md border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-900">
                 {review.category}
               </span>
-              <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-zinc-600">
+              <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-zinc-900">
                 {review.comment}
               </p>
             </Link>

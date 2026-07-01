@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -46,11 +46,11 @@ export function CategoryFilter({ categories, selected }: CategoryFilterProps) {
           <button
             onClick={() => handleSelect(null)}
             className={`flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-zinc-50 ${
-              !selected ? 'font-bold text-blue-700' : 'text-zinc-600'
+              !selected ? 'font-bold text-blue-700' : 'text-zinc-900'
             }`}
           >
             <span>All Categories</span>
-            <span className="text-xs text-zinc-400">{categories.reduce((s, c) => s + c.count, 0)}</span>
+            <span className="text-xs text-zinc-900">{categories.reduce((s, c) => s + c.count, 0)}</span>
           </button>
           <div className="my-1 border-t border-zinc-100" />
           {categories.map((cat) => (
@@ -58,11 +58,11 @@ export function CategoryFilter({ categories, selected }: CategoryFilterProps) {
               key={cat.name}
               onClick={() => handleSelect(cat.name)}
               className={`flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-zinc-50 ${
-                selected === cat.name ? 'font-bold text-blue-700' : 'text-zinc-600'
+                selected === cat.name ? 'font-bold text-blue-700' : 'text-zinc-900'
               }`}
             >
               <span>{cat.name}</span>
-              <span className="text-xs text-zinc-400">{cat.count}</span>
+              <span className="text-xs text-zinc-900">{cat.count}</span>
             </button>
           ))}
         </div>

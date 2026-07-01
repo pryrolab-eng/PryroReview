@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
@@ -131,8 +131,8 @@ export default function CompanyProfilePage() {
     return (
       <div className="mx-auto max-w-5xl px-4 py-24 text-center sm:px-6">
         <Building2 className="mx-auto h-10 w-10 text-slate-200" />
-        <p className="mt-4 text-sm text-slate-500">Company not found.</p>
-        <Link href="/" className="mt-4 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-900">
+        <p className="mt-4 text-sm text-zinc-900">Company not found.</p>
+        <Link href="/" className="mt-4 inline-flex items-center gap-1.5 text-sm text-zinc-900 hover:text-slate-900">
           <ArrowLeft className="h-4 w-4" /> Back to home
         </Link>
       </div>
@@ -146,7 +146,7 @@ export default function CompanyProfilePage() {
     <div className="w-full px-6 py-10 lg:px-10">
 
       {/* Back */}
-      <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-700 hover:underline">
+      <Link href="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-900 hover:underline">
         <ArrowLeft className="h-4 w-4" /> Back
       </Link>
 
@@ -163,7 +163,7 @@ export default function CompanyProfilePage() {
             <Badge variant="secondary" className="text-[11px]">{company.district}</Badge>
             {company.website && (
               <a href={company.website} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-900 transition-colors">
+                className="inline-flex items-center gap-1 text-xs text-zinc-900 hover:text-slate-900 transition-colors">
                 <ExternalLink className="h-3 w-3" />
                 {new URL(company.website).hostname.replace(/^www\./, '')}
               </a>
@@ -171,7 +171,7 @@ export default function CompanyProfilePage() {
           </div>
 
           {company.description && (
-            <p className="mt-3 max-w-xl text-sm text-slate-500 leading-relaxed">{company.description}</p>
+            <p className="mt-3 max-w-xl text-sm text-zinc-900 leading-relaxed">{company.description}</p>
           )}
         </div>
 
@@ -181,10 +181,10 @@ export default function CompanyProfilePage() {
             <span className="text-4xl font-extrabold tabular-nums text-slate-900">
               {company.avgRating > 0 ? company.avgRating.toFixed(1) : '—'}
             </span>
-            <span className="text-sm text-slate-400">/ 5</span>
+            <span className="text-sm text-zinc-900">/ 5</span>
           </div>
           <StarRow rating={Math.round(company.avgRating)} />
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-zinc-900">
             {company.totalReviews} {company.totalReviews === 1 ? 'review' : 'reviews'}
           </span>
         </div>
@@ -200,13 +200,13 @@ export default function CompanyProfilePage() {
 
       {/* ── Reviews ── */}
       <div className="mt-8">
-        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+        <h2 className="text-sm font-semibold text-zinc-900 uppercase tracking-wider">
           Reviews {company.totalReviews > 0 && `(${company.totalReviews})`}
         </h2>
 
         {company.reviews.length === 0 ? (
           <div className="mt-6 py-16 text-center">
-            <p className="mt-4 text-sm font-medium text-slate-700">No reviews yet. Be the first.</p>
+            <p className="mt-4 text-sm font-medium text-zinc-900">No reviews yet. Be the first.</p>
             <Button onClick={handleWriteReview} className="mt-4">
               Write a Review
             </Button>
@@ -228,7 +228,7 @@ export default function CompanyProfilePage() {
                         <p className="text-sm font-semibold text-slate-900">
                           {review.user?.fullName || 'Anonymous'}
                         </p>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-zinc-900">
                           {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
                         </p>
                       </div>
@@ -240,7 +240,7 @@ export default function CompanyProfilePage() {
                           onClick={() => handleFlag(review.id)}
                           disabled={isFlagged}
                           title={isFlagged ? 'Flagged' : 'Flag review'}
-                          className="text-slate-300 hover:text-slate-500 transition-colors disabled:cursor-not-allowed"
+                          className="text-zinc-900 hover:text-zinc-900 transition-colors disabled:cursor-not-allowed"
                         >
                           <Flag className={`h-3.5 w-3.5 ${isFlagged ? 'fill-red-400 text-red-400' : ''}`} />
                         </button>
@@ -250,11 +250,11 @@ export default function CompanyProfilePage() {
 
                   {/* Category tag */}
                   <div className="mt-3">
-                    <Badge variant="outline" className="text-[10px] text-slate-500">{review.category}</Badge>
+                    <Badge variant="outline" className="text-[10px] text-zinc-900">{review.category}</Badge>
                   </div>
 
                   {/* Comment */}
-                  <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                  <p className="mt-2 text-sm leading-relaxed text-zinc-900">
                     {isLong && !isExpanded
                       ? review.comment.slice(0, TRUNCATE_LEN) + '…'
                       : review.comment}
@@ -266,7 +266,7 @@ export default function CompanyProfilePage() {
                         isExpanded ? next.delete(review.id) : next.add(review.id)
                         return next
                       })}
-                      className="mt-1 text-xs font-medium text-slate-400 hover:text-slate-900 transition-colors"
+                      className="mt-1 text-xs font-medium text-zinc-900 hover:text-slate-900 transition-colors"
                     >
                       {isExpanded ? 'Show less' : 'Read more'}
                     </button>
@@ -276,11 +276,11 @@ export default function CompanyProfilePage() {
                   {review.response && (
                     <div className="mt-4 flex gap-3">
                       <div className="mt-0.5 shrink-0">
-                        <MessageSquare className="h-3.5 w-3.5 text-slate-400" />
+                        <MessageSquare className="h-3.5 w-3.5 text-zinc-900" />
                       </div>
                       <div>
-                        <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Official Response</p>
-                        <p className="text-sm text-slate-600">{review.response}</p>
+                        <p className="text-[11px] font-semibold uppercase tracking-wider text-zinc-900 mb-1">Official Response</p>
+                        <p className="text-sm text-zinc-900">{review.response}</p>
                       </div>
                     </div>
                   )}
