@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+import prisma, { withRetry } from '@/lib/prisma'
 import { companySchema } from '@/lib/validations'
 import { generateSlug } from '@/lib/slug'
 
@@ -37,21 +37,23 @@ export async function GET(req: Request) {
       avg_rating: number | null; review_count: bigint; total: bigint
     }
 
-    const rows = await prisma.$queryRawUnsafe<Row[]>(`
-      SELECT
-        c.id, c.name, c.slug, c.category, c.district,
-        c.website, c.phone, c.description, c.verified,
-        c."verifiedSource" AS verified_source, c."createdAt" AS created_at,
-        AVG(r.rating)::float          AS avg_rating,
-        COUNT(r.id)                   AS review_count,
-        COUNT(*) OVER()               AS total
-      FROM "Company" c
-      LEFT JOIN "Review" r ON r."companyId" = c.id
-      ${where}
-      GROUP BY c.id
-      ORDER BY c."createdAt" DESC
-      LIMIT ${take} OFFSET ${skip}
-    `, ...args)
+    const rows = await withRetry(() =>
+      prisma.$queryRawUnsafe<Row[]>(`
+        SELECT
+          c.id, c.name, c.slug, c.category, c.district,
+          c.website, c.phone, c.description, c.verified,
+          c."verifiedSource" AS verified_source, c."createdAt" AS created_at,
+          AVG(r.rating)::float          AS avg_rating,
+          COUNT(r.id)                   AS review_count,
+          COUNT(*) OVER()               AS total
+        FROM "Company" c
+        LEFT JOIN "Review" r ON r."companyId" = c.id
+        ${where}
+        GROUP BY c.id
+        ORDER BY c."createdAt" DESC
+        LIMIT ${take} OFFSET ${skip}
+      `, ...args)
+    )
 
     const total = rows.length > 0 ? Number(rows[0].total) : 0
 

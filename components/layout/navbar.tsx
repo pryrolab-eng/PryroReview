@@ -7,7 +7,6 @@ import { Menu, X, ChevronDown, LayoutDashboard, Star, LogOut } from 'lucide-reac
 import { useAuth } from '@/lib/auth-context'
 import { useAuthModal } from '@/lib/auth-modal-context'
 import { cn } from '@/lib/utils'
-
 const navLinks = [
   { href: '/leaderboard', label: 'Leaderboard', requiresAuth: false },
   { href: '/add-company', label: 'Add Company', requiresAuth: true },
@@ -115,10 +114,11 @@ export function Navbar() {
                 )}
               </div>
             ) : (
-              <Link href="/register"
+              <button
+                onClick={() => openAuthModal('sign up', 'register')}
                 className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700">
                 Sign up
-              </Link>
+              </button>
             )}
           </div>
 
@@ -180,14 +180,15 @@ export function Navbar() {
               </>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link href="/register" onClick={() => setMobileOpen(false)}
+                <button
+                  onClick={() => { setMobileOpen(false); openAuthModal('sign up', 'register') }}
                   className="flex items-center justify-center rounded-full bg-zinc-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700">
                   Sign up
-                </Link>
-                <p className="text-center text-xs text-zinc-900">
+                </button>
+                <p className="text-center text-xs text-zinc-500">
                   Already have an account?{' '}
-                  <Link href="/login" onClick={() => setMobileOpen(false)}
-                    className="font-medium text-zinc-900 hover:underline">Login</Link>
+                  <button onClick={() => { setMobileOpen(false); openAuthModal('sign in') }}
+                    className="font-medium text-zinc-900 hover:underline">Login</button>
                 </p>
               </div>
             )}

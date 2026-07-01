@@ -93,7 +93,7 @@ function LoginForm() {
           </div>
           <button
             type="submit" disabled={loading}
-            className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 disabled:opacity-60"
+            className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-zinc-950 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
           >
             {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
           </button>

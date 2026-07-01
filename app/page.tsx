@@ -184,17 +184,17 @@ export default async function HomePage() {
             {/* ── Left: description ── */}
             <div className="flex-1 lg:max-w-lg">
               <span className="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-900">
-                PryroReview — verified business reviews
+                PryroReview verified business reviews
               </span>
               <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl">
                 Honest reviews you can actually trust
               </h2>
               <p className="mt-4 text-base text-zinc-900 leading-relaxed">
-                Every review on PryroReview is verified with a 20 RWF MTN MoMo payment — making spam and fake reviews economically unviable. Real experiences from real customers.
+                Every review on PryroReview is verified with a 20 RWF MTN MoMo payment, making spam and fake reviews economically unviable. Real experiences from real customers.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
-                  'Verified by a small payment — no bots',
+                  'Verified by a small payment, no bots',
                   'Search any business on PryroReview',
                   'See ratings across all categories',
                   'Add businesses not yet in the directory',

@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2, X } from 'lucide-react'
 import { signIn } from 'next-auth/react'
@@ -12,10 +12,15 @@ import { toast } from 'sonner'
 const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950'
 
 export function AuthModal() {
-  const { isOpen, closeAuthModal } = useAuthModal()
+  const { isOpen, initialMode, closeAuthModal } = useAuthModal()
   const [mode, setMode] = useState<'login' | 'register'>('login')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  // Sync mode when modal opens
+  useEffect(() => {
+    if (isOpen) setMode(initialMode)
+  }, [isOpen, initialMode])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

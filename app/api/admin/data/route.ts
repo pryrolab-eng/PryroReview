@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+import prisma, { withRetry } from '@/lib/prisma'
 
 async function fetchData(tab: string, skip: number, take: number) {
   switch (tab) {
@@ -75,16 +75,7 @@ export async function GET(req: Request) {
     let data: any[] = []
     let total = 0
 
-    // Retry once — Neon free tier wakes slowly after idle
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        ;[data, total] = await fetchData(tab, skip, take)
-        break
-      } catch (err: any) {
-        if (attempt === 1 || err?.code !== 'P1001') throw err
-        await new Promise((r) => setTimeout(r, 2500))
-      }
-    }
+    ;[data, total] = await withRetry(() => fetchData(tab, skip, take))
 
     return Response.json({
       data,

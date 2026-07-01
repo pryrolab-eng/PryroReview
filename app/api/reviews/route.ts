@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import prisma from '@/lib/prisma'
+import prisma, { withRetry } from '@/lib/prisma'
 import { reviewSchema } from '@/lib/validations'
 
 export async function POST(req: Request) {
@@ -81,13 +81,15 @@ export async function GET(req: Request) {
 
     const userId = (session.user as any).id as string
 
-    const reviews = await prisma.review.findMany({
-      where: { userId },
-      orderBy: { createdAt: 'desc' },
-      include: {
-        company: { select: { id: true, name: true, slug: true } },
-      },
-    })
+    const reviews = await withRetry(() =>
+      prisma.review.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        include: {
+          company: { select: { id: true, name: true, slug: true } },
+        },
+      })
+    )
 
     return Response.json(reviews)
   } catch (err) {

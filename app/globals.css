@@ -165,6 +165,6 @@
 
 /* Selection */
 ::selection {
-  background-color: hsl(var(--brand-light));
-  color: hsl(var(--foreground));
+  background-color: #e4e4e7;
+  color: #0a0a0a;
 }

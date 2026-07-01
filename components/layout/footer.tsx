@@ -2,14 +2,14 @@ import Link from 'next/link'
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-zinc-100">
+    <footer className="bg-zinc-50">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
 
-        {/* ── Main grid: logo+nav left | three columns right ── */}
-        <div className="flex flex-col gap-12 lg:flex-row lg:justify-between">
+        {/* ── Main grid: logo left | three columns right ── */}
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">
 
-          {/* Left: Logo only */}
-          <div className="shrink-0 lg:max-w-[160px]">
+          {/* Left: Logo */}
+          <div className="shrink-0 self-start lg:max-w-[160px]">
             <Link href="/">
               <span className="text-2xl font-bold tracking-tight text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>
                 PryroReview
@@ -25,15 +25,9 @@ export function Footer() {
               <p className="text-sm font-semibold text-zinc-900">Top Categories</p>
               <ul className="mt-5 space-y-3">
                 {[
-                  'Banking',
-                  'Telecommunications',
-                  'Government Services',
-                  'Healthcare',
-                  'Insurance',
-                  'Education',
-                  'Transport',
-                  'Food & Beverage',
-                  'All Categories',
+                  'Banking', 'Telecommunications', 'Government Services',
+                  'Healthcare', 'Insurance', 'Education',
+                  'Transport', 'Food & Beverage', 'All Categories',
                 ].map((item) => (
                   <li key={item}>
                     <Link href="/leaderboard" className="text-sm text-zinc-500 hover:text-zinc-900">
@@ -62,10 +56,9 @@ export function Footer() {
                   </li>
                 ))}
               </ul>
-              {/* Social icons removed */}
             </div>
 
-            {/* Quick Links — replaces Policies */}
+            {/* Quick Links */}
             <div>
               <p className="text-sm font-semibold text-zinc-900">Quick Links</p>
               <ul className="mt-5 space-y-3">
@@ -89,7 +82,7 @@ export function Footer() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-zinc-100 pt-6 sm:flex-row sm:items-center">
+        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center">
           <p className="text-xs text-zinc-400">
             © {new Date().getFullYear()} PryroReview · Verified business reviews
           </p>
