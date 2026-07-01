@@ -9,7 +9,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700'
+const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950'
 
 export function AuthModal() {
   const { isOpen, closeAuthModal } = useAuthModal()
@@ -109,7 +109,7 @@ export function AuthModal() {
               </form>
               <p className="mt-5 text-center text-sm text-zinc-500">
                 Don&apos;t have an account?{' '}
-                <button onClick={() => setMode('register')} className="font-semibold text-blue-700 hover:underline">
+                <button onClick={() => setMode('register')} className="font-semibold text-zinc-950 hover:underline">
                   Sign up
                 </button>
               </p>

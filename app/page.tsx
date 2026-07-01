@@ -135,7 +135,7 @@ export default async function HomePage() {
           <div className="flex flex-col items-center text-center gap-6">
 
             {/* Badge */}
-            <span className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-4 py-1 text-xs text-zinc-500">
+            <span className="inline-flex items-center rounded-full border border-zinc-900 bg-white px-4 py-1 text-xs text-zinc-900 font-medium">
               20 RWF per verified review
             </span>
 
