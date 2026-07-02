@@ -8,7 +8,7 @@ import { LeaderboardDropdown } from '@/components/shared/leaderboard-dropdown'
 import { LogoStrip } from '@/components/shared/logo-strip'
 import { Button } from '@/components/ui/button'
 import { Building2, ArrowRight } from 'lucide-react'
-import prisma from '@/lib/prisma'
+import prisma, { withRetry } from '@/lib/prisma'
 
 export const revalidate = 60
 
@@ -38,45 +38,41 @@ async function CompaniesSection() {
   let topRanked: any[] = []
 
   try {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const [rows, ranked] = await Promise.all([
-          prisma.$queryRaw<CompanyRow[]>`
-            SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
-              AVG(r.rating)::float AS avg_rating, COUNT(r.id) AS review_count
-            FROM "Company" c
-            LEFT JOIN "Review" r ON r."companyId" = c.id
-            GROUP BY c.id ORDER BY c."createdAt" DESC
-          `,
-          prisma.$queryRaw<any[]>`
-            SELECT c.id, c.name, c.slug, c.category, c.website,
-              AVG(r.rating)::float AS avg_rating,
-              COUNT(r.id) AS review_count
-            FROM "Company" c
-            INNER JOIN "Review" r ON r."companyId" = c.id
-            GROUP BY c.id
-            ORDER BY AVG(r.rating) DESC, COUNT(r.id) DESC
-            LIMIT 8
-          `,
-        ])
-        allCompanies = rows.map((r) => ({
-          ...r,
-          avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
-          reviewCount: Number(r.review_count),
-        }))
-        topRanked = ranked.map((r, i) => ({
-          ...r,
-          rank: i + 1,
-          avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
-          reviewCount: Number(r.review_count),
-        }))
-        break
-      } catch (err: any) {
-        if (attempt === 1 || err?.code !== 'P1001') break
-        await new Promise((res) => setTimeout(res, 2500))
-      }
-    }
-  } catch (err) { console.error('[CompaniesSection]', err) }
+    const [rows, ranked] = await withRetry(() =>
+      Promise.all([
+        prisma.$queryRaw<CompanyRow[]>`
+          SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
+            AVG(r.rating)::float AS avg_rating, COUNT(r.id) AS review_count
+          FROM "Company" c
+          LEFT JOIN "Review" r ON r."companyId" = c.id
+          GROUP BY c.id ORDER BY c."createdAt" DESC
+        `,
+        prisma.$queryRaw<any[]>`
+          SELECT c.id, c.name, c.slug, c.category, c.website,
+            AVG(r.rating)::float AS avg_rating,
+            COUNT(r.id) AS review_count
+          FROM "Company" c
+          INNER JOIN "Review" r ON r."companyId" = c.id
+          GROUP BY c.id
+          ORDER BY AVG(r.rating) DESC, COUNT(r.id) DESC
+          LIMIT 8
+        `,
+      ])
+    )
+    allCompanies = rows.map((r) => ({
+      ...r,
+      avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
+      reviewCount: Number(r.review_count),
+    }))
+    topRanked = ranked.map((r, i) => ({
+      ...r,
+      rank: i + 1,
+      avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
+      reviewCount: Number(r.review_count),
+    }))
+  } catch (err) {
+    console.error('[CompaniesSection]', err)
+  }
 
   return (
     <div className="flex-1 min-w-0">
@@ -116,12 +112,14 @@ export default async function HomePage() {
   // Fetch companies with websites for the logo strip
   let logoCompanies: { id: string; name: string; website: string }[] = []
   try {
-    const rows = await prisma.company.findMany({
-      where: { website: { not: null } },
-      select: { id: true, name: true, website: true },
-      take: 24,
-      orderBy: { createdAt: 'desc' },
-    })
+    const rows = await withRetry(() =>
+      prisma.company.findMany({
+        where: { website: { not: null } },
+        select: { id: true, name: true, website: true },
+        take: 24,
+        orderBy: { createdAt: 'desc' },
+      })
+    )
     logoCompanies = rows
       .filter((r) => r.website)
       .map((r) => ({ id: r.id, name: r.name, website: r.website! }))
