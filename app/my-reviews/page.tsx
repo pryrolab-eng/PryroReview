@@ -6,7 +6,7 @@ import { StarRating } from '@/components/shared/star-rating'
 import { useAuth } from '@/lib/auth-context'
 import { useAuthModal } from '@/lib/auth-modal-context'
 import { formatDistanceToNow } from 'date-fns'
-import { Building2, ArrowRight, Pencil, Trash2, Star, X, Loader2, Check } from 'lucide-react'
+import { Building2, Pencil, Trash2, Star, X, Loader2, Check, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
@@ -141,7 +141,7 @@ function EditReviewModal({
         </div>
 
         <div className="mt-5 flex gap-3">
-          <Button variant="outline" className="flex-1" onClick={onClose} disabled={saving}>
+          <Button variant="outline" className="flex-1 border-zinc-900 text-zinc-900 hover:bg-zinc-100" onClick={onClose} disabled={saving}>
             Cancel
           </Button>
           <Button
@@ -295,9 +295,6 @@ export default function MyReviewsPage() {
               )}
             </div>
           </div>
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/">Browse <ArrowRight className="h-4 w-4" /></Link>
-          </Button>
         </div>
 
         {reviews.length === 0 ? (
