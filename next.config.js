@@ -6,9 +6,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', 'bcryptjs'],
-  },
+  // Moved from experimental.serverComponentsExternalPackages in Next.js 15+
+  serverExternalPackages: ['@prisma/client', 'bcryptjs'],
 }
 
 module.exports = nextConfig
