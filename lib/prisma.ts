@@ -14,13 +14,14 @@ export const prisma =
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
 /**
- * Retry a Prisma call up to `attempts` times with a delay between each.
- * Handles Neon free-tier cold-start network errors (P1001, ECONNRESET, etc.)
+ * Retry a Prisma call up to `attempts` times with a short delay.
+ * Handles Neon free-tier cold-start: P1001, network errors, ECONNRESET, etc.
+ * Reduced to 2 attempts × 1.5s to stay within the 10s client timeout.
  */
 export async function withRetry<T>(
   fn: () => Promise<T>,
-  attempts = 3,
-  delayMs = 2500
+  attempts = 2,
+  delayMs = 1500
 ): Promise<T> {
   let lastErr: unknown
   for (let i = 0; i < attempts; i++) {
@@ -29,11 +30,13 @@ export async function withRetry<T>(
     } catch (err: any) {
       lastErr = err
       const isRetryable =
-        err?.code === 'P1001' ||          // Prisma "Can't reach database server"
+        err?.code === 'P1001' ||
+        err?.code === 'P1002' ||
         err?.message?.includes('network') ||
         err?.message?.includes('ECONNRESET') ||
         err?.message?.includes('ENOTFOUND') ||
-        err?.message?.includes('Connect timeout')
+        err?.message?.includes('Connect timeout') ||
+        err?.message?.includes('timed out')
       if (!isRetryable || i === attempts - 1) throw err
       await new Promise((r) => setTimeout(r, delayMs))
     }
