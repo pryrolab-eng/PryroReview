@@ -5,6 +5,21 @@ import prisma from './prisma'
 
 export const authOptions: NextAuthOptions = {
   session: { strategy: 'jwt' },
+  // On Vercel, cookies must be secure; locally they don't need to be
+  useSecureCookies: process.env.NODE_ENV === 'production',
+  cookies: {
+    sessionToken: {
+      name: process.env.NODE_ENV === 'production'
+        ? '__Secure-next-auth.session-token'
+        : 'next-auth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+      },
+    },
+  },
   providers: [
     CredentialsProvider({
       name: 'credentials',
