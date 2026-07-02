@@ -2,11 +2,12 @@ import prisma from '@/lib/prisma'
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params
     const company = await prisma.company.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       include: {
         reviews: {
           orderBy: { createdAt: 'desc' },

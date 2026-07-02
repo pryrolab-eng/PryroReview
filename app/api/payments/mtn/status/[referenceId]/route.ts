@@ -5,7 +5,7 @@ import { checkMtnPaymentStatus } from '@/lib/mtn'
 
 export async function GET(
   req: Request,
-  { params }: { params: { referenceId: string } }
+  { params }: { params: Promise<{ referenceId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -13,7 +13,7 @@ export async function GET(
       return Response.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const { referenceId } = params
+    const { referenceId } = await params
 
     // Sandbox mode: auto-confirm after first poll
     if (process.env.NEXT_PUBLIC_PAYMENT_MODE === 'sandbox') {
