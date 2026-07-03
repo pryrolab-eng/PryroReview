@@ -46,7 +46,10 @@ export default function RegisterPage() {
       <div className="w-full max-w-sm animate-fade-up">
 
         <div className="mb-8 flex justify-center">
-          <span className="text-3xl font-bold text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>PryroReview</span>
+          <div className="flex items-center gap-0.5">
+            <img src="/images/pryro.png" alt="Pryro" className="h-8 w-auto object-contain" />
+            <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">Review</span>
+          </div>
         </div>
 
         <h1 className="text-center text-2xl font-bold tracking-tight text-zinc-900">Create your account</h1>

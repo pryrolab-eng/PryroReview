@@ -100,9 +100,9 @@ function EditReviewModal({
                 <Star
                   className={cn(
                     'h-7 w-7 transition-colors',
-                    s <= (hoverRating || rating)
-                      ? 'fill-amber-400 text-amber-400'
-                      : 'fill-zinc-100 text-zinc-200'
+                  s <= (hoverRating || rating)
+                      ? 'fill-blue-500 text-blue-500'
+                      : 'fill-blue-100 text-blue-100'
                   )}
                 />
               </button>
@@ -266,11 +266,6 @@ export default function MyReviewsPage() {
     )
   }
 
-  const avg =
-    reviews.length > 0
-      ? (reviews.reduce((s, r) => s + r.rating, 0) / reviews.length).toFixed(1)
-      : null
-
   return (
     <>
       {editingReview && (
@@ -282,20 +277,6 @@ export default function MyReviewsPage() {
       )}
 
       <div className="animate-fade-up w-full px-6 py-12 lg:px-10">
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-zinc-900">My Reviews</h1>
-            <div className="mt-1 flex items-center gap-3 text-sm text-zinc-500">
-              <span>{reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}</span>
-              {avg && (
-                <>
-                  <span>·</span>
-                  <span>{avg} avg rating</span>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
 
         {reviews.length === 0 ? (
           <div className="mt-8 flex flex-col items-center rounded-md border border-zinc-200 bg-white py-20 text-center">
@@ -309,11 +290,11 @@ export default function MyReviewsPage() {
             </Button>
           </div>
         ) : (
-          <div className="mt-6 space-y-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {reviews.map((review) => (
               <div
                 key={review.id}
-                className="rounded-md border border-zinc-200 bg-white p-5"
+                className="flex flex-col rounded-2xl border border-gray-200 bg-white p-4 hover:shadow-md transition-shadow"
               >
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-3">

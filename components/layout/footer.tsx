@@ -10,9 +10,14 @@ export function Footer() {
 
           {/* Left: Logo */}
           <div className="shrink-0 self-start lg:max-w-[160px]">
-            <Link href="/">
-              <span className="text-2xl font-bold tracking-tight text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>
-                PryroReview
+            <Link href="/" className="flex items-center gap-0.5">
+              <img
+                src="/images/pryro.png"
+                alt="Pryro"
+                className="h-7 w-auto object-contain"
+              />
+              <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">
+                Review
               </span>
             </Link>
           </div>

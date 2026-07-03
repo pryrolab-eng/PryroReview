@@ -124,7 +124,10 @@ export function AuthModal() {
           {mode === 'register' && (
             <>
               <div className="mb-6 flex justify-center">
-                <span className="text-2xl font-bold text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>PryroReview</span>
+                <div className="flex items-center gap-0.5">
+                  <img src="/images/pryro.png" alt="Pryro" className="h-7 w-auto object-contain" />
+                  <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">Review</span>
+                </div>
               </div>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Create your account</h2>

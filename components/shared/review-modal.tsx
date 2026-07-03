@@ -95,7 +95,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-zinc-900/40" onClick={onClose} />
-      <div className="relative w-[calc(100vw-2rem)] max-w-md max-h-[90vh] overflow-y-auto rounded-xl border border-zinc-200 bg-white p-6">
+      <div className="relative w-full max-w-sm min-h-[320px] max-h-[90vh] overflow-y-auto rounded-xl border border-zinc-200 bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-4 rounded-md p-1 text-zinc-900 hover:bg-zinc-100 hover:text-zinc-900">
           <X className="h-5 w-5" />
         </button>
