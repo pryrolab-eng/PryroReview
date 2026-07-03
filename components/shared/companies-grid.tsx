@@ -50,7 +50,7 @@ function getEntryVariant(index: number) {
     hidden: { opacity: 0, x: d.x, y: d.y, scale: 0.95 },
     visible: (i: number) => ({
       opacity: 1, x: 0, y: 0, scale: 1,
-      transition: { delay: (i % PAGE_SIZE) * 0.04, duration: 0.35, ease: 'easeOut' },
+      transition: { delay: (i % PAGE_SIZE) * 0.04, duration: 0.35, ease: 'easeOut' as const },
     }),
   }
 }
