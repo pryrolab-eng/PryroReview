@@ -55,7 +55,7 @@ function getEntryVariant(index: number) {
   }
 }
 
-export function CompaniesGrid({ allCompanies, categories }: CompaniesGridProps) {
+export function CompaniesGrid({ allCompanies, topRanked, categories }: CompaniesGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [page, setPage] = useState(1)
@@ -76,13 +76,13 @@ export function CompaniesGrid({ allCompanies, categories }: CompaniesGridProps) 
   return (
     <div className="flex gap-6 items-start">
 
-      {/* ── Left sidebar: leaderboard list ── */}
+      {/* ── Left sidebar: leaderboard by rating ── */}
       <div className="hidden lg:block w-64 shrink-0 sticky top-20 self-start">
         <h3 className="text-base font-semibold text-zinc-900 pb-3 border-b border-gray-200 mb-1">
           Leaderboard
         </h3>
         <ul>
-          {allCompanies.slice(0, 10).map((c) => (
+          {topRanked.slice(0, 10).map((c) => (
             <li key={c.id}>
               <Link
                 href={`/company/${c.slug}`}
@@ -93,13 +93,8 @@ export function CompaniesGrid({ allCompanies, categories }: CompaniesGridProps) 
             </li>
           ))}
         </ul>
-        {allCompanies.length > 10 && (
-          <Link
-            href="/leaderboard"
-            className="mt-2 block px-1 text-xs font-semibold text-blue-600 hover:underline"
-          >
-            View all {allCompanies.length} →
-          </Link>
+        {topRanked.length === 0 && (
+          <p className="px-1 py-2 text-xs text-zinc-400">No reviews yet.</p>
         )}
       </div>
 
@@ -169,7 +164,6 @@ export function CompaniesGrid({ allCompanies, categories }: CompaniesGridProps) 
                       initial="hidden"
                       animate="visible"
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.15 } }}
-                      whileHover={{ y: -3, scale: 1.02, transition: { duration: 0.15 } }}
                       layout
                     >
                       <CompanyCard company={c} />

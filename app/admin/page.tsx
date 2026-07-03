@@ -64,7 +64,7 @@ export default function AdminPage() {
     } finally {
       setLoading(false)
     }
-  }, []) // no deps — uses refs
+  }, []) // no deps � uses refs
 
   // Only run once when auth resolves
   useEffect(() => {
@@ -93,14 +93,14 @@ export default function AdminPage() {
   // Wait for session to fully resolve before making any auth decision
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="space-y-3 w-full max-w-6xl px-4">
-          <div className="h-7 w-32 animate-pulse rounded bg-zinc-800" />
+          <div className="h-7 w-32 animate-pulse rounded bg-gray-50" />
           <div className="flex gap-2 mt-6">
-            {[1,2,3,4,5].map((i) => <div key={i} className="h-9 w-24 animate-pulse rounded bg-zinc-800" />)}
+            {[1,2,3,4,5].map((i) => <div key={i} className="h-9 w-24 animate-pulse rounded bg-gray-50" />)}
           </div>
           <div className="space-y-2 mt-6">
-            {[1,2,3,4,5].map((i) => <div key={i} className="h-14 animate-pulse rounded bg-zinc-800" />)}
+            {[1,2,3,4,5].map((i) => <div key={i} className="h-14 animate-pulse rounded bg-gray-50" />)}
           </div>
         </div>
       </div>
@@ -108,11 +108,11 @@ export default function AdminPage() {
   }
 
   if (!user) {
-    // Session fully resolved and no user — redirect to login
+    // Session fully resolved and no user � redirect to login
     router.replace('/login')
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <p className="text-zinc-400 text-sm">Redirecting to login...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-zinc-500 text-sm">Redirecting to login...</p>
       </div>
     )
   }
@@ -120,8 +120,8 @@ export default function AdminPage() {
   if (user.role !== 'ADMIN') {
     router.replace('/')
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-        <p className="text-zinc-400 text-sm">Access denied.</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-zinc-500 text-sm">Access denied.</p>
       </div>
     )
   }
@@ -196,12 +196,12 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
+    <div className="min-h-screen bg-white">
     <div className="animate-fade-up mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-10">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-bold text-white">Admin Panel</h1>
+        <h1 className="text-2xl font-bold text-zinc-900">Admin Panel</h1>
         <button onClick={handleImport} disabled={importing}
-          className="inline-flex items-center gap-2 rounded-md border border-zinc-700 px-4 py-2 text-sm font-medium text-zinc-300 hover:border-white hover:text-white disabled:opacity-50">
+          className="inline-flex items-center gap-2 rounded-md border border-gray-200 px-4 py-2 text-sm font-medium text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 disabled:opacity-50">
           <Download className="h-4 w-4" />
           {importing ? 'Importing...' : 'Import Businesses'}
         </button>
@@ -212,7 +212,7 @@ export default function AdminPage() {
         {tabs.map((t) => (
           <button key={t.id} onClick={() => setTab(t.id)}
             className={cn('inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium',
-              tab === t.id ? 'bg-white text-zinc-950' : 'border border-zinc-700 text-zinc-400 hover:border-white hover:text-white')}>
+              tab === t.id ? 'bg-zinc-900 text-white' : 'border border-gray-200 text-zinc-500 hover:border-zinc-400 hover:text-zinc-900')}>
             <t.icon className="h-4 w-4" />{t.label}
           </button>
         ))}
@@ -222,20 +222,20 @@ export default function AdminPage() {
       <div className="relative mt-5">
         <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
         <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..."
-          className="h-11 w-full rounded-md border border-zinc-700 bg-zinc-900 pl-10 pr-4 text-sm text-white placeholder:text-zinc-500 focus:border-white focus:outline-none focus:ring-1 focus:ring-white" />
+          className="h-11 w-full rounded-md border border-gray-200 bg-white pl-10 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-300" />
       </div>
 
       {/* Table */}
       {loading ? (
         <div className="mt-5 space-y-2">
-          {[1,2,3,4,5].map((i) => <div key={i} className="h-14 animate-pulse rounded-xl bg-zinc-800" />)}
+          {[1,2,3,4,5].map((i) => <div key={i} className="h-14 animate-pulse rounded-xl bg-gray-50" />)}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="mt-5 rounded-xl border border-zinc-700 p-12 text-center">
-          <p className="text-sm text-zinc-400">No data found.</p>
+        <div className="mt-5 rounded-xl border border-gray-200 p-12 text-center">
+          <p className="text-sm text-zinc-500">No data found.</p>
         </div>
       ) : (
-        <div className="mt-5 overflow-x-auto rounded-xl border border-zinc-700 bg-zinc-900">
+        <div className="mt-5 overflow-x-auto rounded-xl border border-gray-200 bg-white">
           <table className="w-full min-w-[600px]">
             {tab === 'companies' && (
               <CompaniesTable
@@ -277,12 +277,12 @@ export default function AdminPage() {
       {totalPages > 1 && (
         <div className="mt-5 flex items-center justify-center gap-2">
           <button disabled={page === 1} onClick={() => setPage(page - 1)}
-            className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:border-white hover:text-white disabled:opacity-40">
+            className="rounded-md border border-gray-200 px-4 py-2 text-sm text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 disabled:opacity-40">
             Previous
           </button>
-          <span className="px-2 text-sm text-zinc-400">{page} / {totalPages}</span>
+          <span className="px-2 text-sm text-zinc-500">{page} / {totalPages}</span>
           <button disabled={page === totalPages} onClick={() => setPage(page + 1)}
-            className="rounded-md border border-zinc-700 px-4 py-2 text-sm text-zinc-300 hover:border-white hover:text-white disabled:opacity-40">
+            className="rounded-md border border-gray-200 px-4 py-2 text-sm text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 disabled:opacity-40">
             Next
           </button>
         </div>
@@ -299,24 +299,24 @@ function CompaniesTable({ data, deleteConfirm, setDeleteConfirm, onDelete, onVer
   return (
     <>
       <thead>
-        <tr className="border-b border-zinc-700 bg-zinc-800">
+        <tr className="border-b border-gray-200 bg-gray-50">
           {['Name','Category','District','Verified','Actions'].map((h, i) => (
-            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-400 ${i === 4 ? 'text-right' : 'text-left'}`}>{h}</th>
+            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500 ${i === 4 ? 'text-right' : 'text-left'}`}>{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((c: any) => (
-          <tr key={c.id} className="border-b border-zinc-700 last:border-0 hover:bg-zinc-800">
+          <tr key={c.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50">
             <td className="px-4 py-3">
-              <Link href={`/company/${c.slug}`} className="text-sm font-medium text-white hover:underline">{c.name}</Link>
+              <Link href={`/company/${c.slug}`} className="text-sm font-medium text-zinc-900 hover:underline">{c.name}</Link>
             </td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{c.category}</td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{c.district}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{c.category}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{c.district}</td>
             <td className="px-4 py-3">
               <button onClick={() => onVerify(c.id, !c.verified)}
                 className={cn('inline-block rounded-md px-2.5 py-1 text-xs font-semibold',
-                  c.verified ? 'bg-white text-zinc-950' : 'border border-zinc-600 text-zinc-400 hover:border-white hover:text-white')}>
+                  c.verified ? 'bg-zinc-900 text-white' : 'border border-zinc-300 text-zinc-500 hover:border-zinc-500 hover:text-zinc-800')}>
                 {c.verified ? 'Verified' : 'Unverified'}
               </button>
             </td>
@@ -324,10 +324,10 @@ function CompaniesTable({ data, deleteConfirm, setDeleteConfirm, onDelete, onVer
               {deleteConfirm === c.id ? (
                 <div className="flex justify-end gap-2">
                   <button onClick={() => onDelete(c.id)} className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700">Confirm</button>
-                  <button onClick={() => setDeleteConfirm(null)} className="rounded-md border border-zinc-600 px-3 py-1.5 text-xs text-zinc-300 hover:border-white">Cancel</button>
+                  <button onClick={() => setDeleteConfirm(null)} className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs text-zinc-700 hover:border-zinc-500">Cancel</button>
                 </div>
               ) : (
-                <button onClick={() => setDeleteConfirm(c.id)} className="text-zinc-600 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
+                <button onClick={() => setDeleteConfirm(c.id)} className="text-zinc-400 hover:text-red-500"><Trash2 className="h-4 w-4" /></button>
               )}
             </td>
           </tr>
@@ -343,29 +343,29 @@ function ReviewsTable({ data, deleteConfirm, setDeleteConfirm, onDelete }: {
   return (
     <>
       <thead>
-        <tr className="border-b border-zinc-700 bg-zinc-800">
+        <tr className="border-b border-gray-200 bg-gray-50">
           {['Company','User','Rating','Comment','Actions'].map((h, i) => (
-            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-400 ${i === 4 ? 'text-right' : 'text-left'}`}>{h}</th>
+            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500 ${i === 4 ? 'text-right' : 'text-left'}`}>{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((r: any) => (
-          <tr key={r.id} className="border-b border-zinc-700 last:border-0 hover:bg-zinc-800">
+          <tr key={r.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50">
             <td className="px-4 py-3">
-              <Link href={`/company/${r.company?.slug}`} className="text-sm font-medium text-white hover:underline">{r.company?.name}</Link>
+              <Link href={`/company/${r.company?.slug}`} className="text-sm font-medium text-zinc-900 hover:underline">{r.company?.name}</Link>
             </td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{r.user?.fullName}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{r.user?.fullName}</td>
             <td className="px-4 py-3"><StarRating rating={r.rating} size="sm" /></td>
-            <td className="px-4 py-3 max-w-xs"><p className="truncate text-sm text-zinc-300">{r.comment}</p></td>
+            <td className="px-4 py-3 max-w-xs"><p className="truncate text-sm text-zinc-700">{r.comment}</p></td>
             <td className="px-4 py-3 text-right">
               {deleteConfirm === r.id ? (
                 <div className="flex justify-end gap-2">
                   <button onClick={() => onDelete(r.id)} className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-red-700">Confirm</button>
-                  <button onClick={() => setDeleteConfirm(null)} className="rounded-md border border-zinc-600 px-3 py-1.5 text-xs text-zinc-300 hover:border-white">Cancel</button>
+                  <button onClick={() => setDeleteConfirm(null)} className="rounded-md border border-zinc-300 px-3 py-1.5 text-xs text-zinc-700 hover:border-zinc-500">Cancel</button>
                 </div>
               ) : (
-                <button onClick={() => setDeleteConfirm(r.id)} className="text-zinc-600 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
+                <button onClick={() => setDeleteConfirm(r.id)} className="text-zinc-400 hover:text-red-500"><Trash2 className="h-4 w-4" /></button>
               )}
             </td>
           </tr>
@@ -381,27 +381,27 @@ function UsersTable({ data, onRoleChange, currentUserId }: {
   return (
     <>
       <thead>
-        <tr className="border-b border-zinc-700 bg-zinc-800">
+        <tr className="border-b border-gray-200 bg-gray-50">
           {['Name','Email','Role','Actions'].map((h, i) => (
-            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-400 ${i === 3 ? 'text-right' : 'text-left'}`}>{h}</th>
+            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500 ${i === 3 ? 'text-right' : 'text-left'}`}>{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((u: any) => (
-          <tr key={u.id} className="border-b border-zinc-700 last:border-0 hover:bg-zinc-800">
-            <td className="px-4 py-3 text-sm font-medium text-white">{u.fullName || '—'}</td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{u.email}</td>
+          <tr key={u.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50">
+            <td className="px-4 py-3 text-sm font-medium text-zinc-900">{u.fullName}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{u.email}</td>
             <td className="px-4 py-3">
               <span className={cn('inline-block rounded-md px-2.5 py-1 text-xs font-semibold',
-                u.role === 'ADMIN' ? 'bg-white text-zinc-950' : 'border border-zinc-600 text-zinc-400')}>
+                u.role === 'ADMIN' ? 'bg-white text-zinc-950' : 'border border-zinc-600 text-zinc-500')}>
                 {u.role}
               </span>
             </td>
             <td className="px-4 py-3 text-right">
               {u.id !== currentUserId && (
                 <button onClick={() => onRoleChange(u.id, u.role === 'ADMIN' ? 'USER' : 'ADMIN')}
-                  className="inline-flex items-center gap-1 text-sm text-zinc-400 hover:text-white hover:underline">
+                  className="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-900 hover:underline">
                   {u.role === 'ADMIN' ? <><ArrowDown className="h-3 w-3" /> Demote</> : <><ArrowUp className="h-3 w-3" /> Promote</>}
                 </button>
               )}
@@ -417,27 +417,27 @@ function PaymentsTable({ data }: { data: any[] }) {
   return (
     <>
       <thead>
-        <tr className="border-b border-zinc-700 bg-zinc-800">
+        <tr className="border-b border-gray-200 bg-gray-50">
           {['Method','Phone','Amount','Status','Date'].map((h) => (
-            <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-zinc-400">{h}</th>
+            <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-zinc-500">{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((p: any) => (
-          <tr key={p.id} className="border-b border-zinc-700 last:border-0 hover:bg-zinc-800">
-            <td className="px-4 py-3 text-sm font-medium text-white">{p.method}</td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{p.phoneNumber}</td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{p.amount} RWF</td>
+          <tr key={p.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50">
+            <td className="px-4 py-3 text-sm font-medium text-zinc-900">{p.method}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{p.phoneNumber}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{p.amount} RWF</td>
             <td className="px-4 py-3">
               <span className={cn('inline-block rounded-md px-2.5 py-1 text-xs font-semibold',
-                p.status === 'confirmed' ? 'bg-white text-zinc-950' :
-                p.status === 'pending'   ? 'border border-zinc-600 text-zinc-400' :
-                'bg-red-900 text-red-300')}>
+                p.status === 'confirmed' ? 'bg-zinc-900 text-white' :
+                p.status === 'pending'   ? 'border border-zinc-300 text-zinc-500' :
+                'bg-red-100 text-red-600')}>
                 {p.status}
               </span>
             </td>
-            <td className="px-4 py-3 text-sm text-zinc-400">
+            <td className="px-4 py-3 text-sm text-zinc-500">
               {formatDistanceToNow(new Date(p.createdAt), { addSuffix: true })}
             </td>
           </tr>
@@ -453,28 +453,28 @@ function FlagsTable({ data, onAction, onDelete }: {
   return (
     <>
       <thead>
-        <tr className="border-b border-zinc-700 bg-zinc-800">
+        <tr className="border-b border-gray-200 bg-gray-50">
           {['Review','Company','Reason','Status','Actions'].map((h, i) => (
-            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-400 ${i === 4 ? 'text-right' : 'text-left'}`}>{h}</th>
+            <th key={h} className={`px-4 py-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500 ${i === 4 ? 'text-right' : 'text-left'}`}>{h}</th>
           ))}
         </tr>
       </thead>
       <tbody>
         {data.map((f: any) => (
-          <tr key={f.id} className="border-b border-zinc-700 last:border-0 hover:bg-zinc-800">
-            <td className="px-4 py-3 max-w-xs"><p className="truncate text-sm text-zinc-300">{f.review?.comment}</p></td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{f.review?.company?.name}</td>
-            <td className="px-4 py-3 text-sm text-zinc-400">{f.reason}</td>
+          <tr key={f.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50">
+            <td className="px-4 py-3 max-w-xs"><p className="truncate text-sm text-zinc-700">{f.review?.comment}</p></td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{f.review?.company?.name}</td>
+            <td className="px-4 py-3 text-sm text-zinc-500">{f.reason}</td>
             <td className="px-4 py-3">
               <span className={cn('inline-block rounded-md px-2.5 py-1 text-xs font-medium',
-                !f.dismissed ? 'border border-zinc-600 text-zinc-300' : 'text-zinc-600')}>
+                !f.dismissed ? 'border border-zinc-600 text-zinc-700' : 'text-zinc-600')}>
                 {f.dismissed ? 'Dismissed' : 'Pending'}
               </span>
             </td>
             <td className="px-4 py-3 text-right">
               {!f.dismissed && (
                 <div className="flex justify-end gap-3">
-                  <button onClick={() => onAction(f.id, true)} className="text-sm text-zinc-400 hover:text-white">Dismiss</button>
+                  <button onClick={() => onAction(f.id, true)} className="text-sm text-zinc-500 hover:text-zinc-900">Dismiss</button>
                   <button onClick={() => onDelete(f.id)} className="text-sm text-red-400 hover:text-red-300">Delete</button>
                 </div>
               )}
