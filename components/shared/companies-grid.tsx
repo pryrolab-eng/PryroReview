@@ -133,11 +133,8 @@ export function CompaniesGrid({ allCompanies, topRanked, categories }: Companies
 
       {/* ── Left sidebar: leaderboard by rating ── */}
       <div className="hidden lg:block w-64 shrink-0 sticky top-20 self-start">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-200 mb-2">
+        <div className="pb-3 border-b border-gray-200 mb-2">
           <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
-          <Link href="/leaderboard" className="text-xs font-medium text-blue-600 hover:underline">
-            View all →
-          </Link>
         </div>
         <LeaderboardSidebar allCompanies={allCompanies} />
       </div>
