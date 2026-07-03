@@ -35,7 +35,7 @@ interface CompaniesGridProps {
   categories: string[]
 }
 
-const PAGE_SIZE = 12
+const PAGE_SIZE = 32
 
 // Stagger directions based on card index
 function getEntryVariant(index: number) {
@@ -56,6 +56,29 @@ function getEntryVariant(index: number) {
 }
 
 const SIDEBAR_PAGE_SIZE = 10
+
+function CompanyFavicon({ name, website }: { name: string; website?: string | null }) {
+  const [failed, setFailed] = useState(false)
+  const domain = website
+    ? (() => { try { return new URL(website).hostname.replace(/^www\./, '') } catch { return null } })()
+    : null
+
+  if (domain && !failed) {
+    return (
+      <img
+        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+        alt={name}
+        onError={() => setFailed(true)}
+        className="h-5 w-5 rounded object-contain shrink-0"
+      />
+    )
+  }
+  return (
+    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-zinc-100 text-[9px] font-bold text-zinc-600">
+      {name[0].toUpperCase()}
+    </div>
+  )
+}
 
 function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
   const [page, setPage] = useState(1)
@@ -80,9 +103,12 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
           <li key={c.id}>
             <Link
               href={`/company/${c.slug}`}
-              className="block py-2.5 px-1 text-sm text-zinc-700 hover:text-zinc-950 rounded-md transition-colors truncate"
+              className="flex items-center gap-2 py-1.5 px-1 rounded-md hover:bg-zinc-50 transition-colors group"
             >
-              {c.name}
+              <CompanyFavicon name={c.name} website={c.website} />
+              <span className="truncate text-sm text-zinc-700 group-hover:text-zinc-950">
+                {c.name}
+              </span>
             </Link>
           </li>
         ))}

@@ -214,9 +214,9 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
 
               {/* Comment */}
               <div>
-                <label className="block text-sm font-medium text-zinc-900 mb-1.5">Your Experience</label>
+                <label className="block text-sm font-medium text-zinc-900 mb-1.5">Your Review</label>
                 <textarea value={comment} onChange={(e) => setComment(e.target.value)}
-                  placeholder="Tell others about your experience..." rows={4}
+                  placeholder="Share your review..." rows={4}
                   className="w-full rounded-xl border border-gray-200 bg-white p-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 resize-none" />
                 <div className="mt-1 flex justify-end">
                   <span className={`text-xs ${comment.length >= 50 ? 'text-blue-600 font-semibold' : 'text-zinc-400'}`}>

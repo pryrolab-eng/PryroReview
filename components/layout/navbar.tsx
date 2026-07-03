@@ -105,7 +105,7 @@ export function Navbar() {
             ) : (
               <button
                 onClick={() => openAuthModal('sign up', 'register')}
-                className="rounded-full bg-zinc-950 px-4 py-2 text-sm font-semibold text-white hover:bg-zinc-700"
+                className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
               >
                 Sign up
               </button>
@@ -168,7 +168,7 @@ export function Navbar() {
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => { setMobileOpen(false); openAuthModal('sign up', 'register') }}
-                  className="flex items-center justify-center rounded-full bg-zinc-950 px-4 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700">
+                  className="flex items-center justify-center rounded-full bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">
                   Sign up
                 </button>
                 <p className="text-center text-xs text-zinc-500">
