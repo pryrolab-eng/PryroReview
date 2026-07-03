@@ -95,7 +95,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-zinc-900/40" onClick={onClose} />
-      <div className="relative w-[calc(100vw-2rem)] max-w-md max-h-[90vh] overflow-y-auto rounded-md border border-zinc-200 bg-white p-6">
+      <div className="relative w-[calc(100vw-2rem)] max-w-md max-h-[90vh] overflow-y-auto rounded-xl border border-zinc-200 bg-white p-6">
         <button onClick={onClose} className="absolute right-4 top-4 rounded-md p-1 text-zinc-900 hover:bg-zinc-100 hover:text-zinc-900">
           <X className="h-5 w-5" />
         </button>
@@ -111,9 +111,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
               <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)}
                 placeholder="0781234567" className={inputCls} />
             </div>
-            <Button className="w-full mt-5" disabled={!phone || paying} onClick={handlePayment}>
-              {paying ? <><Loader2 className="h-4 w-4 animate-spin" /> Initiating...</> : 'Pay 20 RWF via MTN MoMo'}
-            </Button>
+            <button
+              type="button"
+              className="w-full mt-5 h-11 rounded-md bg-blue-600 px-8 text-sm font-medium text-white hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!phone || paying}
+              onClick={handlePayment}
+            >
+              {paying ? <span className="flex items-center justify-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Initiating...</span> : 'Pay 20 RWF via MTN MoMo'}
+            </button>
           </div>
         )}
 
@@ -182,9 +187,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
               </div>
             </div>
 
-            <Button className="w-full mt-4" disabled={submitting || rating === 0 || comment.length < 50} onClick={handleSubmit}>
-              {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : 'Submit Review'}
-            </Button>
+            <button
+              type="button"
+              className="w-full mt-4 h-11 rounded-md bg-blue-600 px-8 text-sm font-medium text-white hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={submitting || rating === 0 || comment.length < 50}
+              onClick={handleSubmit}
+            >
+              {submitting ? <span className="flex items-center justify-center gap-2"><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</span> : 'Submit Review'}
+            </button>
           </div>
         )}
       </div>

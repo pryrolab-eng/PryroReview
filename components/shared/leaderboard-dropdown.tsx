@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 
@@ -19,6 +19,17 @@ type SortKey = (typeof SORT_OPTIONS)[number]['value']
 export function LeaderboardDropdown({ companies }: { companies: RankedCompany[] }) {
   const [open, setOpen] = useState(false)
   const [sort, setSort] = useState<SortKey>('top_rated')
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   const sorted = [...companies]
     .sort((a, b) =>
@@ -29,39 +40,37 @@ export function LeaderboardDropdown({ companies }: { companies: RankedCompany[] 
     .map((c, i) => ({ ...c, rank: i + 1 }))
 
   return (
-    <div
-      className="relative inline-block"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-    >
+    <div ref={containerRef} className="relative inline-block">
       <button
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-900 hover:text-blue-700"
+        onClick={() => setOpen(!open)}
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-700 hover:text-zinc-950 transition-colors"
         aria-haspopup="true"
         aria-expanded={open}
       >
         Leaderboard
-        <ChevronDown className={`h-4 w-4 ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`h-4 w-4 transition-transform duration-150 ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-30 mt-1.5 w-60 rounded-md border border-zinc-200 bg-white">
-          <div className="flex items-center justify-between border-b border-zinc-100 px-3 py-2">
+        <div className="absolute right-0 top-8 z-50 w-64 rounded-xl border border-gray-200 bg-white shadow-lg p-3">
+          <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-bold text-zinc-900 uppercase tracking-wide">Top Companies</span>
             <Link href="/leaderboard" onClick={() => setOpen(false)}
-              className="text-xs font-semibold text-blue-700 hover:underline whitespace-nowrap">
+              className="text-xs font-semibold text-blue-600 hover:underline whitespace-nowrap">
               View all →
             </Link>
           </div>
 
-          <div className="flex gap-1 border-b border-zinc-100 px-2.5 py-1.5">
+          {/* Sort tabs */}
+          <div className="flex gap-1 mb-3 border-b border-gray-100 pb-2">
             {SORT_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => setSort(opt.value)}
-                className={`rounded-md px-2.5 py-1 text-xs font-semibold ${
+                className={`rounded-md px-2.5 py-1 text-xs font-semibold transition-colors ${
                   sort === opt.value
-                    ? 'bg-blue-700 text-white'
-                    : 'text-zinc-900 hover:text-zinc-900'
+                    ? 'bg-zinc-900 text-white'
+                    : 'text-zinc-500 hover:text-zinc-900'
                 }`}
               >
                 {opt.label}
@@ -69,19 +78,22 @@ export function LeaderboardDropdown({ companies }: { companies: RankedCompany[] 
             ))}
           </div>
 
-          <ul className="py-1">
+          <ul className="space-y-0.5">
             {sorted.map((c) => (
               <li key={c.id}>
-                <Link href={`/company/${c.slug}`} onClick={() => setOpen(false)}
-                  className="flex items-center gap-2.5 px-3 py-1.5 hover:bg-zinc-50">
-                  <span className="w-4 shrink-0 text-center text-[11px] font-bold text-blue-700">
-                    {c.rank}
+                <Link
+                  href={`/company/${c.slug}`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-2.5 rounded-lg px-2 py-2 hover:bg-gray-50 transition-colors"
+                >
+                  <span className="w-5 shrink-0 text-center text-xs font-bold text-blue-600">
+                    #{c.rank}
                   </span>
                   <span className="flex-1 truncate text-sm font-medium text-zinc-900">
                     {c.name}
                   </span>
-                  <span className="shrink-0 text-xs font-semibold text-zinc-900">
-                    {c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}
+                  <span className="shrink-0 text-xs font-semibold text-amber-500">
+                    {c.avgRating > 0 ? `${c.avgRating.toFixed(1)} ★` : '—'}
                   </span>
                 </Link>
               </li>

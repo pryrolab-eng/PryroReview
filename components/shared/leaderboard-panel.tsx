@@ -75,33 +75,38 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
       </div>
 
       {/* Desktop: vertical panel */}
-      <div className="hidden lg:block rounded-md border border-zinc-200 bg-white p-4">
+      <div className="hidden lg:block rounded-xl border border-gray-200 bg-white p-4">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
-          <Link href="/leaderboard" className="text-xs font-semibold text-blue-700 hover:underline whitespace-nowrap">
+          <h3 className="text-sm font-bold text-zinc-900">🏆 Leaderboard</h3>
+          <Link href="/leaderboard" className="text-xs font-semibold text-blue-600 hover:underline whitespace-nowrap">
             View all →
           </Link>
         </div>
 
-        <ul className="space-y-1">
+        <ul>
           {sorted.map((c) => (
-            <li key={c.id}>
-              <Link href={`/company/${c.slug}`}
-                className="flex items-center gap-2.5 rounded-md p-2 hover:bg-zinc-50">
-                <span className="w-4 text-center text-xs font-bold text-blue-700 shrink-0">
-                  {c.rank}
+            <li key={c.id} className="border-b border-gray-100 last:border-0">
+              <Link
+                href={`/company/${c.slug}`}
+                className="flex items-center gap-3 py-2.5 hover:bg-gray-50 rounded-lg px-1 transition-colors"
+              >
+                {/* Rank */}
+                <span className="w-5 shrink-0 text-center text-xs font-bold text-blue-600">
+                  #{c.rank}
                 </span>
+
+                {/* Logo/Avatar */}
                 <CompanyLogo name={c.name} website={c.website} />
+
+                {/* Name + stats */}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-semibold text-zinc-900">
-                    {c.name}
-                  </p>
-                  <div className="flex items-center gap-1 mt-0.5 text-[11px] text-zinc-900">
-                    <span className="font-medium text-zinc-900">
-                      {c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}
+                  <p className="truncate text-xs font-semibold text-zinc-900">{c.name}</p>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <span className="text-[11px] font-semibold text-amber-500">
+                      {c.avgRating > 0 ? `${c.avgRating.toFixed(1)} ★` : '—'}
                     </span>
-                    <span>·</span>
-                    <span>{c.reviewCount} reviews</span>
+                    <span className="text-[11px] text-zinc-400">·</span>
+                    <span className="text-[11px] text-zinc-400">{c.reviewCount} reviews</span>
                   </div>
                 </div>
               </Link>

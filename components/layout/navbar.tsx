@@ -1,6 +1,7 @@
 ﻿'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X, ChevronDown, LayoutDashboard, Star, LogOut } from 'lucide-react'
@@ -34,9 +35,17 @@ export function Navbar() {
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
 
         {/* ── Logo ── */}
-        <Link href="/" className="shrink-0">
-          <span className="text-2xl font-bold tracking-tight text-zinc-950 select-none" style={{ fontFamily: "'Dancing Script', cursive" }}>
-            PryroReview
+        <Link href="/" className="shrink-0 flex items-center gap-2">
+          <Image
+            src="/images/pryro.png"
+            alt="Pryro"
+            width={80}
+            height={34}
+            className="h-8 w-auto object-contain"
+            priority
+          />
+          <span className="text-xl font-bold tracking-tight text-zinc-950 select-none">
+            Review
           </span>
         </Link>
 

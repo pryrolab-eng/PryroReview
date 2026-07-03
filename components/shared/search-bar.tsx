@@ -23,8 +23,8 @@ interface OsmResult {
   website: string | null
 }
 
-export function SearchBar({ className }: { className?: string }) {
-  const [query, setQuery] = useState('')
+export function SearchBar({ className, initialQuery }: { className?: string; initialQuery?: string }) {
+  const [query, setQuery] = useState(initialQuery ?? '')
   const [dbResults, setDbResults] = useState<SearchResult[]>([])
   const [osmResults, setOsmResults] = useState<OsmResult[]>([])
   const [open, setOpen] = useState(false)
@@ -32,6 +32,14 @@ export function SearchBar({ className }: { className?: string }) {
   const [loadingOsm, setLoadingOsm] = useState(false)
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // Sync when parent passes a new initialQuery (chip click)
+  useEffect(() => {
+    if (initialQuery) {
+      setQuery(initialQuery)
+      setOpen(true)
+    }
+  }, [initialQuery])
 
   useEffect(() => {
     if (query.trim().length < 1) {
@@ -121,11 +129,11 @@ export function SearchBar({ className }: { className?: string }) {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="h-14 w-full rounded-full border border-zinc-300 bg-white pl-6 pr-16 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-950 md:h-16"
+            className="w-full rounded-full border border-gray-300 bg-white px-5 py-3 pr-12 text-base text-zinc-900 placeholder:text-gray-400 shadow-sm transition-shadow hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-300"
           />
           <button
             type="submit"
-            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-zinc-950 text-white hover:bg-zinc-700 md:h-11 md:w-11"
+            className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-gray-400 hover:text-gray-600"
             aria-label="Search"
           >
             {isLoading

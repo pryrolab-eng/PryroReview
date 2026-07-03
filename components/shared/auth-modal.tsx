@@ -80,13 +80,13 @@ export function AuthModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose() }}>
-      <DialogContent className="max-w-sm gap-0 rounded-md border border-zinc-200 bg-white p-0 [&>button]:hidden">
+      <DialogContent className="max-w-sm gap-0 rounded-md border border-zinc-200 bg-white p-0 [&>button:first-child]:hidden">
 
         <button
           onClick={handleClose}
-          className="absolute right-3 top-3 z-10 flex h-7 w-7 items-center justify-center rounded-md text-zinc-900 hover:bg-zinc-100 hover:text-zinc-900"
+          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
         >
-          <X className="h-4 w-4" />
+          <X className="h-5 w-5" />
         </button>
 
         <div className="px-8 pb-8 pt-8">
@@ -108,7 +108,7 @@ export function AuthModal() {
                   <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••" className={inputCls} />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full" size="lg">
+                <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="lg">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
                 </Button>
               </form>
@@ -146,7 +146,7 @@ export function AuthModal() {
                   <input type="password" required value={regPassword} onChange={(e) => setRegPassword(e.target.value)}
                     placeholder="Min 8 chars, 1 uppercase, 1 number" className={inputCls} />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full" size="lg">
+                <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="lg">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
                 </Button>
               </form>
