@@ -123,13 +123,13 @@ export default function CompanyPage() {
         ) : (
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {company.reviews.map((review) => (
-              <div key={review.id} className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 hover:shadow-md transition-shadow">
+              <div key={review.id} className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 hover:shadow-md transition-shadow overflow-hidden">
                 {/* Header */}
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
                     <ReviewerAvatar name={review.user?.fullName || 'A'} />
-                    <div>
-                      <p className="text-sm font-semibold text-zinc-900">{review.user?.fullName || 'Anonymous'}</p>
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-zinc-900 truncate">{review.user?.fullName || 'Anonymous'}</p>
                       <p className="text-xs text-zinc-400">
                         {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}
                       </p>
@@ -144,7 +144,7 @@ export default function CompanyPage() {
                 </span>
 
                 {/* Comment */}
-                <p className="text-sm leading-relaxed text-zinc-700">{review.comment}</p>
+                <p className="text-sm leading-relaxed text-zinc-700 break-words">{review.comment}</p>
               </div>
             ))}
           </div>
