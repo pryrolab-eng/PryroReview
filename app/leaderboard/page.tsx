@@ -168,7 +168,7 @@ export default function LeaderboardPage() {
                               {c.name}
                             </span>
                             {c.verified && (
-                              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-blue-700" />
+                              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-blue-600" />
                             )}
                           </div>
                         </div>

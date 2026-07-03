@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -129,7 +129,7 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="w-full rounded-full border border-gray-300 bg-white px-5 py-3 pr-12 text-base text-zinc-900 placeholder:text-gray-400 shadow-sm transition-shadow hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-300"
+            className="w-full rounded-full border border-gray-300 bg-white px-5 py-2.5 pr-11 text-sm text-zinc-900 placeholder:text-gray-400 shadow-sm transition-shadow hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-300"
           />
           <button
             type="submit"
@@ -170,7 +170,7 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
                       </div>
                       {company.reviewCount > 0 && (
                         <span className="ml-2 shrink-0 text-xs font-medium text-amber-500">
-                          {company.avgRating.toFixed(1)} ★
+                          {company.avgRating.toFixed(1)} ?
                         </span>
                       )}
                     </button>
@@ -206,7 +206,7 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
                         </p>
                       </div>
                       <span className="ml-2 shrink-0 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-900">
-                        Add →
+                        Add ?
                       </span>
                     </Link>
                   </li>
@@ -233,7 +233,7 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
               <Link
                 href={`/add-company?name=${encodeURIComponent(query)}`}
                 onClick={() => { setOpen(false); setQuery('') }}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
               >
                 <Plus className="h-4 w-4" />
                 Add &ldquo;{query}&rdquo; to the directory

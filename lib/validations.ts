@@ -30,7 +30,7 @@ export const reviewSchema = z.object({
     'Facility Condition',
     'Overall Experience',
   ]),
-  comment: z.string().min(50, 'Comment must be at least 50 characters'),
+  comment: z.string().min(1, 'Please write a review'),
 })
 
 export const mtnPaymentSchema = z.object({

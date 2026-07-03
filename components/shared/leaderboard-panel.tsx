@@ -50,7 +50,7 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
       <div className="lg:hidden">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
-          <Link href="/leaderboard" className="text-xs font-semibold text-blue-700 hover:underline">
+          <Link href="/leaderboard" className="text-xs font-semibold text-blue-600 hover:underline">
             View all →
           </Link>
         </div>
@@ -59,7 +59,7 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
             <Link key={c.id} href={`/company/${c.slug}`}
               className="shrink-0 w-44 rounded-md border border-zinc-200 bg-white p-3">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-bold text-blue-700">#{c.rank}</span>
+                <span className="text-xs font-bold text-blue-600">#{c.rank}</span>
                 <CompanyLogo name={c.name} website={c.website} />
               </div>
               <p className="text-xs font-semibold text-zinc-900 truncate">{c.name}</p>

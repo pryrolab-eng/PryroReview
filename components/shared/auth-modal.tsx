@@ -1,15 +1,16 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, X } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { useAuthModal } from '@/lib/auth-modal-context'
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950'
+const inputCls = 'h-9 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 transition-colors'
 
 export function AuthModal() {
   const { isOpen, initialMode, closeAuthModal } = useAuthModal()
@@ -80,14 +81,10 @@ export function AuthModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose() }}>
-      <DialogContent className="max-w-sm gap-0 rounded-md border border-zinc-200 bg-white p-0 [&>button:first-child]:hidden">
-
-        <button
-          onClick={handleClose}
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
-        >
-          <X className="h-5 w-5" />
-        </button>
+      <DialogContent className="max-w-sm gap-0 rounded-3xl border border-zinc-200 bg-white p-0">
+        <VisuallyHidden>
+          <DialogTitle>{mode === 'login' ? 'Sign in to your account' : 'Create your account'}</DialogTitle>
+        </VisuallyHidden>
 
         <div className="px-8 pb-8 pt-8">
 
@@ -97,18 +94,12 @@ export function AuthModal() {
                 <h2 className="text-xl font-bold text-zinc-900">Welcome back</h2>
                 <p className="mt-1 text-sm text-zinc-900">Sign in to your account</p>
               </div>
-              <form onSubmit={handleLogin} className="mt-6 space-y-4">
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Email</label>
-                  <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com" className={inputCls} />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Password</label>
-                  <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••" className={inputCls} />
-                </div>
-                <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="lg">
+              <form onSubmit={handleLogin} className="mt-6 space-y-3">
+                <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email" className={inputCls} />
+                <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password" className={inputCls} />
+                <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white" size="sm">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
                 </Button>
               </form>
@@ -133,29 +124,20 @@ export function AuthModal() {
                 <h2 className="text-xl font-bold text-zinc-900">Create your account</h2>
                 <p className="mt-1 text-sm text-zinc-900">Join PryroReview&apos;s verified review platform</p>
               </div>
-              <form onSubmit={handleRegister} className="mt-6 space-y-4">
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Full Name</label>
-                  <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Your full name" className={inputCls} />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Email address</label>
-                  <input type="email" required value={regEmail} onChange={(e) => setRegEmail(e.target.value)}
-                    placeholder="you@example.com" className={inputCls} />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium text-zinc-900">Password</label>
-                  <input type="password" required value={regPassword} onChange={(e) => setRegPassword(e.target.value)}
-                    placeholder="Min 8 chars, 1 uppercase, 1 number" className={inputCls} />
-                </div>
-                <Button type="submit" disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="lg">
+              <form onSubmit={handleRegister} className="mt-6 space-y-3">
+                <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
+                  placeholder="Full Name" className={inputCls} />
+                <input type="email" required value={regEmail} onChange={(e) => setRegEmail(e.target.value)}
+                  placeholder="Email" className={inputCls} />
+                <input type="password" required value={regPassword} onChange={(e) => setRegPassword(e.target.value)}
+                  placeholder="Password" className={inputCls} />
+                <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white" size="sm">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
                 </Button>
               </form>
               <p className="mt-5 text-center text-sm text-zinc-900">
                 Already have an account?{' '}
-                <button onClick={() => setMode('login')} className="font-semibold text-blue-700 hover:underline">
+                <button onClick={() => setMode('login')} className="font-semibold text-blue-500 hover:underline">
                   Sign in
                 </button>
               </p>

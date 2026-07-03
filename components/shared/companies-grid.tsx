@@ -174,16 +174,19 @@ export function CompaniesGrid({ allCompanies, topRanked, categories }: Companies
             {selectedCategory ?? 'All Businesses'}
           </h2>
           <div className="relative">
+            {/* Smaller Filter button */}
             <button
               onClick={() => setFilterOpen(!filterOpen)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-zinc-700 hover:border-gray-300 hover:text-zinc-900 transition-colors"
+              className="inline-flex items-center gap-1 rounded-md border border-gray-200 px-2 py-1 text-xs font-medium text-zinc-600 hover:border-gray-300 hover:text-zinc-900 transition-colors"
             >
-              <SlidersHorizontal className="h-4 w-4" />
+              <SlidersHorizontal className="h-3 w-3" />
               Filter
-              <ChevronDown className={`h-4 w-4 transition-transform duration-150 ${filterOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`h-3 w-3 transition-transform duration-150 ${filterOpen ? 'rotate-180' : ''}`} />
             </button>
+
+            {/* Dropdown with internal scroll — max height so it never overflows the page */}
             {filterOpen && (
-              <div className="absolute right-0 top-10 z-50 w-52 rounded-xl border border-gray-200 bg-white shadow-lg p-2">
+              <div className="absolute right-0 top-8 z-50 w-52 rounded-xl border border-gray-200 bg-white shadow-lg p-2 max-h-72 overflow-y-auto">
                 <button
                   onClick={() => handleCategoryChange(null)}
                   className={`flex w-full items-center rounded-lg px-3 py-2 text-sm transition-colors ${

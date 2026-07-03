@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import { Star } from 'lucide-react'
@@ -100,7 +100,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
             {[1, 2, 3, 4, 5].map((s) => (
               <Star
                 key={s}
-                className={`h-3 w-3 ${s <= filled ? 'fill-blue-500 text-blue-500' : 'fill-blue-100 text-blue-100'}`}
+                className={`h-3 w-3 ${s <= filled ? 'fill-blue-600 text-blue-500' : 'fill-blue-200 text-blue-200'}`}
               />
             ))}
             {company.avgRating > 0 && (
@@ -111,7 +111,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
           </div>
           <button
             onClick={handleReviewClick}
-            className="shrink-0 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors"
+            className="shrink-0 rounded-full bg-blue-500 px-2 py-0.5 text-xs font-medium text-white hover:bg-blue-600 transition-colors"
           >
             Review
           </button>
