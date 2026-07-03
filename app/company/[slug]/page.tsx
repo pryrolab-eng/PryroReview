@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { Star } from 'lucide-react'
+import { Star, ArrowLeft } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { useAuthModal } from '@/lib/auth-modal-context'
 import { ReviewModal } from '@/components/shared/review-modal'
