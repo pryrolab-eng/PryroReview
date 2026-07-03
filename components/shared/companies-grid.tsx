@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { SlidersHorizontal, ChevronDown, Building2 } from 'lucide-react'
+import { SlidersHorizontal, ChevronDown, ChevronLeft, ChevronRight, Building2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CompanyCard } from '@/components/shared/company-card'
 
@@ -55,6 +55,61 @@ function getEntryVariant(index: number) {
   }
 }
 
+const SIDEBAR_PAGE_SIZE = 10
+
+function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
+  const [page, setPage] = useState(1)
+
+  const sorted = [...allCompanies].sort((a, b) => {
+    if (a.reviewCount > 0 && b.reviewCount === 0) return -1
+    if (a.reviewCount === 0 && b.reviewCount > 0) return 1
+    return b.avgRating - a.avgRating || b.reviewCount - a.reviewCount
+  })
+
+  const totalPages = Math.ceil(sorted.length / SIDEBAR_PAGE_SIZE)
+  const visible = sorted.slice((page - 1) * SIDEBAR_PAGE_SIZE, page * SIDEBAR_PAGE_SIZE)
+
+  if (sorted.length === 0) {
+    return <p className="py-4 text-xs text-zinc-400">No companies yet.</p>
+  }
+
+  return (
+    <div>
+      <ul className="space-y-0.5">
+        {visible.map((c) => (
+          <li key={c.id}>
+            <Link
+              href={`/company/${c.slug}`}
+              className="block py-2.5 px-1 text-sm text-zinc-700 hover:text-zinc-950 rounded-md transition-colors truncate"
+            >
+              {c.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      {totalPages > 1 && (
+        <div className="mt-3 flex items-center justify-between pt-2">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronLeft className="h-3 w-3" /> Prev
+          </button>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            Next <ChevronRight className="h-3 w-3" />
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function CompaniesGrid({ allCompanies, topRanked, categories }: CompaniesGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
@@ -78,24 +133,13 @@ export function CompaniesGrid({ allCompanies, topRanked, categories }: Companies
 
       {/* ── Left sidebar: leaderboard by rating ── */}
       <div className="hidden lg:block w-64 shrink-0 sticky top-20 self-start">
-        <h3 className="text-base font-semibold text-zinc-900 pb-3 border-b border-gray-200 mb-1">
-          Leaderboard
-        </h3>
-        <ul>
-          {topRanked.slice(0, 10).map((c) => (
-            <li key={c.id}>
-              <Link
-                href={`/company/${c.slug}`}
-                className="block py-2 px-1 text-sm text-zinc-700 hover:text-blue-600 transition-colors truncate"
-              >
-                {c.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        {topRanked.length === 0 && (
-          <p className="px-1 py-2 text-xs text-zinc-400">No reviews yet.</p>
-        )}
+        <div className="flex items-center justify-between pb-3 border-b border-gray-200 mb-2">
+          <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
+          <Link href="/leaderboard" className="text-xs font-medium text-blue-600 hover:underline">
+            View all →
+          </Link>
+        </div>
+        <LeaderboardSidebar allCompanies={allCompanies} />
       </div>
 
       {/* ── Company grid ── */}

@@ -49,10 +49,15 @@ async function CompaniesSection() {
       Promise.all([
         prisma.$queryRaw<CompanyRow[]>`
           SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
-            AVG(r.rating)::float AS avg_rating, COUNT(r.id) AS review_count
+            COALESCE(AVG(r.rating), 0)::float AS avg_rating, COUNT(r.id) AS review_count
           FROM "Company" c
           LEFT JOIN "Review" r ON r."companyId" = c.id
-          GROUP BY c.id ORDER BY c."createdAt" DESC
+          GROUP BY c.id
+          ORDER BY
+            CASE WHEN COUNT(r.id) = 0 THEN 1 ELSE 0 END ASC,
+            AVG(r.rating) DESC,
+            COUNT(r.id) DESC,
+            c."createdAt" DESC
         `,
         prisma.$queryRaw<any[]>`
           SELECT c.id, c.name, c.slug, c.category, c.website,
@@ -103,13 +108,13 @@ export default async function HomePage() {
     <div>
       {/* Hero */}
       <section className="bg-white">
-        <div className="w-full px-6 pt-8 pb-10 md:pt-12 md:pb-14 lg:px-10">
+        <div className="mx-auto max-w-screen-2xl px-4 pt-8 pb-10 sm:px-6 md:pt-12 md:pb-14 lg:px-10">
           <SearchHero />
         </div>
       </section>
 
       {/* Companies */}
-      <section className="w-full px-6 py-10 lg:px-10">
+      <section className="mx-auto max-w-screen-2xl w-full px-4 py-10 sm:px-6 lg:px-10">
         <Suspense fallback={<CompaniesSkeleton />}>
           <CompaniesSection />
         </Suspense>
