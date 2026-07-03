@@ -111,7 +111,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
           </div>
           <button
             onClick={handleReviewClick}
-            className="shrink-0 rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-medium text-white hover:bg-blue-700 transition-colors"
+            className="shrink-0 rounded-full bg-blue-600 px-2 py-0.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors"
           >
             Review
           </button>

@@ -136,7 +136,7 @@ export function Navbar() {
 
         {/* ── Mobile menu ── */}
         {mobileOpen && (
-          <div className="border-t border-zinc-100 bg-white px-4 pb-4 pt-2 md:hidden rounded-b-full">
+          <div className="border-t border-zinc-100 bg-white px-4 pb-4 pt-2 md:hidden rounded-b-2xl">
             <nav className="space-y-1">
               {user ? (
                 <Link href="/add-company" onClick={() => setMobileOpen(false)}

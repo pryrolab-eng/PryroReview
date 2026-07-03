@@ -121,7 +121,7 @@ export default function CompanyPage() {
             </button>
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {company.reviews.map((review) => (
               <div key={review.id} className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 hover:shadow-md transition-shadow">
                 {/* Header */}

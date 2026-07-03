@@ -74,7 +74,7 @@ function EditReviewModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-zinc-900/40" onClick={onClose} />
-      <div className="relative w-full max-w-md rounded-md border border-zinc-200 bg-white p-6 shadow-xl">
+      <div className="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-md border border-zinc-200 bg-white p-6 shadow-xl">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-md p-1 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900"
@@ -290,7 +290,7 @@ export default function MyReviewsPage() {
             </Button>
           </div>
         ) : (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {reviews.map((review) => (
               <div
                 key={review.id}

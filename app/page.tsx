@@ -18,7 +18,7 @@ function CompaniesSkeleton() {
       {/* Center skeleton */}
       <div className="flex-1 min-w-0">
         <div className="mb-5 h-6 w-36 animate-pulse rounded bg-slate-100" />
-        <div className="grid grid-cols-2 gap-4 xl:grid-cols-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {[1,2,3,4,5,6].map((i) => (
             <div key={i} className="h-36 animate-pulse rounded-2xl bg-slate-100" />
           ))}
