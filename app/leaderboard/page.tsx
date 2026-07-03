@@ -85,8 +85,8 @@ export default function LeaderboardPage() {
           <h1 className="text-2xl font-bold text-slate-900">Leaderboard</h1>
           <p className="mt-1 text-sm text-zinc-900">
             {tab === 'best'
-              ? 'Top rated companies by verified reviews'
-              : 'Lowest rated companies by verified reviews'}
+              ? 'All companies ranked from highest to lowest rating'
+              : 'All companies ranked from lowest to highest rating'}
           </p>
         </div>
         <Badge variant="outline" className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs">
@@ -190,17 +190,23 @@ export default function LeaderboardPage() {
                     {/* Rating */}
                     <TableCell className="py-3">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-slate-900 tabular-nums">
-                          {c.avg_rating.toFixed(1)}
-                        </span>
-                        <StarDisplay rating={c.avg_rating} />
+                        {c.review_count > 0 ? (
+                          <>
+                            <span className="text-sm font-bold text-slate-900 tabular-nums">
+                              {c.avg_rating.toFixed(1)}
+                            </span>
+                            <StarDisplay rating={c.avg_rating} />
+                          </>
+                        ) : (
+                          <span className="text-xs text-zinc-400">No reviews</span>
+                        )}
                       </div>
                     </TableCell>
 
                     {/* Review count */}
                     <TableCell className="py-3 text-right">
                       <span className="text-sm font-semibold text-slate-900 tabular-nums">
-                        {c.review_count}
+                        {c.review_count > 0 ? c.review_count : '—'}
                       </span>
                     </TableCell>
                   </TableRow>

@@ -5,11 +5,13 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
     const type = (searchParams.get('type') || 'best') as 'best' | 'worst'
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'))
-    const take = 10
+    const take = 25
     const skip = (page - 1) * take
 
-    // Get all companies that have at least one review, with avg rating
-    // Run best and worst as separate fixed queries
+    // Include ALL companies (even with no reviews), sorted by avg rating.
+    // Companies with no reviews get avg_rating = 0 and review_count = 0.
+    // Best: highest avg first (ties broken by review count), no-review companies at bottom.
+    // Worst: lowest avg first among companies that HAVE reviews, then no-review companies.
     const bestQuery = prisma.$queryRaw<
       Array<{
         id: string
@@ -18,18 +20,22 @@ export async function GET(req: Request) {
         category: string
         district: string
         verified: boolean
+        website: string | null
         avg_rating: number
         review_count: bigint
       }>
     >`
       SELECT
-        c.id, c.name, c.slug, c.category, c.district, c.verified,
-        AVG(r.rating)::float AS avg_rating,
+        c.id, c.name, c.slug, c.category, c.district, c.verified, c.website,
+        COALESCE(AVG(r.rating), 0)::float AS avg_rating,
         COUNT(r.id) AS review_count
       FROM "Company" c
-      INNER JOIN "Review" r ON r."companyId" = c.id
-      GROUP BY c.id, c.name, c.slug, c.category, c.district, c.verified
-      ORDER BY avg_rating DESC, review_count DESC
+      LEFT JOIN "Review" r ON r."companyId" = c.id
+      GROUP BY c.id, c.name, c.slug, c.category, c.district, c.verified, c.website
+      ORDER BY
+        CASE WHEN COUNT(r.id) = 0 THEN 1 ELSE 0 END ASC,
+        avg_rating DESC,
+        COUNT(r.id) DESC
     `
 
     const worstQuery = prisma.$queryRaw<
@@ -40,29 +46,33 @@ export async function GET(req: Request) {
         category: string
         district: string
         verified: boolean
+        website: string | null
         avg_rating: number
         review_count: bigint
       }>
     >`
       SELECT
-        c.id, c.name, c.slug, c.category, c.district, c.verified,
-        AVG(r.rating)::float AS avg_rating,
+        c.id, c.name, c.slug, c.category, c.district, c.verified, c.website,
+        COALESCE(AVG(r.rating), 0)::float AS avg_rating,
         COUNT(r.id) AS review_count
       FROM "Company" c
-      INNER JOIN "Review" r ON r."companyId" = c.id
-      GROUP BY c.id, c.name, c.slug, c.category, c.district, c.verified
-      ORDER BY avg_rating ASC, review_count DESC
+      LEFT JOIN "Review" r ON r."companyId" = c.id
+      GROUP BY c.id, c.name, c.slug, c.category, c.district, c.verified, c.website
+      ORDER BY
+        CASE WHEN COUNT(r.id) = 0 THEN 1 ELSE 0 END ASC,
+        avg_rating ASC,
+        COUNT(r.id) DESC
     `
 
-    const companiesWithRatings = await (type === 'best' ? bestQuery : worstQuery)
+    const all = await (type === 'best' ? bestQuery : worstQuery)
 
-    const total = companiesWithRatings.length
-    const paginated = companiesWithRatings.slice(skip, skip + take)
+    const total = all.length
+    const paginated = all.slice(skip, skip + take)
 
     const ranked = paginated.map((company, index) => ({
       ...company,
       review_count: Number(company.review_count),
-      avg_rating: Number(company.avg_rating.toFixed(1)),
+      avg_rating: Number(Number(company.avg_rating).toFixed(1)),
       rank: skip + index + 1,
     }))
 
