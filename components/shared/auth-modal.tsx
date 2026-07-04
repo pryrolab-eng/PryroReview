@@ -10,7 +10,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-const inputCls = 'h-9 w-full rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-colors'
+const inputCls = 'h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200'
 
 export function AuthModal() {
   const { isOpen, initialMode, closeAuthModal } = useAuthModal()
@@ -99,7 +99,7 @@ export function AuthModal() {
                   placeholder="Email" className={inputCls} />
                 <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password" className={inputCls} />
-                <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white" size="sm">
+                <Button type="submit" disabled={loading} className="w-full bg-blue-700 hover:bg-blue-800 text-white" size="default">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
                 </Button>
               </form>
@@ -131,7 +131,7 @@ export function AuthModal() {
                   placeholder="Email" className={inputCls} />
                 <input type="password" required value={regPassword} onChange={(e) => setRegPassword(e.target.value)}
                   placeholder="Password" className={inputCls} />
-                <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white" size="sm">
+                <Button type="submit" disabled={loading} className="w-full bg-blue-700 hover:bg-blue-800 text-white" size="default">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
                 </Button>
               </form>

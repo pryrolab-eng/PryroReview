@@ -130,7 +130,7 @@ export default function CompanyPage() {
       <div className="flex flex-col sm:flex-row sm:items-center gap-5 pb-8 border-b border-gray-200">
 
         {/* Logo */}
-        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+        <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white overflow-hidden">
           <CompanyLogo name={company.name} website={company.website} />
         </div>
 
@@ -197,7 +197,7 @@ export default function CompanyPage() {
             <p className="text-sm text-zinc-500 mb-4">No reviews yet. Be the first.</p>
             <button
               onClick={handleWriteReview}
-              className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+              className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200"
             >
               Write a Review
             </button>

@@ -7,7 +7,7 @@ import { Loader2, MailCheck, AlertCircle } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { toast } from 'sonner'
 
-const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950'
+const inputCls = 'h-10 w-full rounded-lg border border-slate-200 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200'
 
 function LoginForm() {
   const [email, setEmail] = useState('')
@@ -93,7 +93,7 @@ function LoginForm() {
           </div>
           <button
             type="submit" disabled={loading}
-            className="flex h-11 w-full items-center justify-center gap-2 rounded-md bg-zinc-950 text-sm font-semibold text-white hover:bg-zinc-700 disabled:opacity-60"
+            className="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:opacity-60"
           >
             {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
           </button>

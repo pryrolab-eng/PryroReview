@@ -186,7 +186,7 @@ select:-webkit-autofill:focus {
 
 /* Focus ring using brand blue */
 *:focus-visible {
-  outline: 2px solid hsl(var(--brand));
+  outline: 2px solid #1d4ed8;
   outline-offset: 2px;
 }
 

@@ -66,7 +66,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
     <div className="relative">
       <Link
         href={`/company/${company.slug}`}
-        className="group relative flex flex-col rounded-2xl border border-gray-200 bg-white p-3 transition-shadow duration-200 hover:shadow-md"
+        className="group relative flex flex-col rounded-2xl border border-slate-200 bg-white p-4 transition-colors duration-200"
       >
         {/* Top row */}
         <div className="flex items-start gap-3">
@@ -111,7 +111,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
           </div>
           <button
             onClick={handleReviewClick}
-            className="shrink-0 rounded-full bg-blue-500 px-2 py-0.5 text-xs font-medium text-white hover:bg-blue-600 transition-colors"
+            className="shrink-0 rounded-lg bg-blue-700 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-800 transition-colors duration-200"
           >
             Review
           </button>
