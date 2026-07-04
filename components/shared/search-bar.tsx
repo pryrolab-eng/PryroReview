@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Search, Plus, MapPin, Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import { useAddCompanyModal } from '@/lib/add-company-modal-context'
 
 interface SearchResult {
   id: string
@@ -32,6 +33,7 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
   const [loadingOsm, setLoadingOsm] = useState(false)
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
+  const { openAddCompanyModal } = useAddCompanyModal()
 
   // Sync when parent passes a new initialQuery (chip click)
   useEffect(() => {
@@ -230,14 +232,13 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
               <p className="text-sm text-zinc-900">
                 No results for <span className="font-medium text-zinc-900">&ldquo;{query}&rdquo;</span>
               </p>
-              <Link
-                href={`/add-company?name=${encodeURIComponent(query)}`}
-                onClick={() => { setOpen(false); setQuery('') }}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
+              <button
+                onClick={() => { setOpen(false); setQuery(''); openAddCompanyModal(query) }}
+                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
               >
                 <Plus className="h-4 w-4" />
                 Add &ldquo;{query}&rdquo; to the directory
-              </Link>
+              </button>
             </div>
           )}
         </div>

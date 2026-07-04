@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react'
 import { Menu, X, ChevronDown, LayoutDashboard, Star, LogOut } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { useAuthModal } from '@/lib/auth-modal-context'
+import { useAddCompanyModal } from '@/lib/add-company-modal-context'
+import { AddCompanyModal } from '@/components/shared/add-company-modal'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -15,6 +17,7 @@ export function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { openAuthModal } = useAuthModal()
+  const { openAddCompanyModal } = useAddCompanyModal()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 4)
@@ -47,12 +50,12 @@ export function Navbar() {
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-3">
             {user ? (
-              <Link
-                href="/add-company"
+              <button
+                onClick={() => openAddCompanyModal()}
                 className="rounded-full px-4 py-1.5 text-sm font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
               >
                 Add Company
-              </Link>
+              </button>
             ) : (
               <button
                 onClick={() => openAuthModal('add a company')}
@@ -128,10 +131,12 @@ export function Navbar() {
         <div className="border-t border-zinc-100 bg-white px-4 pb-4 pt-2 md:hidden">
           <nav className="space-y-1">
             {user ? (
-              <Link href="/add-company" onClick={() => setMobileOpen(false)}
-                className="block rounded-md px-3 py-2 text-sm font-medium text-zinc-900 hover:bg-zinc-50">
+              <button
+                onClick={() => { setMobileOpen(false); openAddCompanyModal() }}
+                className="block w-full rounded-md px-3 py-2 text-left text-sm font-medium text-zinc-900 hover:bg-zinc-50"
+              >
                 Add Company
-              </Link>
+              </button>
             ) : (
               <button
                 onClick={() => { setMobileOpen(false); openAuthModal('add a company') }}

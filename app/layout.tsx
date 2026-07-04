@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { AuthProvider } from '@/lib/auth-context'
 import { AuthModalProvider } from '@/lib/auth-modal-context'
+import { AddCompanyModalProvider } from '@/lib/add-company-modal-context'
 import { AuthModal } from '@/components/shared/auth-modal'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
@@ -27,11 +28,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col bg-white font-sans">
         <AuthProvider>
           <AuthModalProvider>
+            <AddCompanyModalProvider>
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
             <AuthModal />
             <Toaster position="bottom-right" />
+            </AddCompanyModalProvider>
           </AuthModalProvider>
         </AuthProvider>
       </body>
