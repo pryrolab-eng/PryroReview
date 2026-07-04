@@ -1,6 +1,6 @@
 ﻿'use client'
 
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { StarRating } from '@/components/shared/star-rating'
 import { useAuth } from '@/lib/auth-context'
@@ -171,37 +171,6 @@ export default function MyReviewsPage() {
   const [editingReview, setEditingReview] = useState<ReviewWithCompany | null>(null)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [deleting, setDeleting] = useState<string | null>(null)
-  // track whether we've already kicked off a fetch so we don't fire twice
-  const fetchedRef = useRef(false)
-
-  const loadReviews = useCallback(async () => {
-    if (fetchedRef.current) return   // prevent duplicate calls
-    fetchedRef.current = true
-    setLoading(true)
-    setFetchError(null)
-    // 10s hard timeout on the fetch
-    const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 10000)
-    try {
-      const res = await fetch('/api/reviews', { signal: controller.signal })
-      if (res.ok) {
-        const data = await res.json()
-        setReviews(Array.isArray(data) ? data : [])
-      } else {
-        const err = await res.json().catch(() => ({}))
-        setFetchError(err.error || `Error ${res.status}`)
-      }
-    } catch (e: any) {
-      if (e?.name === 'AbortError') {
-        setFetchError('Request timed out — the database may be waking up. Please retry.')
-      } else {
-        setFetchError('Could not load reviews. Please retry.')
-      }
-    } finally {
-      clearTimeout(timeout)
-      setLoading(false)
-    }
-  }, [])
 
   useEffect(() => {
     if (authLoading) return
@@ -209,10 +178,27 @@ export default function MyReviewsPage() {
       setLoading(false)
       return
     }
-    // Reset the guard every time user changes so re-login works
-    fetchedRef.current = false
-    loadReviews()
-  }, [user, authLoading, loadReviews])
+
+    setLoading(true)
+    setFetchError(null)
+
+    fetch('/api/reviews')
+      .then(async (res) => {
+        if (res.ok) {
+          const data = await res.json()
+          setReviews(Array.isArray(data) ? data : [])
+        } else {
+          const err = await res.json().catch(() => ({}))
+          setFetchError(err.error || `Error ${res.status}`)
+        }
+      })
+      .catch(() => {
+        setFetchError('Could not load reviews. Please retry.')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [user?.id, authLoading])
 
   const handleDelete = async (id: string) => {
     setDeleting(id)
@@ -275,7 +261,7 @@ export default function MyReviewsPage() {
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-5 text-sm text-red-700">
           {fetchError}
           <button
-            onClick={() => { fetchedRef.current = false; loadReviews() }}
+            onClick={() => window.location.reload()}
             className="ml-3 font-semibold underline hover:no-underline"
           >
             Retry

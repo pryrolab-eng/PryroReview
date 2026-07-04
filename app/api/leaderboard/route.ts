@@ -27,7 +27,7 @@ export async function GET(req: Request) {
     >`
       SELECT
         c.id, c.name, c.slug, c.category, c.district, c.verified, c.website,
-        COALESCE(AVG(r.rating), 0)::float AS avg_rating,
+        COALESCE(AVG(NULLIF(r.rating, 0)), 0)::float AS avg_rating,
         COUNT(r.id) AS review_count
       FROM "Company" c
       LEFT JOIN "Review" r ON r."companyId" = c.id
@@ -53,7 +53,7 @@ export async function GET(req: Request) {
     >`
       SELECT
         c.id, c.name, c.slug, c.category, c.district, c.verified, c.website,
-        COALESCE(AVG(r.rating), 0)::float AS avg_rating,
+        COALESCE(AVG(NULLIF(r.rating, 0)), 0)::float AS avg_rating,
         COUNT(r.id) AS review_count
       FROM "Company" c
       LEFT JOIN "Review" r ON r."companyId" = c.id

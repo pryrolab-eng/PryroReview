@@ -49,24 +49,24 @@ async function CompaniesSection() {
       Promise.all([
         prisma.$queryRaw<CompanyRow[]>`
           SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
-            COALESCE(AVG(r.rating), 0)::float AS avg_rating, COUNT(r.id) AS review_count
+            COALESCE(AVG(NULLIF(r.rating, 0)), 0)::float AS avg_rating, COUNT(r.id) AS review_count
           FROM "Company" c
           LEFT JOIN "Review" r ON r."companyId" = c.id
           GROUP BY c.id
           ORDER BY
             CASE WHEN COUNT(r.id) = 0 THEN 1 ELSE 0 END ASC,
-            AVG(r.rating) DESC,
+            AVG(NULLIF(r.rating, 0)) DESC,
             COUNT(r.id) DESC,
             c."createdAt" DESC
         `,
         prisma.$queryRaw<any[]>`
           SELECT c.id, c.name, c.slug, c.category, c.website,
-            AVG(r.rating)::float AS avg_rating,
+            AVG(NULLIF(r.rating, 0))::float AS avg_rating,
             COUNT(r.id) AS review_count
           FROM "Company" c
           INNER JOIN "Review" r ON r."companyId" = c.id
           GROUP BY c.id
-          ORDER BY AVG(r.rating) DESC, COUNT(r.id) DESC
+          ORDER BY AVG(NULLIF(r.rating, 0)) DESC, COUNT(r.id) DESC
           LIMIT 10
         `,
       ])
