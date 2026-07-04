@@ -22,7 +22,7 @@ export const companySchema = z.object({
 export const reviewSchema = z.object({
   companyId: z.string(),
   paymentId: z.string(),
-  rating: z.number().min(1).max(5),
+  rating: z.number().min(0).max(5),
   category: z.enum([
     'Staff Attitude',
     'Speed of Service',

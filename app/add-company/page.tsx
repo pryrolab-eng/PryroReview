@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 const categories = ['Telecommunications','Banking & Finance','Healthcare','Government Services','Airlines & Transport','Hospitality & Tourism','Retail & Shopping','Education','Energy & Utilities','NGOs & Development','Other']
 const districts  = ['Kigali','Northern Province','Southern Province','Eastern Province','Western Province']
 
-const inputCls  = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600'
+const inputCls  = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600'
 const selectCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600'
 const labelCls  = 'block text-sm font-medium text-zinc-900 mb-1.5'
 
@@ -96,7 +96,7 @@ function AddCompanyForm() {
         <div>
           <label className={labelCls}>Description <span className="text-zinc-900 font-normal">(optional)</span></label>
           <textarea name="description" rows={3}
-            className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
+            className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 resize-none"
             placeholder="What does this company do?" />
         </div>
 

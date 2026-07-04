@@ -91,7 +91,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-6">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative w-full max-w-md rounded-3xl bg-white shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-xs rounded-[2rem] bg-white shadow-2xl overflow-hidden">
 
         {/* Header */}
         <div className="flex items-center justify-between px-8 pt-7 pb-5 border-b border-gray-100">
@@ -134,8 +134,8 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           {step === 'payment' && (
             <div className="space-y-4">
               <div className="rounded-xl bg-white p-4">
-                <p className="text-sm font-semibold text-blue-500">20 RWF verification fee</p>
-                <p className="text-xs text-blue-500 mt-0.5">Paid via MTN MoMo to prevent fake reviews</p>
+                <p className="text-sm font-semibold text-zinc-900">20 RWF verification fee</p>
+                <p className="text-xs text-zinc-600 mt-0.5">Paid via MTN MoMo to prevent fake reviews</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">MTN Mobile Number</label>
@@ -162,8 +162,8 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           {/* -- Step 2: Processing -- */}
           {step === 'processing' && (
             <div className="py-8 text-center space-y-4">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 border-2 border-blue-200">
-                <Phone className="h-7 w-7 text-blue-500" />
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-600">
+                <Phone className="h-7 w-7 text-white" />
               </div>
               <div>
                 <p className="font-semibold text-zinc-900">Check your phone</p>
@@ -189,14 +189,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
 
               {/* Stars */}
               <div>
-                <label className="block text-sm font-medium text-zinc-900 mb-2">Your Rating</label>
+                <label className="block text-sm font-medium text-zinc-900 mb-2">Your Rating <span className="text-zinc-400 font-normal">(optional)</span></label>
                 <div className="flex gap-1">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <button key={s} onClick={() => setRating(s)}
                       onMouseEnter={() => setHoverRating(s)} onMouseLeave={() => setHoverRating(0)}
                       className="flex h-7 w-7 items-center justify-center focus:outline-none">
                       <Star className={`h-6 w-6 transition-colors ${
-                        s <= (hoverRating || rating) ? 'fill-blue-600 text-blue-500' : 'fill-gray-100 text-gray-200'
+                        s <= (hoverRating || rating) ? 'fill-blue-600 text-blue-600' : 'fill-zinc-200 text-zinc-300'
                       }`} />
                     </button>
                   ))}
@@ -216,14 +216,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Your Review</label>
                 <textarea value={comment} onChange={(e) => setComment(e.target.value)}
-                  placeholder="Share your review..." rows={4}
+                  placeholder="Share your experience..." rows={4}
                   className="w-full rounded-xl border border-gray-200 bg-white p-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 resize-none" />
               </div>
 
               <button
                 type="button"
                 onClick={handleSubmit}
-                disabled={submitting || rating === 0 || comment.trim().length < 1}
+                disabled={submitting || comment.trim().length < 1}
                 className="w-full h-11 rounded-xl bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : 'Submit Review'}

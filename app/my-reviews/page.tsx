@@ -131,7 +131,7 @@ function EditReviewModal({
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             rows={4}
-            className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950 resize-none"
+            className="w-full rounded-md border border-zinc-300 bg-white p-3.5 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950 resize-none"
           />
           <div className="mt-1 flex justify-end">
             <span className={cn('text-xs', comment.trim().length >= 50 ? 'text-zinc-900 font-semibold' : 'text-zinc-400')}>
@@ -204,11 +204,10 @@ export default function MyReviewsPage() {
   }, [])
 
   useEffect(() => {
-    if (authLoading) return
+    if (authLoading) return          // wait for session to resolve
     if (!user) {
       setLoading(false)
-      openAuthModal('view your reviews')
-      return
+      return                         // do nothing — let the page show a prompt instead
     }
     loadReviews()
   }, [user, authLoading, loadReviews])
@@ -245,6 +244,21 @@ export default function MyReviewsPage() {
             <div key={i} className="h-36 animate-pulse rounded-md bg-zinc-100" />
           ))}
         </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return (
+      <div className="w-full px-6 py-20 lg:px-10 flex flex-col items-center text-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-md border border-zinc-200 bg-white">
+          <Building2 className="h-5 w-5 text-zinc-400" />
+        </div>
+        <p className="mt-4 text-sm font-semibold text-zinc-900">Sign in to see your reviews</p>
+        <p className="mt-1 text-xs text-zinc-500">Your submitted reviews will appear here.</p>
+        <Button className="mt-5 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => openAuthModal('view your reviews')}>
+          Sign In
+        </Button>
       </div>
     )
   }

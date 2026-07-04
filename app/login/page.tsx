@@ -7,7 +7,7 @@ import { Loader2, MailCheck, AlertCircle } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { toast } from 'sonner'
 
-const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950'
+const inputCls = 'h-11 w-full rounded-md border border-zinc-300 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-zinc-950 focus:outline-none focus:ring-2 focus:ring-zinc-950'
 
 function LoginForm() {
   const [email, setEmail] = useState('')

@@ -10,7 +10,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-const inputCls = 'h-9 w-full rounded-lg border border-zinc-200 bg-zinc-50 px-3 text-sm text-zinc-900 placeholder:text-zinc-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 transition-colors'
+const inputCls = 'h-9 w-full rounded-lg border border-zinc-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-colors'
 
 export function AuthModal() {
   const { isOpen, initialMode, closeAuthModal } = useAuthModal()
@@ -81,12 +81,12 @@ export function AuthModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose() }}>
-      <DialogContent className="max-w-sm gap-0 rounded-3xl border border-zinc-200 bg-white p-0">
+      <DialogContent className="max-w-xs gap-0 rounded-[2rem] border border-zinc-200 bg-white p-0">
         <VisuallyHidden>
           <DialogTitle>{mode === 'login' ? 'Sign in to your account' : 'Create your account'}</DialogTitle>
         </VisuallyHidden>
 
-        <div className="px-8 pb-8 pt-8">
+        <div className="px-6 pb-6 pt-6">
 
           {mode === 'login' && (
             <>
