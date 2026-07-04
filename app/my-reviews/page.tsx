@@ -204,11 +204,13 @@ export default function MyReviewsPage() {
   }, [])
 
   useEffect(() => {
-    if (authLoading) return          // wait for session to resolve
+    if (authLoading) return
     if (!user) {
       setLoading(false)
-      return                         // do nothing — let the page show a prompt instead
+      return
     }
+    // Reset the guard every time user changes so re-login works
+    fetchedRef.current = false
     loadReviews()
   }, [user, authLoading, loadReviews])
 
@@ -251,12 +253,15 @@ export default function MyReviewsPage() {
   if (!user) {
     return (
       <div className="w-full px-6 py-20 lg:px-10 flex flex-col items-center text-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-md border border-zinc-200 bg-white">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-white">
           <Building2 className="h-5 w-5 text-zinc-400" />
         </div>
         <p className="mt-4 text-sm font-semibold text-zinc-900">Sign in to see your reviews</p>
         <p className="mt-1 text-xs text-zinc-500">Your submitted reviews will appear here.</p>
-        <Button className="mt-5 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => openAuthModal('view your reviews')}>
+        <Button
+          className="mt-5 bg-blue-700 hover:bg-blue-800 text-white"
+          onClick={() => openAuthModal('view your reviews')}
+        >
           Sign In
         </Button>
       </div>

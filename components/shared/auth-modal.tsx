@@ -48,7 +48,8 @@ export function AuthModal() {
       if (result?.error) { toast.error('Invalid email or password'); return }
       toast.success('Welcome back!')
       handleClose()
-      router.refresh()
+      // Force a full page refresh so useSession picks up the new cookie immediately
+      window.location.reload()
     } catch {
       toast.error('Something went wrong.')
     } finally { setLoading(false) }
@@ -69,7 +70,7 @@ export function AuthModal() {
         toast.success('Account created! Signing you in...')
         await signIn('credentials', { email: regEmail, password: regPassword, redirect: false })
         handleClose()
-        router.refresh()
+        window.location.reload()
       } else {
         toast.success('Check your email to verify your account.')
         handleClose()
