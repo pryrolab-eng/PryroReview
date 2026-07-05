@@ -26,20 +26,20 @@ export function Navbar() {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-50 w-full bg-white transition-shadow duration-200${scrolled ? ' shadow-sm border-b border-zinc-100' : ''}`}>
+    <header className="sticky top-0 z-50 w-full bg-white">
       <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-8 px-4 sm:px-6 lg:px-10">
 
         {/* Logo */}
-        <Link href="/" className="shrink-0 flex items-center gap-0.5">
+        <Link href="/" className="shrink-0 flex items-end gap-1">
           <Image
             src="/images/pryro.png"
             alt="Pryro"
-            width={80}
-            height={36}
-            className="h-8 w-auto object-contain"
+            width={70}
+            height={28}
+            className="h-7 w-auto object-contain rounded-md"
             priority
           />
-          <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">
+          <span className="text-xs font-semibold tracking-tight text-zinc-950 select-none">
             Review
           </span>
         </Link>
@@ -52,21 +52,21 @@ export function Navbar() {
             {user ? (
               <button
                 onClick={() => openAddCompanyModal()}
-                className="rounded-full px-4 py-1.5 text-sm font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
+                className="rounded-full px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
               >
                 Add Company
               </button>
             ) : (
               <button
                 onClick={() => openAuthModal('add a company')}
-                className="rounded-full px-4 py-1.5 text-sm font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
+                className="rounded-full px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
               >
                 Add Company
               </button>
             )}
 
             {loading ? (
-              <div className="h-7 w-20 animate-pulse rounded bg-zinc-100" />
+              <div className="h-6 w-16 animate-pulse rounded bg-zinc-100" />
             ) : user ? (
               <div className="relative">
                 <button
@@ -108,7 +108,7 @@ export function Navbar() {
             ) : (
               <button
                 onClick={() => openAuthModal('sign up', 'register')}
-                className="rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200"
+                className="rounded-lg bg-blue-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-800 transition-colors duration-200"
               >
                 Sign up
               </button>

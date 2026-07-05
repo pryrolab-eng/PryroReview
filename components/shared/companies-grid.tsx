@@ -32,6 +32,7 @@ interface RankedCompany {
 interface CompaniesGridProps {
   allCompanies: Company[]
   topRanked: RankedCompany[]
+  badReviewCompanies: { id: string; name: string; slug: string; category: string; website: string | null; badReviewCount: number }[]
   categories: string[]
 }
 
@@ -63,20 +64,21 @@ function CompanyFavicon({ name, website }: { name: string; website?: string | nu
     ? (() => { try { return new URL(website).hostname.replace(/^www\./, '') } catch { return null } })()
     : null
 
-  if (domain && !failed) {
+  if (!domain || failed) {
     return (
-      <img
-        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
-        alt={name}
-        onError={() => setFailed(true)}
-        className="h-5 w-5 rounded object-contain shrink-0"
-      />
+      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-zinc-100 text-[9px] font-bold text-zinc-600">
+        {name[0].toUpperCase()}
+      </div>
     )
   }
+
   return (
-    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-zinc-100 text-[9px] font-bold text-zinc-600">
-      {name[0].toUpperCase()}
-    </div>
+    <img
+      src={`https://www.google.com/s2/favicons?domain=${domain}&sz=32`}
+      alt={name}
+      onError={() => setFailed(true)}
+      className="h-5 w-5 rounded object-contain shrink-0"
+    />
   )
 }
 
@@ -99,19 +101,30 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
   return (
     <div>
       <ul className="space-y-0.5">
-        {visible.map((c) => (
-          <li key={c.id}>
-            <Link
-              href={`/company/${c.slug}`}
-              className="flex items-center gap-2 py-1.5 px-1 rounded-md hover:bg-zinc-50 transition-colors group"
-            >
-              <CompanyFavicon name={c.name} website={c.website} />
-              <span className="truncate text-sm text-zinc-700 group-hover:text-zinc-950">
-                {c.name}
-              </span>
-            </Link>
-          </li>
-        ))}
+        {visible.map((c, i) => {
+          const globalRank = (page - 1) * SIDEBAR_PAGE_SIZE + i + 1
+          return (
+            <li key={c.id}>
+              <Link
+                href={`/company/${c.slug}`}
+                className="flex items-center gap-2 py-1.5 px-1 rounded-md hover:bg-zinc-50 transition-colors group"
+              >
+                <span className="w-5 shrink-0 text-center text-[11px] font-bold text-blue-600">
+                  {globalRank}
+                </span>
+                <CompanyFavicon name={c.name} website={c.website} />
+                <div className="min-w-0 flex-1">
+                  <span className="truncate text-sm text-zinc-700 group-hover:text-zinc-950 block">
+                    {c.name}
+                  </span>
+                  <span className="text-[11px] text-zinc-400">
+                    {c.reviewCount > 0 ? `${c.reviewCount} reviews` : 'No reviews'}
+                  </span>
+                </div>
+              </Link>
+            </li>
+          )
+        })}
       </ul>
 
       {totalPages > 1 && (
@@ -119,16 +132,16 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center justify-center h-7 w-7 rounded-md text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
-            <ChevronLeft className="h-3 w-3" /> Prev
+            <ChevronLeft className="h-4 w-4" />
           </button>
           <button
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center justify-center h-7 w-7 rounded-md text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
-            Next <ChevronRight className="h-3 w-3" />
+            <ChevronRight className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -136,7 +149,68 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
   )
 }
 
-export function CompaniesGrid({ allCompanies, topRanked, categories }: CompaniesGridProps) {
+function WorstRatedSidebar({ companies }: { companies: { id: string; name: string; slug: string; website: string | null; badReviewCount: number }[] }) {
+  const [page, setPage] = useState(1)
+
+  const totalPages = Math.ceil(companies.length / SIDEBAR_PAGE_SIZE)
+  const visible = companies.slice((page - 1) * SIDEBAR_PAGE_SIZE, page * SIDEBAR_PAGE_SIZE)
+
+  if (companies.length === 0) {
+    return <p className="py-4 text-xs text-zinc-400">No bad reviews yet.</p>
+  }
+
+  return (
+    <div>
+      <ul className="space-y-0.5">
+        {visible.map((c, i) => {
+          const globalRank = (page - 1) * SIDEBAR_PAGE_SIZE + i + 1
+          return (
+            <li key={c.id}>
+              <Link
+                href={`/company/${c.slug}`}
+                className="flex items-center gap-2 py-1.5 px-1 rounded-md hover:bg-zinc-50 transition-colors group"
+              >
+                <span className="w-5 shrink-0 text-center text-[11px] font-bold text-red-500">
+                  {globalRank}
+                </span>
+                <CompanyFavicon name={c.name} website={c.website} />
+                <div className="min-w-0 flex-1">
+                  <span className="truncate text-sm text-zinc-700 group-hover:text-zinc-950 block">
+                    {c.name}
+                  </span>
+                  <span className="text-[11px] text-zinc-400">
+                    {c.badReviewCount} bad {c.badReviewCount === 1 ? 'review' : 'reviews'}
+                  </span>
+                </div>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+
+      {totalPages > 1 && (
+        <div className="mt-3 flex items-center justify-between pt-2">
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className="flex items-center justify-center h-7 w-7 rounded-md text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className="flex items-center justify-center h-7 w-7 rounded-md text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, categories }: CompaniesGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [page, setPage] = useState(1)
@@ -159,10 +233,16 @@ export function CompaniesGrid({ allCompanies, topRanked, categories }: Companies
 
       {/* ── Left sidebar: leaderboard by rating ── */}
       <div className="hidden lg:block w-64 shrink-0 sticky top-20 self-start">
-        <div className="pb-3 border-b border-gray-200 mb-2">
+        <div className="mb-2">
           <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
         </div>
         <LeaderboardSidebar allCompanies={allCompanies} />
+
+        {/* Bad Reviews section */}
+        <div className="mt-6 mb-2">
+          <h3 className="text-sm font-bold text-zinc-900">Bad Reviews</h3>
+        </div>
+        <WorstRatedSidebar companies={badReviewCompanies} />
       </div>
 
       {/* ── Company grid ── */}

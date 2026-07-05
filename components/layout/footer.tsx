@@ -10,11 +10,11 @@ export function Footer() {
 
           {/* Left: Logo */}
           <div className="shrink-0 self-start lg:max-w-[160px]">
-            <Link href="/" className="flex items-center gap-0.5">
+            <Link href="/" className="flex items-end gap-1">
               <img
                 src="/images/pryro.png"
                 alt="Pryro"
-                className="h-7 w-auto object-contain"
+                className="h-8 w-auto object-contain rounded-lg"
               />
               <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">
                 Review

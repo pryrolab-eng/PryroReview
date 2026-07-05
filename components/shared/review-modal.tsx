@@ -145,14 +145,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="0781234567"
-                  className="h-10 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200"
+                  className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200"
                 />
               </div>
               <button
                 type="button"
                 onClick={handlePayment}
                 disabled={!phone || paying}
-                className="w-full h-10 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-8 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {paying ? <><Loader2 className="h-4 w-4 animate-spin" /> Initiating...</> : 'Pay 20 RWF'}
               </button>
@@ -207,7 +207,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Category</label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}
-                  className="h-10 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200">
+                  className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200">
                   {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
@@ -224,7 +224,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 type="button"
                 onClick={handleSubmit}
                 disabled={submitting || comment.trim().length < 1}
-                className="w-full h-10 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-8 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : 'Submit Review'}
               </button>

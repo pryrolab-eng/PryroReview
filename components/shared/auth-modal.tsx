@@ -10,7 +10,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-const inputCls = 'h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200'
+const inputCls = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200'
 
 export function AuthModal() {
   const { isOpen, initialMode, closeAuthModal } = useAuthModal()
@@ -82,7 +82,7 @@ export function AuthModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose() }}>
-      <DialogContent className="max-w-xs gap-0 rounded-[2rem] border border-zinc-200 bg-white p-0">
+      <DialogContent className="max-w-[22rem] gap-0 rounded-[2rem] border border-zinc-200 bg-white p-0">
         <VisuallyHidden>
           <DialogTitle>{mode === 'login' ? 'Sign in to your account' : 'Create your account'}</DialogTitle>
         </VisuallyHidden>
@@ -116,14 +116,14 @@ export function AuthModal() {
           {mode === 'register' && (
             <>
               <div className="mb-6 flex justify-center">
-                <div className="flex items-center gap-0.5">
-                  <img src="/images/pryro.png" alt="Pryro" className="h-7 w-auto object-contain" />
+                <div className="flex items-end gap-1">
+                  <img src="/images/pryro.png" alt="Pryro" className="h-8 w-auto object-contain rounded-lg" />
                   <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">Review</span>
                 </div>
               </div>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Create your account</h2>
-                <p className="mt-1 text-sm text-zinc-900">Join PryroReview&apos;s verified review platform</p>
+                <p className="mt-1 text-xs text-zinc-900">Join PryroReview&apos;s verified review platform</p>
               </div>
               <form onSubmit={handleRegister} className="mt-6 space-y-3">
                 <input type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)}
@@ -136,7 +136,7 @@ export function AuthModal() {
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
                 </Button>
               </form>
-              <p className="mt-5 text-center text-sm text-zinc-900">
+              <p className="mt-5 text-center text-xs text-zinc-900">
                 Already have an account?{' '}
                 <button onClick={() => setMode('login')} className="font-semibold text-blue-500 hover:underline">
                   Sign in

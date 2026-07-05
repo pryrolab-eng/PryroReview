@@ -40,16 +40,24 @@ async function CompaniesSection() {
     id: string; name: string; slug: string; category: string; district: string
     website: string | null; verified: boolean; avg_rating: number | null; review_count: bigint
   }
+  type BadReviewRow = {
+    id: string; name: string; slug: string; category: string
+    website: string | null; bad_review_count: bigint
+  }
+
   let allCompanies: any[] = []
   let topRanked: any[] = []
+  let badReviewCompanies: any[] = []
   let categories: string[] = []
 
   try {
-    const [rows, ranked] = await withRetry(() =>
+    const [rows, ranked, badRows] = await withRetry(() =>
       Promise.all([
+        // All companies with avg rating
         prisma.$queryRaw<CompanyRow[]>`
           SELECT c.id, c.name, c.slug, c.category, c.district, c.website, c.verified,
-            COALESCE(AVG(NULLIF(r.rating, 0)), 0)::float AS avg_rating, COUNT(r.id) AS review_count
+            COALESCE(AVG(NULLIF(r.rating, 0)), 0)::float AS avg_rating,
+            COUNT(r.id) AS review_count
           FROM "Company" c
           LEFT JOIN "Review" r ON r."companyId" = c.id
           GROUP BY c.id
@@ -59,6 +67,7 @@ async function CompaniesSection() {
             COUNT(r.id) DESC,
             c."createdAt" DESC
         `,
+        // Top 10 for leaderboard panel
         prisma.$queryRaw<any[]>`
           SELECT c.id, c.name, c.slug, c.category, c.website,
             AVG(NULLIF(r.rating, 0))::float AS avg_rating,
@@ -69,13 +78,25 @@ async function CompaniesSection() {
           ORDER BY AVG(NULLIF(r.rating, 0)) DESC, COUNT(r.id) DESC
           LIMIT 10
         `,
+        // Bad reviews: companies that have reviews with rating = 0 or 1 (no stars / 1 star)
+        prisma.$queryRaw<BadReviewRow[]>`
+          SELECT c.id, c.name, c.slug, c.category, c.website,
+            COUNT(r.id) AS bad_review_count
+          FROM "Company" c
+          INNER JOIN "Review" r ON r."companyId" = c.id
+          WHERE r.rating <= 1
+          GROUP BY c.id
+          ORDER BY COUNT(r.id) DESC
+        `,
       ])
     )
+
     allCompanies = rows.map((r) => ({
       ...r,
       avgRating: r.avg_rating ? Number(r.avg_rating.toFixed(1)) : 0,
       reviewCount: Number(r.review_count),
     }))
+
     topRanked = ranked.map((r, i) => ({
       ...r,
       rank: i + 1,
@@ -83,12 +104,16 @@ async function CompaniesSection() {
       reviewCount: Number(r.review_count),
     }))
 
+    badReviewCompanies = badRows.map((r) => ({
+      ...r,
+      badReviewCount: Number(r.bad_review_count),
+    }))
+
     // Unique sorted categories from all companies
     const catSet = new Set(allCompanies.map((c) => c.category as string).filter(Boolean))
     categories = Array.from(catSet).sort()
   } catch (err) {
     console.error('[CompaniesSection]', err)
-    // Surface the error in UI during development
     if (process.env.NODE_ENV === 'development') {
       throw err
     }
@@ -98,6 +123,7 @@ async function CompaniesSection() {
     <CompaniesGrid
       allCompanies={allCompanies}
       topRanked={topRanked}
+      badReviewCompanies={badReviewCompanies}
       categories={categories}
     />
   )
@@ -119,8 +145,6 @@ export default async function HomePage() {
           <CompaniesSection />
         </Suspense>
       </section>
-
-    
     </div>
   )
 }

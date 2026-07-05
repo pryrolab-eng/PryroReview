@@ -57,6 +57,13 @@ function LoginForm() {
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm animate-fade-up">
 
+        <div className="mb-8 flex justify-center">
+          <div className="flex items-end gap-1">
+            <img src="/images/pryro.png" alt="Pryro" className="h-8 w-auto object-contain rounded-lg" />
+            <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">Review</span>
+          </div>
+        </div>
+
         <h1 className="text-center text-2xl font-bold tracking-tight text-zinc-900">
           Welcome back
         </h1>
