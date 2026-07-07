@@ -15,7 +15,7 @@ function LoginForm() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get('redirect') || '/'
+  const redirect = searchParams.get('callbackUrl') || searchParams.get('redirect') || '/'
   const verified = searchParams.get('verified') === 'true'
   const urlError = searchParams.get('error')
 
