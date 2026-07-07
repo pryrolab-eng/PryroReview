@@ -33,7 +33,10 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
+    // Use VERCEL_URL on Vercel, fallback to NEXTAUTH_URL for local
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXTAUTH_URL || 'http://localhost:3000'
     const resetUrl = `${baseUrl}/reset-password?token=${rawToken}`
 
     await sendResetPasswordEmail(user.email, resetUrl)
