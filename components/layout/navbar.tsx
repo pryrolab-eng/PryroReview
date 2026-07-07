@@ -73,7 +73,7 @@ export function Navbar() {
                   onClick={() => setProfileOpen(!profileOpen)}
                   className="flex h-9 items-center gap-2 rounded-full px-3 text-sm font-medium text-zinc-900 hover:bg-zinc-100 transition-colors"
                 >
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-bold text-white">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
                     {(user.fullName || user.email || 'U')[0].toUpperCase()}
                   </div>
                   <span className="max-w-[100px] truncate">{user.fullName || user.email}</span>
