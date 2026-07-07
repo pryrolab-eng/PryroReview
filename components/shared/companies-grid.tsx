@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { SlidersHorizontal, ChevronDown, ChevronLeft, ChevronRight, Building2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -34,6 +34,7 @@ interface CompaniesGridProps {
   topRanked: RankedCompany[]
   badReviewCompanies: { id: string; name: string; slug: string; category: string; website: string | null; badReviewCount: number }[]
   categories: string[]
+  initialCategory?: string | null
 }
 
 const PAGE_SIZE = 32
@@ -210,10 +211,16 @@ function WorstRatedSidebar({ companies }: { companies: { id: string; name: strin
   )
 }
 
-export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, categories }: CompaniesGridProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, categories, initialCategory }: CompaniesGridProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory ?? null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [page, setPage] = useState(1)
+
+  // Sync if initialCategory changes (e.g. back/forward navigation)
+  useEffect(() => {
+    setSelectedCategory(initialCategory ?? null)
+    setPage(1)
+  }, [initialCategory])
 
   const filtered = selectedCategory
     ? allCompanies.filter((c) => c.category === selectedCategory)
@@ -251,7 +258,7 @@ export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, cat
         {/* Header */}
         <div className="mb-5 flex items-center justify-between">
           <h2 className="text-lg font-bold text-zinc-900">
-            {selectedCategory ?? 'All Businesses'}
+            {selectedCategory ? `${selectedCategory} Companies` : 'All Businesses'}
           </h2>
           <div className="relative">
             {/* Smaller Filter button */}
@@ -280,7 +287,7 @@ export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, cat
                     key={cat}
                     onClick={() => handleCategoryChange(cat)}
                     className={`flex w-full items-center rounded-lg px-3 py-2 text-sm transition-colors ${
-                      selectedCategory === cat ? 'bg-zinc-100 text-zinc-900 font-semibold' : 'text-zinc-700 hover:bg-gray-50'
+                      selectedCategory === cat ? 'bg-zinc-100 text-blue-600 font-semibold' : 'text-zinc-700 hover:bg-gray-50'
                     }`}
                   >
                     {cat}

@@ -29,11 +29,11 @@ export default function RegisterPage() {
         toast.error(data.error || 'Failed to create account')
         return
       }
-      toast.success(`Welcome to PryroReview, ${fullName.split(' ')[0]}! Your account is ready.`, {
-        description: 'Sign in to start leaving verified reviews.',
-        duration: 5000,
+      toast.success(`Thanks for signing up, ${fullName.split(' ')[0]}! Check your email to verify your account.`, {
+        description: 'Click the link we sent to activate your account.',
+        duration: 6000,
       })
-      router.push('/login')
+      router.push('/verify-email')
     } catch {
       toast.error('Something went wrong. Please try again.')
     } finally {

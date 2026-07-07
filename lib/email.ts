@@ -76,3 +76,33 @@ export async function sendReviewDeletedEmail(
     `<p>Hi ${name}, your review for <strong>${companyName}</strong> was removed by our moderation team for violating our guidelines.</p>`
   )
 }
+
+export async function sendPasswordResetEmail(
+  email: string,
+  name: string,
+  resetUrl: string
+) {
+  await sendEmail(
+    email,
+    'Reset your Pryro Review password',
+    `
+    <div style="font-family: sans-serif; max-width: 480px; margin: 0 auto; padding: 32px;">
+      <h2 style="font-size: 24px; font-weight: 900; color: #18181b; margin: 0 0 8px;">
+        Reset your password
+      </h2>
+      <p style="color: #71717a; font-size: 14px; margin: 0 0 24px;">
+        Hi ${name}, click the button below to reset your Pryro Review account password. This link expires in 1 hour.
+      </p>
+      <a
+        href="${resetUrl}"
+        style="display: inline-block; background: #18181b; color: #fff; text-decoration: none; padding: 12px 28px; border-radius: 9999px; font-size: 14px; font-weight: 600;"
+      >
+        Reset Password
+      </a>
+      <p style="color: #a1a1aa; font-size: 12px; margin: 24px 0 0;">
+        This link expires in 1 hour. If you didn't request a password reset, you can safely ignore this email.
+      </p>
+    </div>
+    `
+  )
+}

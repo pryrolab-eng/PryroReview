@@ -98,7 +98,7 @@ export function Navbar() {
                     )}
                     <div className="mt-1 border-t border-zinc-100 pt-1">
                       <button onClick={() => { signOut(); setProfileOpen(false) }}
-                        className="flex min-h-[44px] w-full items-center gap-2.5 px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-md mx-2 mb-1">
+                        className="flex min-h-[44px] w-full items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors">
                         <LogOut className="h-4 w-4" /> Sign Out
                       </button>
                     </div>

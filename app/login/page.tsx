@@ -17,6 +17,7 @@ function LoginForm() {
   const searchParams = useSearchParams()
   const redirect = searchParams.get('callbackUrl') || searchParams.get('redirect') || '/'
   const verified = searchParams.get('verified') === 'true'
+  const resetSuccess = searchParams.get('reset') === 'true'
   const urlError = searchParams.get('error')
 
   const bannerError: string | null =
@@ -80,6 +81,15 @@ function LoginForm() {
           </div>
         )}
 
+        {resetSuccess && (
+          <div className="mt-5 flex items-center gap-3 rounded-md border border-green-200 bg-green-50 p-4">
+            <MailCheck className="h-5 w-5 shrink-0 text-green-600" />
+            <p className="text-sm font-medium text-green-700">
+              Password reset successful. You can now sign in.
+            </p>
+          </div>
+        )}
+
         {bannerError && (
           <div className="mt-5 flex items-start gap-3 rounded-md border border-red-200 bg-red-50 p-4">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
@@ -97,6 +107,11 @@ function LoginForm() {
             <label className="block text-sm font-medium text-zinc-900 mb-1.5">Password</label>
             <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)}
               className={inputCls} placeholder="••••••••" />
+            <div className="mt-1.5 flex justify-end">
+              <Link href="/forgot-password" className="text-xs text-zinc-500 hover:text-zinc-900 hover:underline transition-colors">
+                Forgot password?
+              </Link>
+            </div>
           </div>
           <button
             type="submit" disabled={loading}

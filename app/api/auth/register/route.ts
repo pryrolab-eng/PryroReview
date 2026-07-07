@@ -1,6 +1,8 @@
 import { hash } from 'bcryptjs'
+import crypto from 'crypto'
 import prisma from '@/lib/prisma'
 import { registerSchema } from '@/lib/validations'
+import { sendVerificationEmail } from '@/lib/email'
 
 export async function POST(req: Request) {
   try {
@@ -25,18 +27,32 @@ export async function POST(req: Request) {
 
     const password = await hash(parsed.data.password, 12)
 
-    // Auto-verify on creation — no email verification step
     const user = await prisma.user.create({
       data: {
         fullName: parsed.data.fullName,
         email: parsed.data.email,
         password,
-        emailVerified: new Date(),
+        // emailVerified left null until user clicks link
       },
     })
 
+    // Generate verification token
+    const token = crypto.randomBytes(32).toString('hex')
+    await prisma.verificationToken.create({
+      data: {
+        token,
+        userId: user.id,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+      },
+    })
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const verifyUrl = `${appUrl}/api/auth/verify?token=${token}`
+
+    await sendVerificationEmail(user.email, user.fullName, verifyUrl)
+
     return Response.json(
-      { message: 'Account created. You can now sign in.', verified: true },
+      { message: 'Check your email to verify your account.', verified: false },
       { status: 201 }
     )
   } catch (err) {
