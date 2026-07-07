@@ -352,7 +352,7 @@ export default function MyReviewsPage() {
           {/* ── Left Sidebar ── */}
           <div className="hidden lg:block w-64 shrink-0 sticky top-20 self-start">
             <h1 className="text-2xl font-bold text-zinc-900">My Reviews</h1>
-            <p className="mt-1 text-sm text-zinc-500">{user.name}</p>
+            <p className="mt-1 text-sm text-zinc-500">{user.fullName}</p>
 
             <div className="mt-5 space-y-3">
               {/* Total Reviews */}
