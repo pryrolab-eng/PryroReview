@@ -409,7 +409,7 @@ export default function MyReviewsPage() {
             {/* Mobile header */}
             <div className="lg:hidden mb-5">
               <h1 className="text-2xl font-bold text-zinc-900">My Reviews</h1>
-              <p className="text-sm text-zinc-500">{user.name}</p>
+              <p className="text-sm text-zinc-500">{user.fullName}</p>
             </div>
 
             {/* Filter + Sort row */}
