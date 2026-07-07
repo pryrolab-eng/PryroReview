@@ -32,27 +32,12 @@ export async function POST(req: Request) {
         fullName: parsed.data.fullName,
         email: parsed.data.email,
         password,
-        // emailVerified left null until user clicks link
+        emailVerified: new Date(), // auto-verify until email service is configured
       },
     })
-
-    // Generate verification token
-    const token = crypto.randomBytes(32).toString('hex')
-    await prisma.verificationToken.create({
-      data: {
-        token,
-        userId: user.id,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-      },
-    })
-
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-    const verifyUrl = `${appUrl}/api/auth/verify?token=${token}`
-
-    await sendVerificationEmail(user.email, user.fullName, verifyUrl)
 
     return Response.json(
-      { message: 'Check your email to verify your account.', verified: false },
+      { message: 'Account created. You can now sign in.', verified: true },
       { status: 201 }
     )
   } catch (err) {

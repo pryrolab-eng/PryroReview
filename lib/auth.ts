@@ -4,22 +4,9 @@ import bcrypt from 'bcryptjs'
 import prisma from './prisma'
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: 'jwt' },
-  // On Vercel, cookies must be secure; locally they don't need to be
-  useSecureCookies: process.env.NODE_ENV === 'production',
-  cookies: {
-    sessionToken: {
-      name: process.env.NODE_ENV === 'production'
-        ? '__Secure-next-auth.session-token'
-        : 'next-auth.session-token',
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    },
-  },
+  useSecureCookies: false,
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -47,12 +34,6 @@ export const authOptions: NextAuthOptions = {
 
         const valid = await bcrypt.compare(credentials.password, user.password)
         if (!valid) return null
-
-        // Not verified — return null with a custom error via query param trick:
-        // We redirect to /login?error=not_verified using NextAuth's error page
-        if (!user.emailVerified) {
-          throw new Error('not_verified')
-        }
 
         return {
           id: user.id,

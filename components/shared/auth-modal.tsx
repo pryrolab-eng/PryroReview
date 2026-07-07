@@ -112,9 +112,11 @@ export function AuthModal() {
     try {
       const result = await signIn('credentials', { email, password, redirect: false })
       if (result?.error) { toast.error('Invalid email or password'); return }
-      toast.success('Welcome back!')
-      handleClose()
-      window.location.reload()
+      if (result?.ok) {
+        toast.success('Welcome back!')
+        handleClose()
+        window.location.reload()
+      }
     } catch { toast.error('Something went wrong.') }
     finally { setLoading(false) }
   }
