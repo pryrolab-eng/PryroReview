@@ -30,7 +30,7 @@ export function Navbar() {
       <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-8 px-4 sm:px-6 lg:px-10">
 
         {/* Logo */}
-        <Link href="/" className="shrink-0 flex items-end gap-1">
+        <Link href="/" className="shrink-0 flex items-end gap-0">
           <Image
             src="/images/pryro.png"
             alt="Pryro"
@@ -98,7 +98,7 @@ export function Navbar() {
                     )}
                     <div className="mt-1 border-t border-zinc-100 pt-1">
                       <button onClick={() => { signOut(); setProfileOpen(false) }}
-                        className="flex min-h-[44px] w-full items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50">
+                        className="flex min-h-[44px] w-full items-center gap-2.5 px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-md mx-2 mb-1">
                         <LogOut className="h-4 w-4" /> Sign Out
                       </button>
                     </div>
@@ -165,7 +165,7 @@ export function Navbar() {
                   </Link>
                 )}
                 <button onClick={() => { signOut(); setMobileOpen(false) }}
-                  className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-red-500 hover:bg-red-50">
+                  className="flex w-full items-center justify-center gap-2 rounded-md px-3 py-2 text-sm text-white bg-red-600 hover:bg-red-700">
                   <LogOut className="h-4 w-4" /> Sign Out
                 </button>
               </>

@@ -130,8 +130,8 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
-            placeholder="Search for a company — e.g. MTN, Bank of Kigali..."
-            className="w-full rounded-full border border-gray-300 bg-white px-5 py-2.5 pr-11 text-sm text-zinc-900 placeholder:text-gray-400 shadow-sm transition-shadow hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-300"
+            placeholder="Search for a company"
+            className="w-full rounded-full border border-gray-300 bg-white px-5 py-4 pr-11 text-sm text-zinc-900 placeholder:text-gray-400 shadow-sm transition-shadow hover:shadow-md focus:border-transparent focus:outline-none focus:ring-2 focus:ring-zinc-300"
           />
           <button
             type="submit"

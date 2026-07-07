@@ -6,15 +6,25 @@ const ENV = process.env.MTN_ENVIRONMENT!
 
 export async function getMtnAccessToken(): Promise<string> {
   const credentials = Buffer.from(`${API_USER}:${API_KEY}`).toString('base64')
-  const res = await fetch(`${BASE_URL}/collection/token/`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${credentials}`,
-      'Ocp-Apim-Subscription-Key': SUB_KEY,
-    },
-  })
-  const data = await res.json()
-  return data.access_token
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 10000) // 10s timeout
+
+  try {
+    const res = await fetch(`${BASE_URL}/collection/token/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${credentials}`,
+        'Ocp-Apim-Subscription-Key': SUB_KEY,
+      },
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+    const data = await res.json()
+    return data.access_token
+  } catch (error) {
+    clearTimeout(timeout)
+    throw new Error('MTN API timeout or unreachable')
+  }
 }
 
 export async function requestMtnPayment(
@@ -25,25 +35,36 @@ export async function requestMtnPayment(
 ): Promise<boolean> {
   const token = await getMtnAccessToken()
   const msisdn = phone.startsWith('0') ? `250${phone.slice(1)}` : phone
-  const res = await fetch(`${BASE_URL}/collection/v1_0/requesttopay`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'X-Reference-Id': referenceId,
-      'X-Target-Environment': ENV,
-      'Ocp-Apim-Subscription-Key': SUB_KEY,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      amount: '20',
-      currency: 'RWF',
-      externalId,
-      payer: { partyIdType: 'MSISDN', partyId: msisdn },
-      payerMessage: 'Pryro Review payment',
-      payeeNote: `Review payment for ${companyName}`,
-    }),
-  })
-  return res.status === 202
+  
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 10000) // 10s timeout
+
+  try {
+    const res = await fetch(`${BASE_URL}/collection/v1_0/requesttopay`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'X-Reference-Id': referenceId,
+        'X-Target-Environment': ENV,
+        'Ocp-Apim-Subscription-Key': SUB_KEY,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        amount: '20',
+        currency: 'RWF',
+        externalId,
+        payer: { partyIdType: 'MSISDN', partyId: msisdn },
+        payerMessage: 'Pryro Review payment',
+        payeeNote: `Review payment for ${companyName}`,
+      }),
+      signal: controller.signal,
+    })
+    clearTimeout(timeout)
+    return res.status === 202
+  } catch (error) {
+    clearTimeout(timeout)
+    return false
+  }
 }
 
 export async function checkMtnPaymentStatus(

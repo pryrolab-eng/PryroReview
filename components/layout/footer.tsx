@@ -10,7 +10,7 @@ export function Footer() {
 
           {/* Left: Logo */}
           <div className="shrink-0 self-start lg:max-w-[160px]">
-            <Link href="/" className="flex items-end gap-1">
+            <Link href="/" className="flex items-end gap-0">
               <img
                 src="/images/pryro.png"
                 alt="Pryro"
@@ -30,13 +30,22 @@ export function Footer() {
               <p className="text-sm font-semibold text-zinc-900">Top Categories</p>
               <ul className="mt-5 space-y-3">
                 {[
-                  'Banking', 'Telecommunications', 'Government Services',
-                  'Healthcare', 'Insurance', 'Education',
-                  'Transport', 'Food & Beverage', 'All Categories',
+                  { label: 'Banking', cat: 'Banking & Finance' },
+                  { label: 'Telecommunications', cat: 'Telecommunications' },
+                  { label: 'Government Services', cat: 'Government Services' },
+                  { label: 'Healthcare', cat: 'Healthcare' },
+                  { label: 'Insurance', cat: 'Insurance' },
+                  { label: 'Education', cat: 'Education' },
+                  { label: 'Transport', cat: 'Airlines & Transport' },
+                  { label: 'Food & Beverage', cat: 'Food & Beverage' },
+                  { label: 'All Categories', cat: null },
                 ].map((item) => (
-                  <li key={item}>
-                    <Link href="/leaderboard" className="text-sm text-zinc-500 hover:text-zinc-900">
-                      {item}
+                  <li key={item.label}>
+                    <Link
+                      href={item.cat ? `/?category=${encodeURIComponent(item.cat)}` : '/'}
+                      className="text-sm text-zinc-500 hover:text-zinc-900"
+                    >
+                      {item.label}
                     </Link>
                   </li>
                 ))}
@@ -48,9 +57,9 @@ export function Footer() {
               <p className="text-sm font-semibold text-zinc-900">Company</p>
               <ul className="mt-5 space-y-3">
                 {[
-                  { href: '#', label: 'About PryroReview' },
-                  { href: '#', label: 'How It Works' },
-                  { href: '#', label: 'Pricing' },
+                  { href: '/about', label: 'About PryroReview' },
+                  { href: '/how-it-works', label: 'How It Works' },
+                  { href: '/pricing', label: 'Pricing' },
                   { href: '/leaderboard', label: 'Leaderboard' },
                   { href: '/add-company', label: 'Add a Company' },
                 ].map((l) => (
@@ -71,7 +80,7 @@ export function Footer() {
                   { href: '/', label: 'Home' },
                   { href: '/leaderboard', label: 'Leaderboard' },
                   { href: '/add-company', label: 'Add Company' },
-                  { href: '/company', label: 'Write a Review' },
+                  { href: '/', label: 'Write a Review' },
                   { href: '/my-reviews', label: 'My Reviews' },
                 ].map((l) => (
                   <li key={l.label}>

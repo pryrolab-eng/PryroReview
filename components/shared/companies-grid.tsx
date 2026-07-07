@@ -109,7 +109,7 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
                 href={`/company/${c.slug}`}
                 className="flex items-center gap-2 py-1.5 px-1 rounded-md hover:bg-zinc-50 transition-colors group"
               >
-                <span className="w-5 shrink-0 text-center text-[11px] font-bold text-blue-600">
+                <span className="w-5 shrink-0 text-center text-[11px] font-bold text-zinc-900">
                   {globalRank}
                 </span>
                 <CompanyFavicon name={c.name} website={c.website} />
@@ -117,10 +117,10 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
                   <span className="truncate text-sm text-zinc-700 group-hover:text-zinc-950 block">
                     {c.name}
                   </span>
-                  <span className="text-[11px] text-zinc-400">
-                    {c.reviewCount > 0 ? `${c.reviewCount} reviews` : 'No reviews'}
-                  </span>
                 </div>
+                <span className="shrink-0 text-[11px] text-zinc-900">
+                  {c.reviewCount === 1 ? '1 review' : `${c.reviewCount} reviews`}
+                </span>
               </Link>
             </li>
           )
@@ -178,10 +178,10 @@ function WorstRatedSidebar({ companies }: { companies: { id: string; name: strin
                   <span className="truncate text-sm text-zinc-700 group-hover:text-zinc-950 block">
                     {c.name}
                   </span>
-                  <span className="text-[11px] text-zinc-400">
-                    {c.badReviewCount} bad {c.badReviewCount === 1 ? 'review' : 'reviews'}
-                  </span>
                 </div>
+                <span className="shrink-0 text-[11px] text-zinc-900">
+                  {c.badReviewCount === 1 ? '1 review' : `${c.badReviewCount} reviews`}
+                </span>
               </Link>
             </li>
           )

@@ -116,7 +116,7 @@ export function AuthModal() {
           {mode === 'register' && (
             <>
               <div className="mb-6 flex justify-center">
-                <div className="flex items-end gap-1">
+                <div className="flex items-end gap-0">
                   <img src="/images/pryro.png" alt="Pryro" className="h-8 w-auto object-contain rounded-lg" />
                   <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">Review</span>
                 </div>

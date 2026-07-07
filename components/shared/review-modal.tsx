@@ -91,7 +91,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-6">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative w-full max-w-xs rounded-[2rem] bg-white shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-md rounded-[2rem] bg-white shadow-2xl overflow-hidden">
 
         {/* Header */}
         <div className="flex items-center justify-between px-8 pt-7 pb-5 border-b border-gray-100">
@@ -182,9 +182,9 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           {/* -- Step 3: Review form -- */}
           {step === 'form' && (
             <div className="space-y-4">
-              <div className="flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-3">
+              <div className="flex items-center gap-2 rounded-xl bg-blue-700 px-3 py-2">
                 <Check className="h-4 w-4 text-white shrink-0" />
-                <span className="text-sm font-semibold text-white">Payment confirmed</span>
+                <span className="text-xs font-semibold text-white">Payment confirmed</span>
               </div>
 
               {/* Stars */}
@@ -207,7 +207,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Category</label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}
-                  className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200">
+                  className="h-9 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200">
                   {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
