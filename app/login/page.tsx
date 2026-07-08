@@ -16,15 +16,16 @@ function LoginRedirect() {
   const urlError = searchParams.get('error')
 
   useEffect(() => {
-    // Small delay so the modal context is ready
+    // Store where to redirect after login
+    if (callbackUrl && callbackUrl !== '/') {
+      sessionStorage.setItem('authCallbackUrl', callbackUrl)
+    }
     const timer = setTimeout(() => {
       openAuthModal('sign in', 'login')
     }, 100)
     return () => clearTimeout(timer)
-  }, [openAuthModal])
+  }, [openAuthModal, callbackUrl])
 
-  // If there are special params (verified, reset, error) show them briefly
-  // before the modal opens, otherwise just redirect to home
   if (!verified && !resetSuccess && !urlError) {
     return null
   }

@@ -115,7 +115,10 @@ export function AuthModal() {
       if (result?.ok) {
         toast.success('Welcome back!')
         handleClose()
-        window.location.reload()
+        // Check if there's a stored callback URL (e.g. from /my-reviews redirect)
+        const callbackUrl = sessionStorage.getItem('authCallbackUrl')
+        sessionStorage.removeItem('authCallbackUrl')
+        window.location.href = callbackUrl || '/'
       }
     } catch { toast.error('Something went wrong.') }
     finally { setLoading(false) }
