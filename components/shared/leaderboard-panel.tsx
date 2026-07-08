@@ -66,8 +66,7 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
               <p className="text-[11px] text-zinc-900 truncate">{c.category}</p>
               <div className="mt-2 flex items-center gap-1 text-xs text-zinc-900">
                 <span className="font-semibold">{c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}</span>
-                <span className="text-zinc-900">·</span>
-                <span>{c.reviewCount} reviews</span>
+                <span className="text-amber-400">★</span>
               </div>
             </Link>
           ))}
@@ -103,10 +102,9 @@ export function LeaderboardPanel({ companies }: { companies: RankedCompany[] }) 
                   <p className="truncate text-xs font-semibold text-zinc-900">{c.name}</p>
                   <div className="flex items-center gap-1 mt-0.5">
                     <span className="text-[11px] font-semibold text-amber-500">
-                      {c.avgRating > 0 ? `${c.avgRating.toFixed(1)} ★` : '—'}
+                      {c.avgRating > 0 ? c.avgRating.toFixed(1) : '—'}
                     </span>
-                    <span className="text-[11px] text-zinc-400">·</span>
-                    <span className="text-[11px] text-zinc-400">{c.reviewCount} reviews</span>
+                    <span className="text-[11px] text-amber-400">★</span>
                   </div>
                 </div>
               </Link>

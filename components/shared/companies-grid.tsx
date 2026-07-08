@@ -119,8 +119,9 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
                     {c.name}
                   </span>
                 </div>
-                <span className="shrink-0 text-[11px] text-zinc-900">
-                  {c.reviewCount === 1 ? '1 review' : `${c.reviewCount} reviews`}
+                <span className="shrink-0 flex items-center gap-0.5 text-[11px]">
+                  <span className="text-zinc-700 font-medium">{c.reviewCount}</span>
+                  <span className="text-blue-600 text-[20px] leading-none">★</span>
                 </span>
               </Link>
             </li>
@@ -180,8 +181,9 @@ function WorstRatedSidebar({ companies }: { companies: { id: string; name: strin
                     {c.name}
                   </span>
                 </div>
-                <span className="shrink-0 text-[11px] text-zinc-900">
-                  {c.badReviewCount === 1 ? '1 review' : `${c.badReviewCount} reviews`}
+                <span className="shrink-0 flex items-center gap-0.5 text-[11px]">
+                  <span className="text-zinc-700 font-medium">{c.badReviewCount}</span>
+                  <span className="text-blue-600 text-[20px] leading-none">★</span>
                 </span>
               </Link>
             </li>
