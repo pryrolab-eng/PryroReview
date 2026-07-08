@@ -355,49 +355,36 @@ export default function MyReviewsPage() {
             <p className="mt-1 text-sm text-zinc-500">{user.fullName}</p>
 
             <div className="mt-5 space-y-3">
-              {/* Total Reviews */}
-              <div className="border border-gray-200 rounded-2xl p-4 bg-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-zinc-900">{totalReviews}</p>
-                    <p className="text-xs text-zinc-500 mt-0.5">Total Reviews</p>
-                  </div>
-                  <FileText className="h-4 w-4 text-blue-600" />
+              <div className="rounded-2xl p-4 bg-white shadow-md">
+                <div>
+                  <p className="text-2xl font-bold text-zinc-900">{totalReviews}</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Total Reviews</p>
                 </div>
               </div>
 
               {/* Avg Rating */}
-              <div className="border border-gray-200 rounded-2xl p-4 bg-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-zinc-900">
-                      {totalReviews === 0 ? '—' : avgRating.toFixed(1)}
-                    </p>
-                    <p className="text-xs text-zinc-500 mt-0.5">Avg Rating Given</p>
-                  </div>
-                  <Star className="h-4 w-4 text-blue-600" />
+              <div className="rounded-2xl p-4 bg-white shadow-md">
+                <div>
+                  <p className="text-2xl font-bold text-zinc-900">
+                    {totalReviews === 0 ? '—' : avgRating.toFixed(1)}
+                  </p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Avg Rating Given</p>
                 </div>
               </div>
 
               {/* Companies Reviewed */}
-              <div className="border border-gray-200 rounded-2xl p-4 bg-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-zinc-900">{uniqueCompanies}</p>
-                    <p className="text-xs text-zinc-500 mt-0.5">Companies Reviewed</p>
-                  </div>
-                  <Building2 className="h-4 w-4 text-blue-600" />
+              <div className="rounded-2xl p-4 bg-white shadow-md">
+                <div>
+                  <p className="text-2xl font-bold text-zinc-900">{uniqueCompanies}</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">Companies Reviewed</p>
                 </div>
               </div>
 
               {/* This Month */}
-              <div className="border border-gray-200 rounded-2xl p-4 bg-white">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-zinc-900">{thisMonthCount}</p>
-                    <p className="text-xs text-zinc-500 mt-0.5">This Month</p>
-                  </div>
-                  <Calendar className="h-4 w-4 text-blue-600" />
+              <div className="rounded-2xl p-4 bg-white shadow-md">
+                <div>
+                  <p className="text-2xl font-bold text-zinc-900">{thisMonthCount}</p>
+                  <p className="text-xs text-zinc-500 mt-0.5">This Month</p>
                 </div>
               </div>
             </div>
@@ -480,7 +467,7 @@ export default function MyReviewsPage() {
                 {sorted.map((review) => (
                   <div
                     key={review.id}
-                    className="flex flex-col rounded-2xl border border-gray-200 bg-white p-4 hover:shadow-md transition-shadow"
+                    className="flex flex-col rounded-2xl bg-white p-4 shadow-md hover:shadow-lg transition-shadow"
                   >
                     {/* Header: avatar + company + date */}
                     <div className="flex items-start gap-3">
