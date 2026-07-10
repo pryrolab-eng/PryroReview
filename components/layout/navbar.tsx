@@ -8,7 +8,6 @@ import { Menu, X, ChevronDown, LayoutDashboard, Star, LogOut } from 'lucide-reac
 import { useAuth } from '@/lib/auth-context'
 import { useAuthModal } from '@/lib/auth-modal-context'
 import { useAddCompanyModal } from '@/lib/add-company-modal-context'
-import { AddCompanyModal } from '@/components/shared/add-company-modal'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -110,7 +109,7 @@ export function Navbar() {
                 onClick={() => openAuthModal('sign up', 'register')}
                 className="rounded-lg bg-blue-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-600 transition-colors duration-200"
               >
-                Sign up
+                Get Started
               </button>
             )}
           </div>
@@ -174,7 +173,7 @@ export function Navbar() {
                 <button
                   onClick={() => { setMobileOpen(false); openAuthModal('sign up', 'register') }}
                   className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200">
-                  Sign up
+                  Get Started
                 </button>
                 <p className="text-center text-xs text-zinc-500">
                   Already have an account?{' '}

@@ -12,17 +12,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const inputCls = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200'
 
-function Logo() {
-  return (
-    <div className="mb-5 flex justify-center">
-      <div className="flex items-end gap-0">
-        <img src="/images/pryro.png" alt="Pryro" className="h-8 w-auto object-contain rounded-lg" />
-        <span className="text-sm font-semibold tracking-tight text-zinc-950 select-none">Review</span>
-      </div>
-    </div>
-  )
-}
-
 function PasswordInput({ value, onChange, placeholder = 'Password' }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   const [show, setShow] = useState(false)
   return (
@@ -173,7 +162,7 @@ export function AuthModal() {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose() }}>
-      <DialogContent className="max-w-[22rem] gap-0 rounded-[2rem] border border-zinc-200 bg-white p-0 overflow-hidden max-h-[calc(100vh-3rem)] overflow-y-auto">
+      <DialogContent className="max-w-[18rem] gap-0 rounded-[2rem] border border-zinc-200 bg-white p-0 overflow-hidden max-h-[calc(100vh-3rem)] overflow-y-auto">
         <VisuallyHidden>
           <DialogTitle>{mode === 'login' ? 'Sign in' : mode === 'register' ? 'Create account' : 'Forgot password'}</DialogTitle>
         </VisuallyHidden>
@@ -182,7 +171,6 @@ export function AuthModal() {
           {mode === 'login' && (
             <motion.div key="login" variants={slideVariants} initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.2, ease: 'easeOut' }} className="px-6 pb-6 pt-6">
-              <Logo />
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Welcome back</h2>
                 <p className="mt-1 text-sm text-zinc-500">Sign in to your account</p>
@@ -212,7 +200,6 @@ export function AuthModal() {
           {mode === 'register' && (
             <motion.div key="register" variants={slideVariants} initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.2, ease: 'easeOut' }} className="px-6 pb-6 pt-6">
-              <Logo />
               <div className="text-center">
                 <h2 className="text-xl font-bold text-zinc-900">Create your account</h2>
                 <p className="mt-1 text-xs text-zinc-500">Join PryroReview&apos;s verified review platform</p>
@@ -239,7 +226,6 @@ export function AuthModal() {
           {mode === 'forgot' && (
             <motion.div key="forgot" variants={slideVariants} initial="initial" animate="animate" exit="exit"
               transition={{ duration: 0.2, ease: 'easeOut' }} className="px-6 pb-6 pt-6">
-              <Logo />
               {forgotSent ? (
                 <div className="text-center">
                   <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">

@@ -1,6 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { useAddCompanyModal } from '@/lib/add-company-modal-context'
 
 export function Footer() {
+  const { openAddCompanyModal } = useAddCompanyModal()
+
   return (
     <footer className="bg-white">
       <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-10">
@@ -60,8 +65,6 @@ export function Footer() {
                   { href: '/about', label: 'About PryroReview' },
                   { href: '/how-it-works', label: 'How It Works' },
                   { href: '/pricing', label: 'Pricing' },
-                  { href: '/leaderboard', label: 'Leaderboard' },
-                  { href: '/add-company', label: 'Add a Company' },
                 ].map((l) => (
                   <li key={l.label}>
                     <Link href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900">
@@ -69,6 +72,14 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <button
+                    onClick={() => openAddCompanyModal()}
+                    className="text-sm text-zinc-500 hover:text-zinc-900"
+                  >
+                    Add a Company
+                  </button>
+                </li>
               </ul>
             </div>
 
@@ -76,19 +87,20 @@ export function Footer() {
             <div>
               <p className="text-sm font-semibold text-zinc-900">Quick Links</p>
               <ul className="mt-5 space-y-3">
-                {[
-                  { href: '/', label: 'Home' },
-                  { href: '/leaderboard', label: 'Leaderboard' },
-                  { href: '/add-company', label: 'Add Company' },
-                  { href: '/', label: 'Write a Review' },
-                  { href: '/my-reviews', label: 'My Reviews' },
-                ].map((l) => (
-                  <li key={l.label}>
-                    <Link href={l.href} className="text-sm text-zinc-500 hover:text-zinc-900">
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-900">Home</Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => openAddCompanyModal()}
+                    className="text-sm text-zinc-500 hover:text-zinc-900"
+                  >
+                    Add Company
+                  </button>
+                </li>
+                <li>
+                  <Link href="/my-reviews" className="text-sm text-zinc-500 hover:text-zinc-900">My Reviews</Link>
+                </li>
               </ul>
             </div>
 

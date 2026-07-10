@@ -8,7 +8,7 @@ export function SearchHero() {
 
       {/* Heading */}
       <h1 className="mx-auto max-w-2xl text-3xl font-bold leading-tight tracking-tight text-zinc-900 md:text-5xl">
-        Share your Review
+        Share Your Review
       </h1>
 
       {/* Search bar */}

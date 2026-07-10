@@ -91,7 +91,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-end p-6">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative w-full max-w-md rounded-[2rem] bg-white shadow-2xl overflow-hidden">
+      <div className="relative w-full max-w-xs rounded-[2rem] bg-white shadow-2xl overflow-hidden">
 
         {/* Header */}
         <div className="flex items-center justify-between px-8 pt-7 pb-5 border-b border-gray-100">
