@@ -88,7 +88,7 @@ export function Footer() {
               <p className="text-sm font-semibold text-zinc-900">Quick Links</p>
               <ul className="mt-5 space-y-3">
                 <li>
-                  <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-900">Home</Link>
+                  <Link href="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-sm text-zinc-500 hover:text-zinc-900">Home</Link>
                 </li>
                 <li>
                   <button

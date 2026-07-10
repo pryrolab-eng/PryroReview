@@ -51,16 +51,16 @@ export function Navbar() {
             {user ? (
               <button
                 onClick={() => openAddCompanyModal()}
-                className="rounded-full px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
+                className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                Add Company
+                +Company
               </button>
             ) : (
               <button
                 onClick={() => openAuthModal('add a company')}
-                className="rounded-full px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-100 transition-colors"
+                className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                Add Company
+                +Company
               </button>
             )}
 
@@ -106,10 +106,10 @@ export function Navbar() {
               </div>
             ) : (
               <button
-                onClick={() => openAuthModal('sign up', 'register')}
+                onClick={() => openAuthModal('sign in')}
                 className="rounded-lg bg-blue-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-600 transition-colors duration-200"
               >
-                Get Started
+                Login
               </button>
             )}
           </div>
@@ -132,16 +132,16 @@ export function Navbar() {
             {user ? (
               <button
                 onClick={() => { setMobileOpen(false); openAddCompanyModal() }}
-                className="block w-full rounded-md px-3 py-2 text-left text-sm font-medium text-zinc-900 hover:bg-zinc-50"
+                className="block w-full rounded-lg bg-zinc-100 px-3 py-2 text-left text-sm font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                Add Company
+                +Company
               </button>
             ) : (
               <button
                 onClick={() => { setMobileOpen(false); openAuthModal('add a company') }}
-                className="block w-full rounded-md px-3 py-2 text-left text-sm font-medium text-zinc-900 hover:bg-zinc-50"
+                className="block w-full rounded-lg bg-zinc-100 px-3 py-2 text-left text-sm font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                Add Company
+                +Company
               </button>
             )}
           </nav>
@@ -171,15 +171,10 @@ export function Navbar() {
             ) : (
               <div className="flex flex-col gap-2">
                 <button
-                  onClick={() => { setMobileOpen(false); openAuthModal('sign up', 'register') }}
+                  onClick={() => { setMobileOpen(false); openAuthModal('sign in') }}
                   className="flex items-center justify-center rounded-lg bg-blue-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200">
-                  Get Started
+                  Login
                 </button>
-                <p className="text-center text-xs text-zinc-500">
-                  Already have an account?{' '}
-                  <button onClick={() => { setMobileOpen(false); openAuthModal('sign in') }}
-                    className="font-medium text-zinc-900 hover:underline">Login</button>
-                </p>
               </div>
             )}
           </div>
