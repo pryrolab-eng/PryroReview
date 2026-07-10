@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, X, ChevronDown, LayoutDashboard, Star, LogOut } from 'lucide-react'
+import { Menu, X, ChevronDown, LayoutDashboard, Star, LogOut, Plus } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { useAuthModal } from '@/lib/auth-modal-context'
 import { useAddCompanyModal } from '@/lib/add-company-modal-context'
@@ -51,16 +51,18 @@ export function Navbar() {
             {user ? (
               <button
                 onClick={() => openAddCompanyModal()}
-                className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
+                className="flex items-center gap-1.5 rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                +Company
+                <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                Company
               </button>
             ) : (
               <button
                 onClick={() => openAuthModal('add a company')}
-                className="rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
+                className="flex items-center gap-1.5 rounded-lg bg-zinc-100 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                +Company
+                <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                Company
               </button>
             )}
 
@@ -132,16 +134,18 @@ export function Navbar() {
             {user ? (
               <button
                 onClick={() => { setMobileOpen(false); openAddCompanyModal() }}
-                className="block w-full rounded-lg bg-zinc-100 px-3 py-2 text-left text-sm font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
+                className="flex items-center gap-1.5 w-full rounded-lg bg-zinc-100 px-3 py-2 text-left text-sm font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                +Company
+                <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                Company
               </button>
             ) : (
               <button
                 onClick={() => { setMobileOpen(false); openAuthModal('add a company') }}
-                className="block w-full rounded-lg bg-zinc-100 px-3 py-2 text-left text-sm font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
+                className="flex items-center gap-1.5 w-full rounded-lg bg-zinc-100 px-3 py-2 text-left text-sm font-semibold text-zinc-700 hover:bg-zinc-200 transition-colors duration-200"
               >
-                +Company
+                <Plus className="h-3.5 w-3.5 stroke-[2.5]" />
+                Company
               </button>
             )}
           </nav>
