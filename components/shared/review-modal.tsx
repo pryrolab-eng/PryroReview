@@ -113,8 +113,8 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           {(['payment', 'processing', 'form'] as Step[]).map((s, i) => (
             <div key={s} className="flex items-center gap-1.5">
               <div className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold transition-colors ${
-                step === s ? 'bg-blue-700 text-white' :
-                (step === 'form' || (step === 'processing' && i === 0)) ? 'bg-blue-100 text-blue-700' :
+                step === s ? 'bg-blue-500 text-white' :
+                (step === 'form' || (step === 'processing' && i === 0)) ? 'bg-blue-100 text-blue-500' :
                 'bg-gray-200 text-gray-400'
               }`}>
                 {step === 'form' && i < 2 ? <Check className="h-3 w-3" /> :
@@ -145,14 +145,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="0781234567"
-                  className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200"
+                  className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
                 />
               </div>
               <button
                 type="button"
                 onClick={handlePayment}
                 disabled={!phone || paying}
-                className="w-full h-8 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-8 rounded-lg bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {paying ? <><Loader2 className="h-4 w-4 animate-spin" /> Initiating...</> : 'Pay 20 RWF'}
               </button>
@@ -162,7 +162,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           {/* -- Step 2: Processing -- */}
           {step === 'processing' && (
             <div className="py-8 text-center space-y-4">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-700">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-500">
                 <Phone className="h-7 w-7 text-white" />
               </div>
               <div>
@@ -172,7 +172,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 </p>
               </div>
               <div className="flex items-center justify-center gap-2 text-sm text-zinc-400">
-                <Loader2 className="h-4 w-4 animate-spin text-blue-700" />
+                <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
                 Waiting for confirmation...
               </div>
               <button onClick={onClose} className="text-xs text-zinc-400 hover:text-zinc-600">Cancel</button>
@@ -182,7 +182,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           {/* -- Step 3: Review form -- */}
           {step === 'form' && (
             <div className="space-y-4">
-              <div className="flex items-center gap-2 rounded-xl bg-blue-700 px-3 py-2">
+              <div className="flex items-center gap-2 rounded-xl bg-blue-500 px-3 py-2">
                 <Check className="h-4 w-4 text-white shrink-0" />
                 <span className="text-xs font-semibold text-white">Payment confirmed</span>
               </div>
@@ -196,7 +196,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                       onMouseEnter={() => setHoverRating(s)} onMouseLeave={() => setHoverRating(0)}
                       className="flex h-7 w-7 items-center justify-center focus:outline-none">
                       <Star className={`h-6 w-6 transition-colors ${
-                        s <= (hoverRating || rating) ? 'fill-blue-700 text-blue-700' : 'fill-zinc-200 text-zinc-300'
+                        s <= (hoverRating || rating) ? 'fill-blue-500 text-blue-500' : 'fill-zinc-200 text-zinc-300'
                       }`} />
                     </button>
                   ))}
@@ -207,7 +207,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Category</label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}
-                  className="h-9 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200">
+                  className="h-9 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200">
                   {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
@@ -217,14 +217,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Your Review</label>
                 <textarea value={comment} onChange={(e) => setComment(e.target.value)}
                   placeholder="Share your experience..." rows={4}
-                  className="w-full rounded-lg border border-slate-200 bg-white p-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent resize-none transition-colors duration-200" />
+                  className="w-full rounded-lg border border-slate-200 bg-white p-4 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-colors duration-200" />
               </div>
 
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={submitting || comment.trim().length < 1}
-                className="w-full h-8 rounded-lg bg-blue-700 text-sm font-semibold text-white hover:bg-blue-800 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-8 rounded-lg bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : 'Submit Review'}
               </button>

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
@@ -33,7 +33,7 @@ export function CategoryFilter({ categories, selected }: CategoryFilterProps) {
       onMouseLeave={() => setOpen(false)}
     >
       <button
-        className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-900 hover:text-blue-700"
+        className="inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-900 hover:text-blue-500"
         aria-haspopup="listbox"
         aria-expanded={open}
       >
@@ -46,7 +46,7 @@ export function CategoryFilter({ categories, selected }: CategoryFilterProps) {
           <button
             onClick={() => handleSelect(null)}
             className={`flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-zinc-50 ${
-              !selected ? 'font-bold text-blue-700' : 'text-zinc-900'
+              !selected ? 'font-bold text-blue-500' : 'text-zinc-900'
             }`}
           >
             <span>All Categories</span>
@@ -58,7 +58,7 @@ export function CategoryFilter({ categories, selected }: CategoryFilterProps) {
               key={cat.name}
               onClick={() => handleSelect(cat.name)}
               className={`flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-zinc-50 ${
-                selected === cat.name ? 'font-bold text-blue-700' : 'text-zinc-900'
+                selected === cat.name ? 'font-bold text-blue-500' : 'text-zinc-900'
               }`}
             >
               <span>{cat.name}</span>

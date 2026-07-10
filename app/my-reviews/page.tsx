@@ -7,7 +7,6 @@ import { useAuthModal } from '@/lib/auth-modal-context'
 import { formatDistanceToNow } from 'date-fns'
 import {
   Building2, Pencil, Trash2, Star, X, Loader2, Check, ArrowRight,
-  FileText, Calendar,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
@@ -355,7 +354,7 @@ export default function MyReviewsPage() {
             <p className="mt-1 text-sm text-zinc-500">{user.fullName}</p>
 
             <div className="mt-5 space-y-3">
-              <div className="rounded-2xl p-4 bg-white shadow-md">
+              <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
                 <div>
                   <p className="text-2xl font-bold text-zinc-900">{totalReviews}</p>
                   <p className="text-xs text-zinc-500 mt-0.5">Total Reviews</p>
@@ -363,7 +362,7 @@ export default function MyReviewsPage() {
               </div>
 
               {/* Avg Rating */}
-              <div className="rounded-2xl p-4 bg-white shadow-md">
+              <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
                 <div>
                   <p className="text-2xl font-bold text-zinc-900">
                     {totalReviews === 0 ? '—' : avgRating.toFixed(1)}
@@ -373,7 +372,7 @@ export default function MyReviewsPage() {
               </div>
 
               {/* Companies Reviewed */}
-              <div className="rounded-2xl p-4 bg-white shadow-md">
+              <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
                 <div>
                   <p className="text-2xl font-bold text-zinc-900">{uniqueCompanies}</p>
                   <p className="text-xs text-zinc-500 mt-0.5">Companies Reviewed</p>
@@ -381,7 +380,7 @@ export default function MyReviewsPage() {
               </div>
 
               {/* This Month */}
-              <div className="rounded-2xl p-4 bg-white shadow-md">
+              <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
                 <div>
                   <p className="text-2xl font-bold text-zinc-900">{thisMonthCount}</p>
                   <p className="text-xs text-zinc-500 mt-0.5">This Month</p>
@@ -467,7 +466,7 @@ export default function MyReviewsPage() {
                 {sorted.map((review) => (
                   <div
                     key={review.id}
-                    className="flex flex-col rounded-2xl bg-white p-4 shadow-md hover:shadow-lg transition-shadow"
+                    className="flex flex-col rounded-2xl bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.13)] transition-shadow"
                   >
                     {/* Header: avatar + company + date */}
                     <div className="flex items-start gap-3">

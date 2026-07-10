@@ -31,7 +31,7 @@ function getLogoUrl(website?: string | null): string | null {
 
 function getAvatarColor(name: string): string {
   const colors = [
-    'bg-blue-100 text-blue-700',
+    'bg-blue-100 text-blue-500',
     'bg-emerald-100 text-emerald-700',
     'bg-violet-100 text-violet-700',
     'bg-amber-100 text-amber-700',
@@ -66,7 +66,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
     <div className="relative">
       <Link
         href={`/company/${company.slug}`}
-        className="group relative flex flex-col rounded-2xl bg-white p-4 shadow-md transition-shadow duration-200 hover:shadow-lg"
+        className="group relative flex flex-col rounded-2xl bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.13)] transition-shadow duration-200"
       >
         {/* Top row */}
         <div className="flex items-start gap-3">
@@ -111,7 +111,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
           </div>
           <button
             onClick={handleReviewClick}
-            className="shrink-0 rounded-lg bg-blue-700 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-800 transition-colors duration-200"
+            className="shrink-0 rounded-lg bg-blue-500 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-600 transition-colors duration-200"
           >
             Review
           </button>

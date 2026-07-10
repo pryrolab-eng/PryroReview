@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const inputCls = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:border-transparent transition-colors duration-200'
+const inputCls = 'h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-zinc-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200'
 
 function Logo() {
   return (
@@ -198,7 +198,7 @@ export function AuthModal() {
                     </button>
                   </div>
                 </div>
-                <Button type="submit" disabled={loading} className="w-full bg-blue-700 hover:bg-blue-800 text-white">
+                <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</> : 'Sign In'}
                 </Button>
               </form>
@@ -225,7 +225,7 @@ export function AuthModal() {
                   <PasswordInput value={regPassword} onChange={setRegPassword} />
                   <PasswordStrength password={regPassword} />
                 </div>
-                <Button type="submit" disabled={loading} className="w-full bg-blue-700 hover:bg-blue-800 text-white">
+                <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white">
                   {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Creating account...</> : 'Create Account'}
                 </Button>
               </form>
@@ -266,7 +266,7 @@ export function AuthModal() {
                         {forgotError}
                       </p>
                     )}
-                    <Button type="submit" disabled={loading} className="w-full bg-blue-700 hover:bg-blue-800 text-white">
+                    <Button type="submit" disabled={loading} className="w-full bg-blue-500 hover:bg-blue-600 text-white">
                       {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending...</> : 'Send Reset Link'}
                     </Button>
                   </form>

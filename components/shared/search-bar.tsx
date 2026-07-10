@@ -234,7 +234,7 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
               </p>
               <button
                 onClick={() => { setOpen(false); setQuery(''); openAddCompanyModal(query) }}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500"
               >
                 <Plus className="h-4 w-4" />
                 Add &ldquo;{query}&rdquo; to the directory

@@ -86,11 +86,9 @@ function CompanyFavicon({ name, website }: { name: string; website?: string | nu
 function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
   const [page, setPage] = useState(1)
 
-  const sorted = [...allCompanies].sort((a, b) => {
-    if (a.reviewCount > 0 && b.reviewCount === 0) return -1
-    if (a.reviewCount === 0 && b.reviewCount > 0) return 1
-    return b.avgRating - a.avgRating || b.reviewCount - a.reviewCount
-  })
+  const sorted = [...allCompanies]
+    .filter((c) => c.reviewCount > 0)
+    .sort((a, b) => b.avgRating - a.avgRating || b.reviewCount - a.reviewCount)
 
   const totalPages = Math.ceil(sorted.length / SIDEBAR_PAGE_SIZE)
   const visible = sorted.slice((page - 1) * SIDEBAR_PAGE_SIZE, page * SIDEBAR_PAGE_SIZE)
@@ -121,7 +119,7 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
                 </div>
                 <span className="shrink-0 flex items-center gap-0.5 text-[11px]">
                   <span className="text-zinc-700 font-medium">{c.reviewCount}</span>
-                  <span className="text-blue-600 text-[20px] leading-none">★</span>
+                  <span className="text-blue-600 text-[13px] leading-none">★</span>
                 </span>
               </Link>
             </li>
@@ -183,7 +181,7 @@ function WorstRatedSidebar({ companies }: { companies: { id: string; name: strin
                 </div>
                 <span className="shrink-0 flex items-center gap-0.5 text-[11px]">
                   <span className="text-zinc-700 font-medium">{c.badReviewCount}</span>
-                  <span className="text-blue-600 text-[20px] leading-none">★</span>
+                  <span className="text-blue-600 text-[13px] leading-none">★</span>
                 </span>
               </Link>
             </li>
