@@ -16,6 +16,8 @@ import {
   ArrowUp,
   ArrowDown,
   Download,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { StarRating } from '@/components/shared/star-rating'
@@ -277,13 +279,12 @@ export default function AdminPage() {
       {totalPages > 1 && (
         <div className="mt-5 flex items-center justify-center gap-2">
           <button disabled={page === 1} onClick={() => setPage(page - 1)}
-            className="rounded-md border border-gray-200 px-4 py-2 text-sm text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 disabled:opacity-40">
-            Previous
+            className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+            <ChevronLeft className="h-4 w-4" />
           </button>
-          <span className="px-2 text-sm text-zinc-500">{page} / {totalPages}</span>
           <button disabled={page === totalPages} onClick={() => setPage(page + 1)}
-            className="rounded-md border border-gray-200 px-4 py-2 text-sm text-zinc-700 hover:border-zinc-400 hover:text-zinc-900 disabled:opacity-40">
-            Next
+            className="flex h-8 w-8 items-center justify-center rounded-md text-zinc-500 hover:bg-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+            <ChevronRight className="h-4 w-4" />
           </button>
         </div>
       )}

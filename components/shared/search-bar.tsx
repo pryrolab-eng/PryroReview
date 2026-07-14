@@ -131,11 +131,11 @@ export function SearchBar({ className, initialQuery }: { className?: string; ini
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => (dbResults.length > 0 || osmResults.length > 0) && setOpen(true)}
             placeholder="Search for a company"
-            className="w-full rounded-full border-0 bg-zinc-100 px-5 py-3.5 pr-11 text-sm text-zinc-900 placeholder:text-zinc-300 placeholder:font-normal focus:outline-none focus:ring-0 [&::placeholder]:text-zinc-300"
+            className="w-full rounded-full border-0 bg-zinc-100 px-5 py-5 pr-11 text-sm text-zinc-900 placeholder:text-zinc-300 placeholder:font-normal focus:outline-none focus:ring-0 [&::placeholder]:text-zinc-300"
           />
           <button
             type="submit"
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-blue-500 hover:text-blue-600"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-blue-600 p-2.5 text-white hover:bg-blue-500 transition-colors"
             aria-label="Search"
           >
             {isLoading

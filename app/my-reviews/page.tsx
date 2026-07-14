@@ -444,10 +444,7 @@ export default function MyReviewsPage() {
 
             {/* Empty state */}
             {reviews.length === 0 ? (
-              <div className="flex flex-col items-center rounded-2xl border border-zinc-200 bg-white py-20 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-zinc-200 bg-white">
-                  <Building2 className="h-5 w-5 text-zinc-400" />
-                </div>
+              <div className="flex flex-col items-center rounded-2xl bg-white py-20 text-center">
                 <p className="mt-4 text-sm font-medium text-zinc-900">You haven't written any reviews yet</p>
                 <p className="mt-1 text-xs text-zinc-500">Find a company and share your experience.</p>
                 <Button asChild className="mt-5">
@@ -455,7 +452,7 @@ export default function MyReviewsPage() {
                 </Button>
               </div>
             ) : sorted.length === 0 ? (
-              <div className="flex flex-col items-center rounded-2xl border border-zinc-200 bg-white py-16 text-center">
+              <div className="flex flex-col items-center rounded-2xl bg-white py-16 text-center">
                 <p className="text-sm font-medium text-zinc-900">No reviews match this filter</p>
                 <button onClick={() => setFilterRating(null)} className="mt-3 text-xs text-blue-600 hover:underline">
                   Clear filter

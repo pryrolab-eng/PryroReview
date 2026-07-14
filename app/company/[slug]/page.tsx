@@ -127,7 +127,7 @@ export default function CompanyPage() {
     <div className="mx-auto max-w-5xl px-6 py-10 lg:px-8">
 
       {/* ── Company header ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-5 pb-8 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-5 pb-8">
 
         {/* Logo */}
         <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border border-slate-200 bg-white overflow-hidden">

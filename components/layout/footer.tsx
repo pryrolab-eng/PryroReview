@@ -108,7 +108,7 @@ export function Footer() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center">
+        <div className="mt-16 flex flex-col items-start justify-between gap-4 pt-6 sm:flex-row sm:items-center">
           <p className="text-xs text-zinc-400">
             © {new Date().getFullYear()} PryroReview · Verified business reviews
           </p>
