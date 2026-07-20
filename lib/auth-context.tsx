@@ -4,7 +4,7 @@ import { SessionProvider, useSession, signOut as nextAuthSignOut } from 'next-au
 import { ReactNode } from 'react'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  return <SessionProvider>{children}</SessionProvider>
+  return <SessionProvider basePath="/api/auth">{children}</SessionProvider>
 }
 
 export function useAuth() {
