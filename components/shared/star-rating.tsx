@@ -16,8 +16,8 @@ export function StarRating({ rating, size = 'md', className }: StarRatingProps) 
         <Star
           key={s}
           className={cn(sz, s <= Math.round(rating)
-            ? 'fill-blue-600 text-blue-600'
-            : 'fill-blue-200 text-blue-200'
+            ? 'fill-amber-400 text-amber-400'
+            : 'fill-zinc-200 text-zinc-200'
           )}
         />
       ))}

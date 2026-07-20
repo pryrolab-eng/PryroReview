@@ -63,7 +63,7 @@ function StarDisplay({ rating }: { rating: number }) {
           key={s}
           className={cn(
             'h-3.5 w-3.5',
-            s <= rating ? 'fill-blue-500 text-blue-500' : 'fill-zinc-200 text-zinc-200'
+            s <= rating ? 'fill-amber-400 text-amber-400' : 'fill-zinc-200 text-zinc-200'
           )}
         />
       ))}
@@ -144,8 +144,8 @@ function EditReviewModal({
                   className={cn(
                     'h-7 w-7 transition-colors',
                     s <= (hoverRating || rating)
-                      ? 'fill-blue-500 text-blue-500'
-                      : 'fill-blue-100 text-blue-100'
+                      ? 'fill-amber-400 text-amber-400'
+                      : 'fill-zinc-200 text-zinc-200'
                   )}
                 />
               </button>

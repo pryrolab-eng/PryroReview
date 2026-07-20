@@ -35,7 +35,7 @@ function StarRow({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map((s) => (
-        <Star key={s} className={`h-3.5 w-3.5 ${s <= rating ? 'fill-blue-600 text-blue-600' : 'fill-blue-200 text-blue-200'}`} />
+        <Star key={s} className={`h-3.5 w-3.5 ${s <= rating ? 'fill-amber-400 text-amber-400' : 'fill-zinc-200 text-zinc-200'}`} />
       ))}
     </div>
   )
@@ -171,7 +171,7 @@ export default function CompanyPage() {
                   <span className="text-xl font-bold text-zinc-900">{company.avgRating.toFixed(1)}</span>
                   <div className="flex items-center gap-0.5">
                     {[1,2,3,4,5].map((s) => (
-                      <Star key={s} className={`h-4 w-4 ${s <= Math.round(company.avgRating) ? 'fill-blue-600 text-blue-600' : 'fill-blue-200 text-blue-200'}`} />
+                      <Star key={s} className={`h-4 w-4 ${s <= Math.round(company.avgRating) ? 'fill-amber-400 text-amber-400' : 'fill-zinc-200 text-zinc-200'}`} />
                     ))}
                   </div>
                 </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Star, Phone, X, Check, Loader2 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '@/lib/auth-context'
 import { toast } from 'sonner'
 
@@ -89,9 +90,25 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-end p-6">
-      <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative w-full max-w-xs rounded-[2rem] bg-white shadow-2xl overflow-hidden">
+    <AnimatePresence>
+      {open && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          {/* Modal — bottom-right */}
+          <motion.div
+            className="fixed bottom-6 right-6 z-50 w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden"
+            initial={{ opacity: 0, y: 48, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 48, scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 340, damping: 30 }}
+          >
 
         {/* Header */}
         <div className="flex items-center justify-between px-8 pt-7 pb-5 border-b border-gray-100">
@@ -128,9 +145,9 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           ))}
         </div>
 
-        <div className="px-8 py-6 max-h-[70vh] overflow-y-auto">
+        <div className="px-8 py-6 max-h-[65vh] overflow-y-auto">
 
-          {/* -- Step 1: Payment -- */}
+          {/* Step 1: Payment */}
           {step === 'payment' && (
             <div className="space-y-4">
               <div className="rounded-xl bg-white p-4">
@@ -152,14 +169,14 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 type="button"
                 onClick={handlePayment}
                 disabled={!phone || paying}
-                className="w-full h-8 rounded-lg bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-11 rounded-lg bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {paying ? <><Loader2 className="h-4 w-4 animate-spin" /> Initiating...</> : 'Pay 20 RWF'}
               </button>
             </div>
           )}
 
-          {/* -- Step 2: Processing -- */}
+          {/* Step 2: Processing */}
           {step === 'processing' && (
             <div className="py-8 text-center space-y-4">
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-500">
@@ -179,7 +196,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
             </div>
           )}
 
-          {/* -- Step 3: Review form -- */}
+          {/* Step 3: Review form */}
           {step === 'form' && (
             <div className="space-y-4">
               <div className="flex items-center gap-2 rounded-xl bg-blue-500 px-3 py-2">
@@ -187,7 +204,6 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 <span className="text-xs font-semibold text-white">Payment confirmed</span>
               </div>
 
-              {/* Stars */}
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-2">Your Rating <span className="text-zinc-400 font-normal">(optional)</span></label>
                 <div className="flex gap-1">
@@ -196,23 +212,21 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                       onMouseEnter={() => setHoverRating(s)} onMouseLeave={() => setHoverRating(0)}
                       className="flex h-7 w-7 items-center justify-center focus:outline-none">
                       <Star className={`h-6 w-6 transition-colors ${
-                        s <= (hoverRating || rating) ? 'fill-blue-500 text-blue-500' : 'fill-zinc-200 text-zinc-300'
+                        s <= (hoverRating || rating) ? 'fill-amber-400 text-amber-400' : 'fill-zinc-200 text-zinc-200'
                       }`} />
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Category */}
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Category</label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}
-                  className="h-9 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200">
+                  className="h-11 w-full rounded-lg border border-slate-200 bg-white px-4 text-sm text-zinc-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200">
                   {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
 
-              {/* Comment */}
               <div>
                 <label className="block text-sm font-medium text-zinc-900 mb-1.5">Your Review</label>
                 <textarea value={comment} onChange={(e) => setComment(e.target.value)}
@@ -224,14 +238,16 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
                 type="button"
                 onClick={handleSubmit}
                 disabled={submitting || comment.trim().length < 1}
-                className="w-full h-8 rounded-lg bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-11 rounded-lg bg-blue-500 text-sm font-semibold text-white hover:bg-blue-600 transition-colors duration-200 disabled:bg-blue-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {submitting ? <><Loader2 className="h-4 w-4 animate-spin" /> Submitting...</> : 'Submit Review'}
               </button>
             </div>
           )}
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   )
 }

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { SlidersHorizontal, ChevronDown, ChevronLeft, ChevronRight, Building2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CompanyCard } from '@/components/shared/company-card'
+import { useAddCompanyModal } from '@/lib/add-company-modal-context'
 
 interface Company {
   id: string
@@ -119,7 +120,7 @@ function LeaderboardSidebar({ allCompanies }: { allCompanies: Company[] }) {
                 </div>
                 <span className="shrink-0 flex items-center gap-0.5 text-[11px]">
                   <span className="text-zinc-700 font-medium">{c.reviewCount}</span>
-                  <span className="text-blue-600 text-[13px] leading-none">★</span>
+                  <span className="text-amber-400 text-[13px] leading-none">★</span>
                 </span>
               </Link>
             </li>
@@ -181,7 +182,7 @@ function WorstRatedSidebar({ companies }: { companies: { id: string; name: strin
                 </div>
                 <span className="shrink-0 flex items-center gap-0.5 text-[11px]">
                   <span className="text-zinc-700 font-medium">{c.badReviewCount}</span>
-                  <span className="text-blue-600 text-[13px] leading-none">★</span>
+                  <span className="text-amber-400 text-[13px] leading-none">★</span>
                 </span>
               </Link>
             </li>
@@ -215,6 +216,7 @@ export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, cat
   const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory ?? null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [page, setPage] = useState(1)
+  const { openAddCompanyModal } = useAddCompanyModal()
 
   // Sync if initialCategory changes (e.g. back/forward navigation)
   useEffect(() => {
@@ -238,18 +240,43 @@ export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, cat
   return (
     <div className="flex gap-6 items-start">
 
-      {/* ── Left sidebar: leaderboard by rating ── */}
-      <div className="hidden lg:block w-64 shrink-0 sticky top-20 self-start">
-        <div className="mb-2">
-          <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
-        </div>
-        <LeaderboardSidebar allCompanies={allCompanies} />
 
-        {/* Bad Reviews section */}
-        <div className="mt-6 mb-2">
-          <h3 className="text-sm font-bold text-zinc-900">Bad Reviews</h3>
+      {/* ── Left sidebar ── */}
+      <div className="hidden lg:block w-56 shrink-0 sticky top-20 self-start space-y-4">
+
+        {/* Leaderboard */}
+        <div className="rounded-2xl bg-zinc-50 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-base">🏆</span>
+            <h3 className="text-sm font-bold text-zinc-900">Leaderboard</h3>
+          </div>
+          <LeaderboardSidebar allCompanies={allCompanies} />
         </div>
-        <WorstRatedSidebar companies={badReviewCompanies} />
+
+        {/* Bad Reviews */}
+        <div className="rounded-2xl bg-zinc-50 p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-base">🔴</span>
+            <h3 className="text-sm font-bold text-zinc-900">Bad Reviews</h3>
+          </div>
+          <WorstRatedSidebar companies={badReviewCompanies} />
+        </div>
+
+        {/* Add your business CTA */}
+        <div className="rounded-2xl bg-zinc-50 p-4">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-blue-500 text-base">★</span>
+            <p className="text-sm font-bold text-zinc-900">Add your business</p>
+          </div>
+          <p className="text-xs text-zinc-500 mb-3">Get discovered and build trust with reviews.</p>
+          <button
+            onClick={() => openAddCompanyModal()}
+            className="w-full flex items-center justify-center gap-1.5 rounded-lg bg-blue-500 px-3 py-2 text-xs font-semibold text-white hover:bg-blue-600 transition-colors"
+          >
+            + Add Company
+          </button>
+        </div>
+
       </div>
 
       {/* ── Company grid ── */}

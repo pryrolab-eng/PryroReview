@@ -100,7 +100,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
             {[1, 2, 3, 4, 5].map((s) => (
               <Star
                 key={s}
-                className={`h-3 w-3 ${s <= filled ? 'fill-blue-600 text-blue-500' : 'fill-zinc-300 text-zinc-300'}`}
+                className={`h-3 w-3 ${s <= filled ? 'fill-amber-400 text-amber-400' : 'fill-zinc-200 text-zinc-200'}`}
               />
             ))}
             {company.avgRating > 0 && (
