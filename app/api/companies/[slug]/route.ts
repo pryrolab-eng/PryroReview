@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import prisma, { withRetry } from '@/lib/prisma'
 
 export async function GET(
   req: Request,
@@ -6,7 +6,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params
-    const company = await prisma.company.findUnique({
+    const company = await withRetry(() => prisma.company.findUnique({
       where: { slug },
       include: {
         reviews: {
@@ -16,7 +16,7 @@ export async function GET(
           },
         },
       },
-    })
+    }))
 
     if (!company) {
       return Response.json({ error: 'Company not found' }, { status: 404 })

@@ -85,7 +85,14 @@ export default function CompanyPage() {
   const loadData = useCallback(async () => {
     try {
       const res = await fetch(`/api/companies/${slug}`)
-      if (res.ok) setCompany(await res.json())
+      if (res.ok) {
+        setCompany(await res.json())
+      } else if (res.status === 404) {
+        // Could be Neon cold-start returning null — retry once after delay
+        await new Promise((r) => setTimeout(r, 2000))
+        const retry = await fetch(`/api/companies/${slug}`)
+        if (retry.ok) setCompany(await retry.json())
+      }
     } finally {
       setLoading(false)
     }
@@ -115,10 +122,18 @@ export default function CompanyPage() {
   if (!company) {
     return (
       <div className="mx-auto max-w-5xl px-6 py-24 text-center">
-        <p className="text-sm text-zinc-500">Company not found.</p>
-        <Link href="/" className="mt-4 inline-flex items-center gap-1.5 text-sm text-blue-600 hover:underline">
-          Back to home
-        </Link>
+        <p className="text-sm text-zinc-500">Company not found or failed to load.</p>
+        <div className="mt-4 flex items-center justify-center gap-4">
+          <button
+            onClick={() => { setLoading(true); loadData() }}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-600"
+          >
+            Retry
+          </button>
+          <Link href="/" className="text-sm text-blue-600 hover:underline">
+            Back to home
+          </Link>
+        </div>
       </div>
     )
   }
