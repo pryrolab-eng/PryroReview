@@ -139,7 +139,7 @@ export default function CompanyPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10 lg:px-8">
+    <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 lg:px-8">
 
       {/* ── Company header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-5 pb-8">
@@ -218,7 +218,7 @@ export default function CompanyPage() {
             </button>
           </div>
         ) : (
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {company.reviews.map((review) => (
               <div key={review.id} className="flex flex-col gap-3 rounded-2xl border border-gray-200 bg-white p-4 hover:shadow-md transition-shadow overflow-hidden">
                 {/* Header */}

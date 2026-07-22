@@ -103,7 +103,7 @@ export function ReviewModal({ companyId, companySlug, companyName, open, onClose
           />
           {/* Modal — bottom-right */}
           <motion.div
-            className="fixed bottom-6 right-6 z-50 w-full max-w-sm rounded-2xl bg-white shadow-2xl overflow-hidden"
+            className="fixed bottom-0 right-0 z-50 w-full sm:bottom-6 sm:right-6 sm:max-w-sm rounded-t-2xl sm:rounded-2xl bg-white shadow-2xl overflow-hidden"
             initial={{ opacity: 0, y: 48, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 48, scale: 0.95 }}

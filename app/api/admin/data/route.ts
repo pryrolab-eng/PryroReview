@@ -69,7 +69,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
     const tab  = searchParams.get('tab') || 'companies'
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'))
-    const take = 10
+    const take = 7
     const skip = (page - 1) * take
 
     let data: any[] = []

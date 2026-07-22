@@ -8,7 +8,7 @@ export function Footer() {
 
   return (
     <footer className="bg-white">
-      <div className="mx-auto max-w-screen-2xl px-4 py-16 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-screen-2xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
 
         {/* ── Main grid: logo left | three columns right ── */}
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between">

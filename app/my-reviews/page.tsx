@@ -345,7 +345,7 @@ export default function MyReviewsPage() {
         />
       )}
 
-      <div className="mx-auto max-w-screen-2xl px-6 py-10">
+      <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex gap-6 items-start">
 
           {/* ── Left Sidebar ── */}
@@ -355,36 +355,20 @@ export default function MyReviewsPage() {
 
             <div className="mt-5 space-y-3">
               <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">{totalReviews}</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Total Reviews</p>
-                </div>
+                <p className="text-2xl font-bold text-zinc-900">{totalReviews}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">Total Reviews</p>
               </div>
-
-              {/* Avg Rating */}
               <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">
-                    {totalReviews === 0 ? '—' : avgRating.toFixed(1)}
-                  </p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Avg Rating Given</p>
-                </div>
+                <p className="text-2xl font-bold text-zinc-900">{totalReviews === 0 ? '—' : avgRating.toFixed(1)}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">Avg Rating Given</p>
               </div>
-
-              {/* Companies Reviewed */}
               <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">{uniqueCompanies}</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">Companies Reviewed</p>
-                </div>
+                <p className="text-2xl font-bold text-zinc-900">{uniqueCompanies}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">Companies Reviewed</p>
               </div>
-
-              {/* This Month */}
               <div className="rounded-2xl p-4 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">{thisMonthCount}</p>
-                  <p className="text-xs text-zinc-500 mt-0.5">This Month</p>
-                </div>
+                <p className="text-2xl font-bold text-zinc-900">{thisMonthCount}</p>
+                <p className="text-xs text-zinc-500 mt-0.5">This Month</p>
               </div>
             </div>
           </div>
@@ -392,10 +376,23 @@ export default function MyReviewsPage() {
           {/* ── Right Main ── */}
           <div className="flex-1 min-w-0">
 
-            {/* Mobile header */}
+            {/* Mobile header + stats */}
             <div className="lg:hidden mb-5">
-              <h1 className="text-2xl font-bold text-zinc-900">My Reviews</h1>
-              <p className="text-sm text-zinc-500">{user.fullName}</p>
+              <h1 className="text-xl font-bold text-zinc-900">My Reviews</h1>
+              <p className="text-sm text-zinc-500 mb-3">{user.fullName}</p>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {[
+                  { label: 'Total', value: totalReviews },
+                  { label: 'Avg Rating', value: totalReviews === 0 ? '—' : avgRating.toFixed(1) },
+                  { label: 'Companies', value: uniqueCompanies },
+                  { label: 'This Month', value: thisMonthCount },
+                ].map((s) => (
+                  <div key={s.label} className="rounded-xl p-3 bg-white shadow-[0_2px_8px_rgba(0,0,0,0.06)]">
+                    <p className="text-lg font-bold text-zinc-900">{s.value}</p>
+                    <p className="text-xs text-zinc-500">{s.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Filter + Sort row */}
@@ -459,7 +456,7 @@ export default function MyReviewsPage() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {sorted.map((review) => (
                   <div
                     key={review.id}

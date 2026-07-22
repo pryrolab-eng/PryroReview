@@ -238,10 +238,9 @@ export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, cat
   }
 
   return (
-    <div className="flex gap-6 items-start">
+    <div className="flex flex-col lg:flex-row gap-6 items-start">
 
-
-      {/* ── Left sidebar ── */}
+      {/* ── Left sidebar — desktop only ── */}
       <div className="hidden lg:block w-56 shrink-0 sticky top-20 self-start space-y-4">
 
         {/* Leaderboard */}
@@ -334,7 +333,7 @@ export function CompaniesGrid({ allCompanies, topRanked, badReviewCompanies, cat
         ) : (
           <>
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+              className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"
               layout
             >
               <AnimatePresence mode="popLayout">

@@ -126,12 +126,12 @@ export default async function HomePage({
   return (
     <div>
       <section className="bg-white">
-        <div className="mx-auto max-w-screen-2xl px-4 pt-4 pb-6 sm:px-6 lg:px-10">
+        <div className="mx-auto max-w-screen-2xl px-4 pt-4 pb-6 sm:px-6 lg:px-8">
           <SearchHero />
         </div>
       </section>
 
-      <section className="mx-auto max-w-screen-2xl w-full px-4 py-4 sm:px-6 lg:px-10">
+      <section className="mx-auto max-w-screen-2xl w-full px-4 py-4 sm:px-6 lg:px-8">
         <Suspense fallback={<CompaniesSkeleton />}>
           <CompaniesSection activeCategory={activeCategory} />
         </Suspense>

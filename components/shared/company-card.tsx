@@ -66,7 +66,7 @@ export function CompanyCard({ company }: CompanyCardProps) {
     <div className="relative">
       <Link
         href={`/company/${company.slug}`}
-        className="group relative flex flex-col rounded-2xl bg-white p-4 shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.13)] transition-shadow duration-200"
+        className="group relative flex flex-col rounded-2xl bg-white p-3 sm:p-4 shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.13)] transition-shadow duration-200"
       >
         {/* Top row */}
         <div className="flex items-start gap-3">

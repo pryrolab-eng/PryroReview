@@ -7,6 +7,7 @@ import { AuthModal } from '@/components/shared/auth-modal'
 import { Navbar } from '@/components/layout/navbar'
 import { Footer } from '@/components/layout/footer'
 import { Toaster } from '@/components/ui/sonner'
+import { ConditionalShell } from '@/components/layout/conditional-shell'
 
 export const metadata: Metadata = {
   title: 'PryroReview — Verified Business Reviews',
@@ -32,11 +33,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           <AuthModalProvider>
             <AddCompanyModalProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <AuthModal />
-            <Toaster position="bottom-right" />
+              <ConditionalShell>
+                {children}
+              </ConditionalShell>
+              <AuthModal />
+              <Toaster position="bottom-right" />
             </AddCompanyModalProvider>
           </AuthModalProvider>
         </AuthProvider>
